@@ -1,0 +1,9 @@
+{
+    "csvImport" : {
+        "delimiter" : ","
+    },
+    "webserver" : {
+        "port" : 8080,
+        "sentry_client" : "https://myRavenCode/"
+    }
+}
