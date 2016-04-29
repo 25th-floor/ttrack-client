@@ -11,7 +11,7 @@ describe('TimeInput', function() {
         TimeInput = require('../index.js');
     });
 
-    it('should exists', function() {
+    xit('should exists', function() {
         // Render a checkbox with label in the document
         var input = TestUtils.renderIntoDocument(
             <TimeInput name="myTime" onChange={dummyOnChange}/>

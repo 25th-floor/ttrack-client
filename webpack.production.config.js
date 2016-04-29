@@ -1,36 +1,26 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+'use strict';
 
-var node_modules_dir = __dirname + '/node_modules';
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const PORT = 3000;
-const SERVER_URL = 'http://localhost:' + PORT;
+const node_modules_dir = __dirname + '/node_modules';
+const xt = ExtractTextPlugin.extract.bind(ExtractTextPlugin);
 
 module.exports = {
-    debug: true,
-    devtool: '#eval-source-map',
-
     module: {
         // preLoaders: [
         //     { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ },
         // ],
         loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loaders: ['react-hot', 'babel']
-            },
+            { test: /\.js$/, exclude: /node_modules/, loaders: ['babel'] },
             // Extract css files
-            {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-            },
+            { test: /\.css$/, loader: xt("style-loader", "css-loader") },
             // Optionally extract less files
             // or any other compile-to-css language
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!autoprefixer-loader!less-loader?sourceMap")
+                loader: xt("style-loader", "css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!autoprefixer-loader!less-loader?sourceMap")
             },
             // bootflat
             { test: /\.(png)$/, loader: 'url-loader?limit=100000' },
@@ -42,9 +32,7 @@ module.exports = {
         ]
     },
     entry: [
-        './src/client/app.js',
-        'webpack-dev-server/client?' + SERVER_URL,
-        'webpack/hot/only-dev-server'
+        './src/client/app.js'
         //'./public/less/timetracking.less'
     ],
     output: {
@@ -55,8 +43,9 @@ module.exports = {
         filename: 'app.js'
     },
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }),
         new ExtractTextPlugin("app.css", { allChunks: true }),
         // fix bootflat's broken url request
         new webpack.NormalModuleReplacementPlugin(
@@ -64,20 +53,9 @@ module.exports = {
             node_modules_dir + '/bootflat/bootflat/img/check_flat/default.png'
         )
     ],
+    postcss: () => [autoprefixer({ browsers: ['last 2 versions'] })],
 
-    devServer: {
-        port: PORT,
-        contentBase: "./public",
-        hot: true,
-        quiet: false,
-        noInfo: true,
-        inline: true,
-        colors: true,
-        historyApiFallback: true
-    },
-
-    eslint: { emitWarning: true },
-
+    eslint: { failOnError: true },
     resolve: {
         extensions: ['', '.js', '.jsx']
     }
