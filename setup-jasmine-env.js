@@ -6,9 +6,15 @@
 
 jasmine.VERBOSE = true;
 
-require('jasmine-reporters');
+require('jasmine-expect');
+require('jasmine-expect-moment');
+require('jasmine-expect-react');
+var reporters = require('jasmine-reporters');
 
-var reporter = new jasmine.JUnitXmlReporter("log/");
+var reporter = new reporters.JUnitXmlReporter({
+    savePath: __dirname + '/log/',
+    consolidateAll: false
+});
 jasmine.getEnv().addReporter(reporter);
 
 // Enable Teamcity Reporter if a Teamcity environment is detected

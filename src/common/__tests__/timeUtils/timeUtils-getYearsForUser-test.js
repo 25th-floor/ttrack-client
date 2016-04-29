@@ -3,7 +3,7 @@ jest.dontMock('../../timeUtils.js');
 var moment = require('moment');
 var Immutable = require('immutable');
 
-describe('timeUtils', function() {
+describe('timeUtils.getYearsForUser', function() {
     var timeUtils;
     var user;
     var today;
@@ -15,12 +15,12 @@ describe('timeUtils', function() {
     describe('getYearsForUser', function() {
         it('expects a user', function() {
             expect(function() {return timeUtils.getYearsForUser(42)})
-                .toThrow('getYearsForUser expects an Immutable Map Object!');
+                .toThrowError('getYearsForUser expects an Immutable Map Object!');
         });
 
         it('expects a user and today', function() {
             expect(function() {return timeUtils.getYearsForUser(Immutable.fromJS({1:2}), 21)})
-                .toThrow('getYearsForUser expects a Today Object!');
+                .toThrowError('getYearsForUser expects a Today Object!');
         });
 
         describe('user has no start/enddate', function() {

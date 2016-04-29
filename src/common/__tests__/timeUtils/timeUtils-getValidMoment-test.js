@@ -4,7 +4,7 @@ var moment = require('moment');
 
 require('jasmine-check').install();
 
-describe('timeUtils', function() {
+describe('timeUtils.getValidMoment', function() {
     var timeUtils;
 
     beforeEach(function() {
