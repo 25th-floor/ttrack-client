@@ -10,33 +10,37 @@ import * as timeUtils from './../../../common/timeUtils';
 
 import styles from './less/Day.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.state = { edit: false };
+    }
+
+    static propTypes = {
         day: React.PropTypes.instanceOf(Immutable.Map).isRequired,
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired,
-    },
-
-    getInitialState() {
-        return { edit: false };
-    },
+    };
 
     handleEditClick(event) {
         // don't let user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
-    },
+    }
 
     handleCancel(event) {
         this.setState({ edit: false });
-    },
+    }
 
     onSave(date, periods, removed) {
         this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
-    },
+    }
 
     render() {
         let edit = this.state.edit;
@@ -119,7 +123,7 @@ export default React.createClass({
             </fieldset>
 
         );
-    },
-});
+    }
+};
 
 

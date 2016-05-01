@@ -6,13 +6,13 @@ import MonthSelection from './MonthSelection';
 
 import styles from './less/DatePicker.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         activeMonth: React.PropTypes.object.isRequired,
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
-    },
+    };
 
     render() {
         return (
@@ -28,7 +28,7 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+};
 
 

@@ -9,29 +9,33 @@ import * as timeUtils from '../../../../common/timeUtils';
 
 import styles from './less/DatePicker.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.handleToday = this.handleToday.bind(this);
+        this.renderYearItem = this.renderYearItem.bind(this);
+        this.selectYear = this.selectYear.bind(this);
+        let today = timeUtils.getMomentToday();
+
+        this.state = {
+            today,
+        };
+    }
+
+    static propTypes = {
         activeMonth: React.PropTypes.object.isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
-    },
-
-    getInitialState() {
-        let today = timeUtils.getMomentToday();
-
-        return {
-            today,
-        };
-    },
+    };
 
     selectYear(year) {
         let date = this.props.activeMonth.clone().year(year.format('YYYY'));
         this.props.onChangeDate(date);
-    },
+    }
 
     handleToday() {
         this.props.onChangeDate(this.state.today);
-    },
+    }
 
     renderYearItem(year, index) {
         let format = 'YYYY';
@@ -51,7 +55,7 @@ export default React.createClass({
                     className={styles.short}>{yearShort}</span> </a>
             </li>
         );
-    },
+    }
 
     renderTodayButton() {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
@@ -63,7 +67,7 @@ export default React.createClass({
                 <a onClick={this.handleToday}> Today </a>
             </li>
         );
-    },
+    }
 
     render() {
         let years = this.props.years;
@@ -78,7 +82,7 @@ export default React.createClass({
                 </ul>
             </div>
         );
-    },
-});
+    }
+};
 
 

@@ -9,17 +9,23 @@ import * as timeUtils from '../../../../common/timeUtils';
 
 import styles from './less/DatePicker.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.renderMonthItem = this.renderMonthItem.bind(this);
+        this.selectMonth = this.selectMonth.bind(this);
+    }
+
+    static propTypes = {
         activeMonth: React.PropTypes.object.isRequired,
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
-    },
+    };
 
     selectMonth(month) {
         let date = this.props.activeMonth.clone().month(month.format('MMMM'));
         this.props.onChangeDate(date);
-    },
+    }
 
     renderMonthItem(month, index) {
         let className = classSet('col-xs-1',
@@ -38,7 +44,7 @@ export default React.createClass({
                     className={styles.short}>{monthShort}</span> <span className={styles.full}>{monthFull}</span> </a>
             </li>
         );
-    },
+    }
 
     render() {
         let months = this.props.months;
@@ -51,7 +57,7 @@ export default React.createClass({
                 </ul>
             </div>
         );
-    },
-});
+    }
+};
 
 

@@ -9,21 +9,27 @@ import * as timeUtils from './../../../common/timeUtils';
 
 import styles from './less/Weeks.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.renderDayItem = this.renderDayItem.bind(this);
+        this.renderWeekItem = this.renderWeekItem.bind(this);
+    }
+
+    static propTypes = {
         weeks: React.PropTypes.instanceOf(Immutable.Map).isRequired,
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired,
-    },
+    };
 
     renderDayItem(day) {
         return (
             <Day day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
                  user={this.props.user} onSaveDay={this.props.onSaveDay} />
         );
-    },
+    }
 
     renderDeltaItem(classes, delta) {
         let str = delta.format('hh:mm', { trim: false });
@@ -35,7 +41,7 @@ export default React.createClass({
             },
         );
         return <dd className={className}>{str}</dd>;
-    },
+    }
 
     renderWeekSum(week) {
         let workDuration = week.get('workDuration').format('hh:mm', { trim:false });
@@ -79,7 +85,7 @@ export default React.createClass({
                 </dl>
             </fieldset>
         );
-    },
+    }
 
     renderWeekItem(week) {
         return (
@@ -89,7 +95,7 @@ export default React.createClass({
                 {this.renderWeekSum(week)}
             </fieldset>
         );
-    },
+    }
 
     render() {
         const weeks = this.props.weeks;
@@ -98,7 +104,7 @@ export default React.createClass({
                 {weeks.toList().map(this.renderWeekItem)}
             </div>
         );
-    },
-});
+    }
+};
 
 

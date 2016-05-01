@@ -9,10 +9,10 @@ import * as periodUtils from '../../../../common/periodUtils';
 
 import styles from './less/PeriodComment.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    },
+    };
 
     render() {
         let period = this.props.period;
@@ -44,7 +44,7 @@ export default React.createClass({
                 <span className={styles.comment + ' hidden-xs'}>{comment}</span>
             </span>
         );
-    },
-});
+    }
+};
 
 

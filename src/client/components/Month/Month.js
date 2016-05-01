@@ -5,8 +5,8 @@ import Weeks from './Weeks';
 
 import styles from './less/Month.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
         weeks: React.PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -15,7 +15,7 @@ export default React.createClass({
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
         onSaveDay: React.PropTypes.func.isRequired,
-    },
+    };
 
     render() {
         return (
@@ -46,7 +46,7 @@ export default React.createClass({
                        user={this.props.user} onSaveDay={this.props.onSaveDay} />
             </div>
         );
-    },
-});
+    }
+};
 
 

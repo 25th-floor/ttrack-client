@@ -6,13 +6,13 @@ import AppFooter from '../App/Footer';
 
 import styles from './less/Login.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         users: React.PropTypes.any.isRequired,
         motto: React.PropTypes.object.isRequired,
         onUserSelect: React.PropTypes.func.isRequired,
         build: React.PropTypes.object,
-    },
+    };
 
     render() {
         let motto = this.props.motto;
@@ -48,6 +48,6 @@ export default React.createClass({
             </div>
 
         );
-    },
-});
+    }
+};
 

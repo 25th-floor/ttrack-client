@@ -3,15 +3,21 @@ import React from 'react';
 
 import styles from './less/UserSelection.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.changeUser = this.changeUser.bind(this);
+        this.renderUserItem = this.renderUserItem.bind(this);
+    }
+
+    static propTypes = {
         users: React.PropTypes.any.isRequired,
         onSelect: React.PropTypes.func.isRequired,
-    },
+    };
 
     changeUser(user) {
         this.props.onSelect(user);
-    },
+    }
 
     renderUserItem(user, index) {
         let userId = user.get('usr_id');
@@ -24,7 +30,7 @@ export default React.createClass({
                 </a>
             </li>
         );
-    },
+    }
 
     render() {
         const users = this.props.users.sortBy(user => user.get('usr_lastname'));
@@ -36,7 +42,7 @@ export default React.createClass({
                 <div className="clear"></div>
             </div>
         );
-    },
-});
+    }
+};
 
 

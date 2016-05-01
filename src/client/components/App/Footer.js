@@ -4,11 +4,11 @@ import Motto from '../Motto';
 
 import styles from './less/Footer.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         motto: React.PropTypes.object,
         build: React.PropTypes.object,
-    },
+    };
 
     render() {
         let buildInfo = '';
@@ -36,5 +36,5 @@ export default React.createClass({
                 </div>
             </footer>
         );
-    },
-});
+    }
+};

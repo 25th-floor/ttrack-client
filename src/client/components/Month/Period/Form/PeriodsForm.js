@@ -7,30 +7,37 @@ import * as periodUtils from '../../../../../common/periodUtils';
 
 import styles from './less/PeriodsForm.less';
 
-export default React.createClass({
-    propTypes: {
-        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        onCancel: React.PropTypes.func.isRequired,
-        onSave: React.PropTypes.func.isRequired,
-    },
-
-    getInitialState() {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.onAddPeriod = this.onAddPeriod.bind(this);
+        this.onCancel = this.onCancel.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onRemovePeriod = this.onRemovePeriod.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.onUpdatePeriod = this.onUpdatePeriod.bind(this);
         // add at least one element if turning to edit mode
-        let periods = this.props.periods.toList();
+        let periods = props.periods.toList();
         if (periods.size == 0) {
             periods = periods.push(Immutable.Map({ id: 1 }));
         }
 
-        return {
+        this.state = {
             // todo id setzen
             periods,
 
             // todo immutable?
             removed: [],
         };
-    },
+    }
+
+    static propTypes = {
+        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
+        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
+        onCancel: React.PropTypes.func.isRequired,
+        onSave: React.PropTypes.func.isRequired,
+    };
 
     onAddPeriod() {
         const maxId = this.state.periods.reduce(function (maxId, fi) {
@@ -40,7 +47,7 @@ export default React.createClass({
             periods: this.state.periods.push(Immutable.Map({ id: maxId + 1 })),
             removed: this.state.removed,
         });
-    },
+    }
 
     onRemovePeriod(index) {
         let toBeRemoved = this.state.periods.get(index);
@@ -54,7 +61,7 @@ export default React.createClass({
             periods,
             removed,
         });
-    },
+    }
 
     onUpdatePeriod(index, period) {
         this.setState({
@@ -65,7 +72,7 @@ export default React.createClass({
 
             removed: this.state.removed,
         });
-    },
+    }
 
     onSave(e) {
         e.preventDefault();
@@ -74,12 +81,12 @@ export default React.createClass({
         } else {
             console.log('not valid');
         }
-    },
+    }
 
     onCancel(event) {
         event.preventDefault();
         this.props.onCancel(event);
-    },
+    }
 
     onKeyDown(event) {
         if (event.keyCode === 13) {
@@ -88,7 +95,7 @@ export default React.createClass({
         } else if (event.keyCode === 27) {
             this.onCancel(event);
         }
-    },
+    }
 
     isValid() {
         // no periods
@@ -96,7 +103,7 @@ export default React.createClass({
         // not valid
         if (!periodUtils.validatePeriods(this.state.periods)) return false;
         return true;
-    },
+    }
 
     render() {
         let periods = this.state.periods;
@@ -125,7 +132,7 @@ export default React.createClass({
                 </form>
             </div>
         );
-    },
-});
+    }
+};
 
 

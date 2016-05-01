@@ -6,8 +6,17 @@ import classSet from 'class-set';
 
 import * as timeUtils from '../../../common/timeUtils';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.handleChange = this.handleChange.bind(this);
+        // {hours: 2, minutes: 1}
+        let duration = props.time ? moment.duration(props.time.toJS()).format('hh:mm', { trim:false }) : '';
+
+        this.state = { time: duration };
+    }
+
+    static propTypes = {
         time: React.PropTypes.instanceOf(Immutable.Map),
         id: React.PropTypes.string,
         label: React.PropTypes.string,
@@ -17,14 +26,7 @@ export default React.createClass({
         required: React.PropTypes.bool,
         round: React.PropTypes.number,
         onChange: React.PropTypes.func.isRequired,
-    },
-
-    getInitialState() {
-        // {hours: 2, minutes: 1}
-        let duration = this.props.time ? moment.duration(this.props.time.toJS()).format('hh:mm', { trim:false }) : '';
-
-        return { time: duration };
-    },
+    };
 
     handleChange(event) {
         let duration = timeUtils.getValidMoment(event.target.value);
@@ -36,7 +38,7 @@ export default React.createClass({
         }
 
         this.setState({ time : event.target.value });
-    },
+    }
 
     render() {
         // time is a string
@@ -56,7 +58,7 @@ export default React.createClass({
                        name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange} />
             </div>
         );
-    },
-});
+    }
+};
 
 

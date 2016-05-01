@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from './less/ProfileWidget.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         activeUser: React.PropTypes.object.isRequired,
-    },
+    };
 
     render() {
         let activeUser = this.props.activeUser;
@@ -24,7 +24,7 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+};
 
 

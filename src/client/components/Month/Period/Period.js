@@ -13,10 +13,15 @@ function getDurationObject(immutable) {
     return immutable.toJS();
 }
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.renderPeriodItem = this.renderPeriodItem.bind(this);
+    }
+
+    static propTypes = {
         periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
-    },
+    };
 
     renderPeriodItem(period, index) {
         let start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim:false });
@@ -45,7 +50,7 @@ export default React.createClass({
                 <div className="col-xs-2 col-sm-5 col-lg-offset-1"><PeriodComment period={period} /></div>
             </div>
         );
-    },
+    }
 
     render() {
         let periods = this.props.periods;
@@ -54,7 +59,7 @@ export default React.createClass({
                 {periods.map(this.renderPeriodItem)}
             </div>
         );
-    },
-});
+    }
+};
 
 

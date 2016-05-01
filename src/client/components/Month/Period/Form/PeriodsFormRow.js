@@ -20,26 +20,19 @@ function findType(types, value) {
     return types.find((type) => type.get('pty_id') == value);
 }
 
-export default React.createClass({
-    propTypes: {
-        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        index: React.PropTypes.number.isRequired,
-        onRemove: React.PropTypes.func.isRequired,
-        onUpdate: React.PropTypes.func.isRequired,
-    },
-
-    componentDidMount() {
-        // focus on select on first creation
-        ReactDOM.findDOMNode(this.refs.selectType).focus();
-    },
-
-    getInitialState() {
-        let period = this.props.period;
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.handleComment = this.handleComment.bind(this);
+        this.handleDurationChange = this.handleDurationChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.renderDurationRadio = this.renderDurationRadio.bind(this);
+        this.renderSelectOption = this.renderSelectOption.bind(this);
+        let period = props.period;
         if (!period.get('type')) {
             period = period.merge({
-                type: findType(this.props.types, 'Work'),
+                type: findType(props.types, 'Work'),
             });
         }
         // handle default duration to be the first duration found in the config
@@ -51,21 +44,35 @@ export default React.createClass({
             period = period.merge(this.addDurationTime(period));
         }
 
-        return { period };
-    },
+        this.state = { period };
+    }
+
+    static propTypes = {
+        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
+        index: React.PropTypes.number.isRequired,
+        onRemove: React.PropTypes.func.isRequired,
+        onUpdate: React.PropTypes.func.isRequired,
+    };
+
+    componentDidMount() {
+        // focus on select on first creation
+        ReactDOM.findDOMNode(this.refs.selectType).focus();
+    }
 
     updateState(period) {
         // add duration per_duration object if needed
         period = period.merge(this.addDurationTime(period));
         this.props.onUpdate(period);
         this.setState({ period });
-    },
+    }
 
     addDurationTime(period) {
         return period.merge({
             per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime),
         });
-    },
+    }
 
     handleTypeChange(event) {
         let type = findType(this.props.types, event.target.value);
@@ -77,7 +84,7 @@ export default React.createClass({
             duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration,
         });
         this.updateState(period);
-    },
+    }
 
     handleDurationChange(event) {
         let period = this.state.period.merge({
@@ -94,7 +101,7 @@ export default React.createClass({
         }
 
         this.updateState(period);
-    },
+    }
 
     handleTimeChange(name, duration) {
         let value = {};
@@ -102,20 +109,20 @@ export default React.createClass({
         const period = this.state.period.merge(value);
 
         this.updateState(period);
-    },
+    }
 
     handleComment(event) {
         const period = this.state.period.merge({
             per_comment: event.target.value,
         });
         this.updateState(period);
-    },
+    }
 
     renderSelectOption(type) {
         return (
             <option value={type.get('pty_id')} key={type.get('pty_id')}>{type.get('pty_name')}</option>
         );
-    },
+    }
 
     renderDurationRadio(elementName, value, duration, index) {
         let id = elementName + '-' + duration.name;
@@ -129,7 +136,7 @@ export default React.createClass({
                 </label>
             </div>
         );
-    },
+    }
 
     renderErrorMessages() {
         let period = this.state.period;
@@ -140,7 +147,7 @@ export default React.createClass({
                 {errors.map((msg, index) => <span key={index}>{msg}</span>)}
             </div>
         );
-    },
+    }
 
     render() {
         let period = this.state.period;
@@ -220,7 +227,7 @@ export default React.createClass({
 
             </div>
         );
-    },
-});
+    }
+};
 
 

@@ -5,16 +5,21 @@ import Motto from '../Motto';
 
 import styles from './less/Navigation.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.logoutUser = this.logoutUser.bind(this);
+    }
+
+    static propTypes = {
         activeUser: React.PropTypes.object.isRequired,
         motto: React.PropTypes.object.isRequired,
         onLogout: React.PropTypes.func.isRequired,
-    },
+    };
 
     logoutUser() {
         this.props.onLogout();
-    },
+    }
 
     render() {
         let motto = this.props.motto;
@@ -69,7 +74,7 @@ export default React.createClass({
             </nav>
 
         );
-    },
-});
+    }
+};
 
 

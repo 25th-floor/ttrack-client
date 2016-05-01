@@ -6,13 +6,13 @@ import AppFooter from './Footer';
 
 import styles from './less/App.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         motto: React.PropTypes.object.isRequired,
         logout: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired,
         build: React.PropTypes.object,
-    },
+    };
 
     render() {
         return (
@@ -26,6 +26,6 @@ export default React.createClass({
 
             </div>
         );
-    },
-});
+    }
+};
 
