@@ -92,7 +92,7 @@ function renderMainComponent() {
                 weeks={timesheet.getTimesheet()}
                 types={timesheet.getTypes()}
                 onChangeDate={changeDate}
-                onSaveDay={saveDay}/>
+                onSaveDay={saveDay} />
         </App>
     );
 }
@@ -111,10 +111,10 @@ function initApp() {
 initApp();
 
 // check if time has changed and if it has, move along and reload everything (this helps with the calculations)
-let today = moment().format("YYYY-MM-DD");
-//setInterval(renderApp, 5000); // just rerender every 5 seconds
-setInterval(function() {
-    var now = moment().format("YYYY-MM-DD");
+let today = moment().format('YYYY-MM-DD');
+// setInterval(renderApp, 5000); // just rerender every 5 seconds
+setInterval(function () {
+    var now = moment().format('YYYY-MM-DD');
     if (today == now) return;
     today = now;
 

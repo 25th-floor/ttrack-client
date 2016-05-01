@@ -28,7 +28,7 @@ function getTargetTime(date, user) {
 
     if (parseInt(date.format('E')) < 6)
         return defaultWeekdayWorktime;
-    return {'hours': 0};
+    return { 'hours': 0 };
 }
 
 /**
@@ -42,7 +42,7 @@ function getTargetTime(date, user) {
 function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
     var periodQuery = 'SELECT * FROM user_get_day_periods($1, $2::timestamp, $3::timestamp)';
 
-    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(),  dateRange.end.toISOString()]).then(function (result) {
+    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(), dateRange.end.toISOString()]).then(function (result) {
         var grouped = _.groupBy(result.rows, fmtDayDate);
         var data = _.mapValues(grouped, function (periods) {
             // pick day fields from first period in list to get all props for the day
@@ -56,16 +56,16 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
 
             return _.assign(day,
                 {
-                    periods: _.filter(periods.map(transformPeriod), function(p) {
+                    periods: _.filter(periods.map(transformPeriod), function (p) {
                         // filter empty periods
                         return p.per_id !== null;
                     }),
                     // calculate remaining target time after reducing holidays and all other non Work durations
                     // todo: maybe this should be done in the database
-                    remaining: function() {
+                    remaining: function () {
                         let duration = _.reduce(periods, function (result, period) {
                             // map period type to period
-                            let type = _.find(periodTypes, function(t) { return t.pty_id == period.per_pty_id});
+                            let type = _.find(periodTypes, function (t) { return t.pty_id == period.per_pty_id });
 
                             if (!type || type.pty_id == 'Work') {
                                 return result;
@@ -106,7 +106,7 @@ function calculateCarryData(client, user, until) {
 
     return db.query(client, query, [user.usr_id, until]).then(function (result) {
         var carryData = {
-            carryTime: {hours: 0, minutes: 0},
+            carryTime: { hours: 0, minutes: 0 },
             carryFrom: null,
             carryTo: null
         };
@@ -173,7 +173,7 @@ function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPer
         return Q.Promise(function (resolve) {
             var date = moment(strDate, 'YYYY-MM-DD').toDate();
             // get user target time for that specific date (handles weekends correct)
-            User.getTargetTime(pg, user.usr_id, date, function(val) {
+            User.getTargetTime(pg, user.usr_id, date, function (val) {
                 let day = moment.duration(val);
                 console.log('adding new Holiday', strDate, comment, val);
                 var newPeriod = {
@@ -231,7 +231,7 @@ module.exports = {
             dateRange.start = new Date(fromDate);
             dateRange.end = new Date(toDate);
 
-            User.get(pg, userId, function(user) {
+            User.get(pg, userId, function (user) {
                 getTimesheetForTimeRange(pg, client, user, dateRange, cb);
             });
         });

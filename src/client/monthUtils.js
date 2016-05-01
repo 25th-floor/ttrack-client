@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import Immutable from 'immutable';
 import moment from 'moment';
-import {durationOfWork, durationOfBreak, weekNr, sumDuration} from '../common/timeUtils';
+import { durationOfWork, durationOfBreak, weekNr, sumDuration } from '../common/timeUtils';
 
 function processDay(day) {
     let date = moment(day.get('day_date'));
@@ -43,6 +43,6 @@ export function createWeeks(days, carryTime) {
                 diff: diff,
                 diffUntilToday: diffUntilToday,
                 carry: moment.duration(carry)
-            })
+            });
         });
 }

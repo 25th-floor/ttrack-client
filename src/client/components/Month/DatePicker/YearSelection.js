@@ -17,7 +17,7 @@ export default React.createClass({
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired
     },
-    getInitialState: function() {
+    getInitialState: function () {
         let today = timeUtils.getMomentToday();
 
         return {
@@ -56,7 +56,7 @@ export default React.createClass({
         }
 
         return (
-            <li className={styles.today + " col-sm-1 " + styles['tt-button-today']}>
+            <li className={styles.today + ' col-sm-1 ' + styles['tt-button-today']}>
                 <a onClick={this.handleToday}> Today </a>
             </li>
         );

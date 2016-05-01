@@ -31,11 +31,11 @@ export default React.createClass({
         onRemove: React.PropTypes.func.isRequired,
         onUpdate: React.PropTypes.func.isRequired
     },
-    componentDidMount: function(){
+    componentDidMount: function () {
         // focus on select on first creation
         ReactDOM.findDOMNode(this.refs.selectType).focus();
     },
-    getInitialState: function() {
+    getInitialState: function () {
         let period = this.props.period;
         if (!period.get('type')) {
             period = period.merge({
@@ -51,20 +51,20 @@ export default React.createClass({
             period = period.merge(this.addDurationTime(period));
         }
 
-        return {period: period};
+        return { period: period };
     },
-    updateState: function(period) {
+    updateState: function (period) {
         // add duration per_duration object if needed
         period = period.merge(this.addDurationTime(period));
         this.props.onUpdate(period);
-        this.setState({period: period});
+        this.setState({ period: period });
     },
-    addDurationTime: function(period) {
+    addDurationTime: function (period) {
         return period.merge({
             per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime)
         });
     },
-    handleTypeChange: function(event) {
+    handleTypeChange: function (event) {
         let type = findType(this.props.types, event.target.value);
         let cfg = type.get('pty_config').get('types').toJS();
         let defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
@@ -75,7 +75,7 @@ export default React.createClass({
         });
         this.updateState(period);
     },
-    handleDurationChange: function(event) {
+    handleDurationChange: function (event) {
         var period = this.state.period.merge({
             duration: event.target.value
         });
@@ -91,38 +91,38 @@ export default React.createClass({
 
         this.updateState(period);
     },
-    handleTimeChange: function(name, duration) {
+    handleTimeChange: function (name, duration) {
         let value = {};
         value[name] = duration;
         var period = this.state.period.merge(value);
 
         this.updateState(period);
     },
-    handleComment: function(event) {
+    handleComment: function (event) {
         var period = this.state.period.merge({
-           'per_comment': event.target.value
+            'per_comment': event.target.value
         });
         this.updateState(period);
     },
-    renderSelectOption: function(type) {
+    renderSelectOption: function (type) {
         return (
             <option value={type.get('pty_id')} key={type.get('pty_id')}>{type.get('pty_name')}</option>
         );
     },
-    renderDurationRadio: function(elementName, value, duration, index) {
+    renderDurationRadio: function (elementName, value, duration, index) {
         let id = elementName + '-' + duration.name;
 
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
                 <label htmlFor={id} className="radio-inline">
                     <input type="radio" name={ elementName + '[duration]' } id={id} value={duration.name} checked={duration.name == value}
-                           onChange={this.handleDurationChange}/>
+                           onChange={this.handleDurationChange} />
                     {duration.description}
                 </label>
             </div>
         );
     },
-    renderErrorMessages: function() {
+    renderErrorMessages: function () {
         let period = this.state.period;
         let errors = periodUtils.getAllErrors(period);
 
@@ -132,19 +132,19 @@ export default React.createClass({
             </div>
         );
     },
-    render: function() {
+    render: function () {
         let period = this.state.period;
         let isValid = periodUtils.validatePeriod(period);
 
-        let elementName = 'period-' + (period.get('per_id') ? period.get('per_id') : this.props.index) ;
+        let elementName = 'period-' + (period.get('per_id') ? period.get('per_id') : this.props.index);
 
-        let cfg = period.getIn(['type','pty_config','types']) || Immutable.Map();
+        let cfg = period.getIn(['type', 'pty_config', 'types']) || Immutable.Map();
 
         let durations = periodUtils.durationConfig.filter((d) => cfg.get(d.name) == true);
 
         let periodElements = [];
         let elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
-        let comment = {name: elementName + '[per_comment]', className: 'controls col-xs-12 col-lg-8'};
+        let comment = { name: elementName + '[per_comment]', className: 'controls col-xs-12 col-lg-8' };
         if (period.get('duration') == periodUtils.PERIOD) {
             periodElements = [
                 {
@@ -179,17 +179,17 @@ export default React.createClass({
                 }
             ];
 
-            comment.className+= ' col-sm-6';
+            comment.className += ' col-sm-6';
         }
 
         return (
             <div className={styles.row} key={period.get('per_id')}>
                 {!isValid ? this.renderErrorMessages() : ''}
 
-                <div className="pull-right"><a onClick={this.props.onRemove}><i className="fa fa-trash text-danger"/></a></div>
+                <div className="pull-right"><a onClick={this.props.onRemove}><i className="fa fa-trash text-danger" /></a></div>
                 <div className="row">
-                    <label className='col-xs-12 col-sm-3 col-lg-2'>
-                        <select className='col-xs-12 form-control' name={elementName + '[pty_id]'} value={period.getIn(['type', 'pty_id'])} onChange={this.handleTypeChange}
+                    <label className="col-xs-12 col-sm-3 col-lg-2">
+                        <select className="col-xs-12 form-control" name={elementName + '[pty_id]'} value={period.getIn(['type', 'pty_id'])} onChange={this.handleTypeChange}
                                 ref="selectType">
                             {this.props.types.toList().map(this.renderSelectOption)}
                         </select>
@@ -203,12 +203,12 @@ export default React.createClass({
                                                                  css={p.className} placeholder={p.placeholder}
                                                                  time={p.value} required={p.required} key={index}
                                                                  round={p.round}
-                                                                 onChange={this.handleTimeChange}/>)}
+                                                                 onChange={this.handleTimeChange} />)}
 
                     <div className={comment.className}>
                         <label htmlFor={comment.name}>Kommentar</label>
                         <input type="text" placeholder="Kommentar" className="form-control"
-                               name={comment.name} id={comment.name} value={period.get('per_comment')} onChange={this.handleComment}/>
+                               name={comment.name} id={comment.name} value={period.get('per_comment')} onChange={this.handleComment} />
                     </div>
                 </div>
 

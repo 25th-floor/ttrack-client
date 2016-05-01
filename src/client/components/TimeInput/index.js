@@ -20,13 +20,13 @@ export default React.createClass({
         round: React.PropTypes.number,
         onChange: React.PropTypes.func.isRequired
     },
-    getInitialState: function() {
+    getInitialState: function () {
         // {hours: 2, minutes: 1}
-        let duration = this.props.time ? moment.duration(this.props.time.toJS()).format('hh:mm', {trim:false}) : '';
+        let duration = this.props.time ? moment.duration(this.props.time.toJS()).format('hh:mm', { trim:false }) : '';
 
-        return {time: duration};
+        return { time: duration };
     },
-    handleChange: function(event) {
+    handleChange: function (event) {
         let duration = timeUtils.getValidMoment(event.target.value);
         if (duration != null) {
             if (this.props.round) {
@@ -35,9 +35,9 @@ export default React.createClass({
             this.props.onChange(this.props.id, timeUtils.getDateObjectFromMomentDuration(duration));
         }
 
-        this.setState({time : event.target.value});
+        this.setState({ time : event.target.value });
     },
-    render: function() {
+    render: function () {
         // time is a string
         let time = this.state.time;
 
@@ -49,7 +49,7 @@ export default React.createClass({
             <div className={css}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input type="text" placeholder={this.props.placeholder} className="form-control" required={this.props.required}
-                       name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange}/>
+                       name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange} />
             </div>
         );
     }

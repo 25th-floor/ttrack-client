@@ -1,7 +1,7 @@
 'use strict';
 
 // local storage wrapper working with JSON
-export default  {
+export default {
     getItem: function (key, defaultValue) {
         var dataStr = localStorage.getItem(key);
         if (dataStr) {

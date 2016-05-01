@@ -17,7 +17,7 @@ export default React.createClass({
         return (
             <div id={styles.profileWidget}>
                 <div className={styles.image}>
-                    <img src={imgSrc}/>
+                    <img src={imgSrc} />
                 </div>
                 <div className={styles.name}>
                     <span className="firstname">{activeUser.get('usr_firstname')} </span> <span

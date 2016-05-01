@@ -16,9 +16,9 @@ export const FULLDAY = 'fullday';
  * Duration Config
  */
 export const durationConfig = [
-    {name: PERIOD, description: 'Zeitraum'},
-    {name: FULLDAY, description: 'Ganzer Tag'},
-    {name: HALFDAY, description: 'Halber Tag'}
+    { name: PERIOD, description: 'Zeitraum' },
+    { name: FULLDAY, description: 'Ganzer Tag' },
+    { name: HALFDAY, description: 'Halber Tag' }
 ];
 
 /**
@@ -43,7 +43,7 @@ export function calculateDuration(period, fullDay) {
 
     if (name == FULLDAY) return timeUtils.getDateObjectFromMomentDuration(fullDay);
     if (name == HALFDAY) return timeUtils.getDateObjectFromMomentDuration(halfDay);
-    if (name == NONE) return {hours: 0};
+    if (name == NONE) return { hours: 0 };
 
     let duration = {};
 

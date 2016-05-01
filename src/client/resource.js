@@ -25,7 +25,7 @@ function fetch(uri) {
 }
 
 function cancelRequest(req) {
-    //console.log('canceling', req);
+    // console.log('canceling', req);
     if (req.cancel) {
         req.cancel();
     } else if (req.canceled !== true) {
@@ -37,7 +37,7 @@ function cancelRequest(req) {
 }
 
 function save(method, uri, obj) {
-    return client({method: method, path: uri, entity: obj, headers: {'Content-Type': 'application/json'}})
+    return client({ method: method, path: uri, entity: obj, headers: { 'Content-Type': 'application/json' } })
         .then(function (response) {
             console.log('response', response);
             return response.entity;
@@ -45,13 +45,13 @@ function save(method, uri, obj) {
 }
 
 function collection(uri) {
-    var route = myro({[uri]: 'uri'});
+    var route = myro({ [uri]: 'uri' });
     var _data = Immutable.List();
     let req = null;
     return {
         load: function () {
             if (req) cancelRequest(req);
-            req = {path: uri};
+            req = { path: uri };
             return fetch(req).then(entity => {
                 _data = entity;
                 req = null;
@@ -69,13 +69,13 @@ function collection(uri) {
 }
 
 function single(uri) {
-    var route = myro({[uri]: 'uri'});
+    var route = myro({ [uri]: 'uri' });
     var _data = Immutable.Map();
     let req = null;
     return {
         load: function (params) {
             if (req) cancelRequest(req);
-            req = {path: route.uri(params)};
+            req = { path: route.uri(params) };
             return fetch(req).then(entity => {
                 _data = entity;
                 req = null;
@@ -90,7 +90,7 @@ function single(uri) {
             return save('put', route.uri(obj.toJS()), obj);
         },
         remove: function (params) {
-            return client({method: 'delete', path: route.uri(params), headers: {'Content-Type': 'application/json'}})
+            return client({ method: 'delete', path: route.uri(params), headers: { 'Content-Type': 'application/json' } })
                 .then(function (response) {
                     console.log('delete response', response);
                     return response;
@@ -99,4 +99,4 @@ function single(uri) {
     };
 }
 
-module.exports = {collection, single};
+module.exports = { collection, single };

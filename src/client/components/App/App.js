@@ -15,15 +15,15 @@ export default React.createClass({
         user: React.PropTypes.object.isRequired,
         build: React.PropTypes.object
     },
-    render: function() {
+    render: function () {
         return (
             <div className={styles['site-container']}>
                 <div className="container-fluid">
-                    <Navigation motto={this.props.motto} onLogout={this.props.logout} activeUser={this.props.user}/>
+                    <Navigation motto={this.props.motto} onLogout={this.props.logout} activeUser={this.props.user} />
                     <div>{this.props.children}</div>
                 </div>
 
-                <AppFooter motto={this.props.motto} build={this.props.build}/>
+                <AppFooter motto={this.props.motto} build={this.props.build} />
 
             </div>
         );

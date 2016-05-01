@@ -5,7 +5,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import resource from '../resource';
-import {createWeeks} from '../monthUtils';
+import { createWeeks } from '../monthUtils';
 import * as timeUtils from '../../common/timeUtils';
 
 function getDurationType(period, targetTime, type) {
@@ -17,7 +17,7 @@ function getDurationType(period, targetTime, type) {
         let target = moment.duration(targetTime.toJS());
 
         if (cfg.period && start && moment.duration(start.toJS()).as('minutes') >= 0) return 'period';
-        if (cfg.halfday && duration.as('hours') == (target.as('hours')/2)) return 'halfday';
+        if (cfg.halfday && duration.as('hours') == (target.as('hours') / 2)) return 'halfday';
         if (cfg.fullday && duration.as('hours') == target.as('hours')) return 'fullday';
     } else {
         if (cfg.period) return 'period';
@@ -31,7 +31,7 @@ function getDurationType(period, targetTime, type) {
 function assocPeriodWithType(typeMap, targetTime, period) {
     let type = typeMap.get(period.get('per_pty_id'));
     let duration = getDurationType(period, targetTime, type);
-    return period.merge({type, duration});
+    return period.merge({ type, duration });
 }
 
 function assocPeriodsWithTypes(types, days) {
@@ -51,7 +51,7 @@ function fixDurations(period) {
     return period.map((val, key) => _.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val);
 }
 
-export default function(onChange) {
+export default function (onChange) {
     let periodTypes = resource.collection('/api/period-types');
     let timesheet = Immutable.Map();
     let notify = () => onChange ? onChange() : null;
@@ -76,7 +76,7 @@ export default function(onChange) {
             loadParams = null;
         },
         loadTimesheet(month, userId) {
-            //console.log('loadTimesheet', month, userId);
+            // console.log('loadTimesheet', month, userId);
             if (!initialized) throw new Error('cannot load unitialized');
 
             let newLoadParams = JSON.stringify([month, userId]);
@@ -97,7 +97,7 @@ export default function(onChange) {
                 from: boundries.firstDay.format('YYYY-MM-DD'),
                 to: boundries.lastDay.format('YYYY-MM-DD'),
                 user: userId
-            }).then(function() {
+            }).then(function () {
                 let data = tsResource.get().updateIn(['days'], assocPeriodsWithTypes.bind(null, periodTypes.list()));
                 timesheet = createWeeks(data.get('days'), moment.duration(data.get('carryTime').toJS()));
                 notify();
@@ -115,7 +115,7 @@ export default function(onChange) {
 
             // delete all removed ones
             removed.forEach((id) => {
-                promises.push(periodSingleResource.remove({per_id: id, userId: userId}));
+                promises.push(periodSingleResource.remove({ per_id: id, userId: userId }));
             });
             // update/create
             periods.forEach((period) => {
@@ -126,7 +126,7 @@ export default function(onChange) {
                 });
                 period = fixDurations(period);
 
-                //console.log('timesheet store prepared obj', period);
+                // console.log('timesheet store prepared obj', period);
 
                 if (period.get('per_id')) {
                     promises.push(periodSingleResource.save(period));
@@ -139,4 +139,4 @@ export default function(onChange) {
 
         }
     };
-};
+}

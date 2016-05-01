@@ -30,11 +30,11 @@ function fetchDayIdForUser(db, date, user) {
                 };
 
                 console.log('create new day', date);
-                if(moment(date).isoWeekday() < 6) {
+                if (moment(date).isoWeekday() < 6) {
                     console.log('with', defaultWeekdayWorktime);
                     return createDayIdForUser(db, date, defaultWeekdayWorktime, user.usr_id);
                 } else
-                    return createDayIdForUser(db, date, {hours: 0}, user.usr_id);
+                    return createDayIdForUser(db, date, { hours: 0 }, user.usr_id);
             }
         });
 }
@@ -67,18 +67,18 @@ function fetchPeriodTypes(db) {
 }
 
 function convertToTime(time) {
-    return time? moment.duration(time).format('hh:mm:', {trim: false}) : null;
+    return time ? moment.duration(time).format('hh:mm:', { trim: false }) : null;
 }
 
 
 function preparePeriodForApiResponse(periodData) {
-    return _.mapValues(periodData, function(val, key) {
+    return _.mapValues(periodData, function (val, key) {
         // transform time strings
         if (_.includes(['per_start', 'per_stop'], key)) {
-            if(val === null) return null;
+            if (val === null) return null;
             let duration = moment.duration(val);
             return {
-                hours: duration.get('hours') + duration.get('days')*24,
+                hours: duration.get('hours') + duration.get('days') * 24,
                 minutes: duration.get('minutes')
             };
         }
@@ -89,17 +89,17 @@ function preparePeriodForApiResponse(periodData) {
 module.exports = {
     post: function (pg, userId, data, cb) {
         pg(function (db) {
-            User.get(pg, userId, function(user) {
+            User.get(pg, userId, function (user) {
                 Q.all([
                     fetchPeriodTypes(db),
                     fetchDayIdForUser(db, data.date, user)
                 ]).spread(function (types, dayId) {
                     // TODO: check if pty_id is valid type if defined
-                    if(data.per_pty_id === undefined) {
+                    if (data.per_pty_id === undefined) {
                         data.per_pty_id = types['Arbeitszeit'];
                     }
 
-                    if(data.per_start) {
+                    if (data.per_start) {
                         data.per_stop = data.per_stop ? convertToTime(data.per_stop) : null;
                         data.per_start = convertToTime(data.per_start);
                         data.per_break = convertToTime(data.per_break);
@@ -120,7 +120,7 @@ module.exports = {
 
         });
     },
-    put: function(pg, userId, data, cb) {
+    put: function (pg, userId, data, cb) {
         pg(function (db) {
             Q.all([
                 fetchPeriodTypes(db),
@@ -149,7 +149,7 @@ module.exports = {
             }).done();
         });
     },
-    delete: function(pg, dataId, userId, cb) {
+    delete: function (pg, dataId, userId, cb) {
         pg(function (db) {
             var query = 'DELETE FROM periods WHERE per_id = (SELECT per_id FROM periods INNER JOIN days ON (day_id = per_day_id) WHERE per_id = $1 AND day_usr_id = $2)';
             db.query(query, [dataId, userId], function (err, result) {

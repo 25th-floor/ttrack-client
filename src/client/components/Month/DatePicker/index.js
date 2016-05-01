@@ -15,17 +15,17 @@ export default React.createClass({
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired
     },
-    render: function() {
+    render: function () {
         return (
             <div className={styles.dateSelection}>
-                <div className={"row " + styles.touchVersion}>
+                <div className={'row ' + styles.touchVersion}>
                     <YearSelection activeMonth={this.props.activeMonth}
                                    years={this.props.years}
-                                   onChangeDate={this.props.onChangeDate}/>
+                                   onChangeDate={this.props.onChangeDate} />
 
                     <MonthSelection activeMonth={this.props.activeMonth}
                                     months={this.props.months}
-                                    onChangeDate={this.props.onChangeDate}/>
+                                    onChangeDate={this.props.onChangeDate} />
                 </div>
             </div>
         );

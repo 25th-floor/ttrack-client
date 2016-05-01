@@ -42,7 +42,7 @@ export default React.createClass({
                       title={name}>
                     <i className={iconClassName}></i>
                 </span>
-                <span className={styles.comment + " hidden-xs"}>{comment}</span>
+                <span className={styles.comment + ' hidden-xs'}>{comment}</span>
             </span>
         );
     }

@@ -13,14 +13,14 @@ export default React.createClass({
         motto: React.PropTypes.object.isRequired,
         onLogout: React.PropTypes.func.isRequired
     },
-    logoutUser: function() {
+    logoutUser: function () {
         this.props.onLogout();
     },
-    render: function() {
+    render: function () {
         let motto = this.props.motto;
 
         return (
-            <nav className={"navbar navbar-inverse navbar-fixed-top " + styles.navbar} role="navigation">
+            <nav className={'navbar navbar-inverse navbar-fixed-top ' + styles.navbar} role="navigation">
                 <div className={'container-fluid ' + styles.container}>
                     <div className={'navbar-header ' + styles.header}>
                         <a className={'navbar-brand ' + styles.brand} href="/">
@@ -39,25 +39,25 @@ export default React.createClass({
                                  0.00,20.00 0.00,0.00 0.00,0.00
                                  0.00,0.00 100.00,0.00 100.00,0.00 Z" />
                             </svg>
-                            <span className={"title " + styles.title}>
+                            <span className={'title ' + styles.title}>
                                 <strong>Time</strong> Tracking
                             </span>
 
-                            <small className={styles['tt-motto']}><Motto house={motto.house} motto={motto.motto}/></small>
+                            <small className={styles['tt-motto']}><Motto house={motto.house} motto={motto.motto} /></small>
                         </a>
                     </div>
 
-                    <ProfileWidget activeUser={this.props.activeUser}/>
+                    <ProfileWidget activeUser={this.props.activeUser} />
 
-                    <div className={"navbar-container " + styles['navbar-container']}>
-                        <ul className={"nav navbar-nav " + styles['navbar-nav']}>
-                            <li className={"active " + styles.active}>
+                    <div className={'navbar-container ' + styles['navbar-container']}>
+                        <ul className={'nav navbar-nav ' + styles['navbar-nav']}>
+                            <li className={'active ' + styles.active}>
                                 <a>
                                     <i className="fa fa-calendar"></i>
                                     <span>Monatsansicht</span>
                                 </a>
                             </li>
-                            <li className={"logout " + styles.logout}>
+                            <li className={'logout ' + styles.logout}>
                                 <a onClick={this.logoutUser}>
                                     <i className="fa fa-power-off"></i>
                                     <span>Logout</span>

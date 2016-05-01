@@ -29,7 +29,7 @@ var periodTypes = sql.define({
  * @param vals the query values if no query object is provided, optional, defaults to empty array
  * @returns {*} promise
  */
-function query(db, query /*, vals */) {
+function query(db, query /* , vals */) {
     var vals = query.values || (arguments.length > 2 ? arguments[2] : []);
     var sql = query.text || query;
     return Q.Promise(function (resolve, reject) {

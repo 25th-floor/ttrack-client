@@ -15,7 +15,7 @@ export default React.createClass({
         onUserSelect: React.PropTypes.func.isRequired,
         build: React.PropTypes.object
     },
-    render: function() {
+    render: function () {
         let motto = this.props.motto;
         return (
             <div id="login" className={styles.login}>
@@ -39,12 +39,12 @@ export default React.createClass({
                         <strong>Time</strong> Tracking
                     </span>
 
-                    <small className={styles['tt-motto']}><Motto house={motto.house} motto={motto.motto}/></small>
+                    <small className={styles['tt-motto']}><Motto house={motto.house} motto={motto.motto} /></small>
                 </div>
 
                 <UserSelection users={this.props.users} onSelect={this.props.onUserSelect} />
 
-                <AppFooter build={this.props.build}/>
+                <AppFooter build={this.props.build} />
 
             </div>
 

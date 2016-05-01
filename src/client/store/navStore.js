@@ -22,7 +22,7 @@ function activeMonthFromRoute(route) {
     }
 }
 
-export default function(onChange) {
+export default function (onChange) {
 
     let notify = () => onChange ? onChange() : null;
     let activeMonth = timeUtils.getMomentToday();
@@ -45,10 +45,10 @@ export default function(onChange) {
             return activeMonth;
         },
         gotoMonth(month) {
-            let path = router.month({month: month.format('YYYY-MM')});
+            let path = router.month({ month: month.format('YYYY-MM') });
             activeMonth = month;
             window.history.pushState(null, '', path);
             notify();
         }
     };
-};
+}

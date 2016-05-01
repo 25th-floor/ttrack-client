@@ -1,5 +1,5 @@
 var fs = require('fs');
-var nomnom = require("nomnom");
+var nomnom = require('nomnom');
 var pg = require('pg');
 var csvParse = require('csv-parse');
 var Q = require('q');
@@ -16,13 +16,13 @@ var dbconfig = dbconfigfile.dev;
 nomnom.command('import')
     .option('file', {
         abbr: 'f',
-        help: "csv file to import",
+        help: 'csv file to import',
         required: true
     })
     .option('config', {
         abbr: 'c',
         default: 'config.json',
-        help: "configuration as json"
+        help: 'configuration as json'
     })
     .option('user', {
         abbr: 'u',
@@ -30,7 +30,7 @@ nomnom.command('import')
         help: 'The userid of the user to insert the data'
     })
     .callback(importFile)
-    .help("Import shit");
+    .help('Import shit');
 
 nomnom.parse();
 
@@ -92,7 +92,7 @@ function importFile(opts) {
         if (err) {
             return console.error('could not connect to postgres', err);
         }
-        parseCsv(opts.file, _.assign({}, config.csvImport, {columns: csvColumns}))
+        parseCsv(opts.file, _.assign({}, config.csvImport, { columns: csvColumns }))
             .then(function (csvData) {
                 return Q.all([csvData, getUser(client, userId), fetchExistingDays(client, userId)]);
             })
@@ -132,8 +132,8 @@ function processCsvRow(row, day) {
 
     // if default type use start, stop and break, otherwise just set duration to 7.7 hours
     var data = type == defaultPeriodType
-        ? {start: row.start, stop: row.stop, break: row.break || '00:00'}
-        : {duration: day};
+        ? { start: row.start, stop: row.stop, break: row.break || '00:00' }
+        : { duration: day };
 
     return _.assign(data, {
         day: moment(row.date.substring(0, 10), 'DD.MM.YYYY'),
@@ -213,7 +213,7 @@ function insertPeriod(client, types, user, period) {
             minutes: day.minutes()
         };
     } else {
-        target_time = {hours: 0};
+        target_time = { hours: 0 };
     }
 
     queryPromise = createDayIdForUser(client, period.day, target_time, user.usr_id);

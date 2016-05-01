@@ -17,11 +17,11 @@ export default React.createClass({
         onCancel: React.PropTypes.func.isRequired,
         onSave: React.PropTypes.func.isRequired
     },
-    getInitialState: function() {
+    getInitialState: function () {
         // add at least one element if turning to edit mode
         let periods = this.props.periods.toList();
         if (periods.size == 0) {
-            periods = periods.push(Immutable.Map({id: 1}))
+            periods = periods.push(Immutable.Map({ id: 1 }));
         }
 
         return {
@@ -29,16 +29,16 @@ export default React.createClass({
             removed: [] // todo immutable?
         };
     },
-    onAddPeriod: function() {
-        var maxId = this.state.periods.reduce(function(maxId, fi) {
+    onAddPeriod: function () {
+        var maxId = this.state.periods.reduce(function (maxId, fi) {
             return Math.max(maxId, fi.get('id'));
         }, 0);
         this.setState({
-            periods: this.state.periods.push(Immutable.Map({id: maxId+1})),
+            periods: this.state.periods.push(Immutable.Map({ id: maxId + 1 })),
             removed: this.state.removed
         });
     },
-    onRemovePeriod: function(index) {
+    onRemovePeriod: function (index) {
         let toBeRemoved = this.state.periods.get(index);
         let removed = this.state.removed;
         if (toBeRemoved.get('per_id')) {
@@ -51,7 +51,7 @@ export default React.createClass({
             removed: removed
         });
     },
-    onUpdatePeriod: function(index, period) {
+    onUpdatePeriod: function (index, period) {
         this.setState({
             periods: this.state.periods.set(
                 index,
@@ -60,7 +60,7 @@ export default React.createClass({
             removed: this.state.removed
         });
     },
-    onSave: function(e) {
+    onSave: function (e) {
         e.preventDefault();
         if (this.isValid()) {
             this.props.onSave(this.state.periods, this.state.removed);
@@ -68,11 +68,11 @@ export default React.createClass({
             console.log('not valid');
         }
     },
-    onCancel: function(event) {
+    onCancel: function (event) {
         event.preventDefault();
         this.props.onCancel(event);
     },
-    onKeyDown: function(event) {
+    onKeyDown: function (event) {
         if (event.keyCode === 13) {
             this.onSave(event);
             // escape just cancel everything
@@ -80,7 +80,7 @@ export default React.createClass({
             this.onCancel(event);
         }
     },
-    isValid: function() {
+    isValid: function () {
         // no periods
         if (this.state.periods.size == 0 && this.state.removed.length == 0) return false;
         // not valid
@@ -101,15 +101,15 @@ export default React.createClass({
                                                             key={(period.get('per_id') || period.get('id'))}
                                                             index={index}
                                                             onRemove={this.onRemovePeriod.bind(this, index)}
-                                                            onUpdate={this.onUpdatePeriod.bind(this, index)}/>)}
+                                                            onUpdate={this.onUpdatePeriod.bind(this, index)} />)}
 
                     { isOverlapping ? <div className="alert alert-warning">Der Zeitraum überschneidet sich mit anderen Einträgen an diesem Tag!</div> : ''}
 
                     <div className={styles.row}>
-                        <button className={styles.btn + " btn btn-primary pull-right"} disabled={disableSaveButton} onClick={this.onSave}>Speichern</button>
-                        <button className={styles.btn + " btn btn-default pull-right"} onClick={this.onCancel}>Abbrechen</button>
+                        <button className={styles.btn + ' btn btn-primary pull-right'} disabled={disableSaveButton} onClick={this.onSave}>Speichern</button>
+                        <button className={styles.btn + ' btn btn-default pull-right'} onClick={this.onCancel}>Abbrechen</button>
 
-                        <button className={styles.btn + " btn btn-success"} onClick={this.onAddPeriod}><i className="fa fa-fw fa-plus"/> Eintrag hinzufügen</button>
+                        <button className={styles.btn + ' btn btn-success'} onClick={this.onAddPeriod}><i className="fa fa-fw fa-plus" /> Eintrag hinzufügen</button>
                     </div>
                 </form>
             </div>

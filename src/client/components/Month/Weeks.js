@@ -19,22 +19,22 @@ export default React.createClass({
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    renderDayItem: function(day) {
+    renderDayItem: function (day) {
         return (
             <Day day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
-                 user={this.props.user} onSaveDay={this.props.onSaveDay}/>
+                 user={this.props.user} onSaveDay={this.props.onSaveDay} />
         );
     },
-    renderDeltaItem: function(classes, delta) {
-        let str = delta.format('hh:mm', {trim: false});
+    renderDeltaItem: function (classes, delta) {
+        let str = delta.format('hh:mm', { trim: false });
         let className = classSet(classes || '', {
             'text-success': delta.as('ms') >= 0,
             'text-danger': delta.as('ms') < 0
         });
         return <dd className={className}>{str}</dd>;
     },
-    renderWeekSum: function(week) {
-        let workDuration = week.get('workDuration').format('hh:mm', {trim:false});
+    renderWeekSum: function (week) {
+        let workDuration = week.get('workDuration').format('hh:mm', { trim:false });
 
         let diff = week.get('diffUntilToday');
         let carry = week.get('carry');

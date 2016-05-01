@@ -8,7 +8,7 @@ var PeriodType = require('./resources/period_type');
 var Timesheet = require('./resources/timesheet');
 
 api.use(bodyParser.json()); // for parsing application/json
-api.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+api.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 /**
  * add extra debug information to sentry
@@ -53,7 +53,7 @@ api.get('/users', function (req, res) {
     console.log('API GET Request for Users');
     User.list(api.get('pg'), function (users) {
         res.json(users);
-    })
+    });
 });
 
 api.get('/period-types', function (req, res) {

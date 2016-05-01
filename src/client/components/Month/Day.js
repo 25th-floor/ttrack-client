@@ -20,20 +20,20 @@ export default React.createClass({
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    getInitialState: function() {
+    getInitialState: function () {
         return { edit: false };
     },
-    handleEditClick: function(event) {
+    handleEditClick: function (event) {
         // don't let user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
     },
-    handleCancel: function(event) {
+    handleCancel: function (event) {
         this.setState({ edit: false });
     },
-    onSave: function(date, periods, removed) {
+    onSave: function (date, periods, removed) {
         this.props.onSaveDay(date, periods, removed);
-        this.setState({edit: false});
+        this.setState({ edit: false });
     },
     render: function () {
         let edit = this.state.edit;
@@ -95,7 +95,7 @@ export default React.createClass({
                     Tag {fullDate}
                 </legend>
 
-                <i className={"fa fa-pencil " + styles.editIcon}/>
+                <i className={'fa fa-pencil ' + styles.editIcon} />
 
                 <dl>
                     <dt>Datum</dt>
@@ -110,8 +110,8 @@ export default React.createClass({
 
                 {edit ? <PeriodsForm periods={day.get('periods')} types={this.props.types} date={date}
                                      dayTargetTime={day.get('day_target_time')}
-                                     onCancel={this.handleCancel} onSave={this.onSave.bind(this, date)}/>
-                    : <Period periods={day.get('periods')}/>}
+                                     onCancel={this.handleCancel} onSave={this.onSave.bind(this, date)} />
+                    : <Period periods={day.get('periods')} />}
 
             </fieldset>
 

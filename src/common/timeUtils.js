@@ -43,10 +43,10 @@ export function getValidMoment(time) {
         validTime = moment.duration(parseFloat(time.replace(',', '.')) * 60, 'minutes');
     }
     if (time.indexOf(':') > -1) {
-        validTime = moment.duration({hours: time.split(':')[0], minutes: time.split(':')[1]});
+        validTime = moment.duration({ hours: time.split(':')[0], minutes: time.split(':')[1] });
     }
     if (time.match(/^(\d*)$/)) {
-        validTime = moment.duration({hours: time});
+        validTime = moment.duration({ hours: time });
     }
 
     return validTime;
@@ -119,7 +119,7 @@ export function getNearestDateWithinEmployment(date, user) {
     } else {
         // check if we want more than a year into the future and stop it
         var today = getMomentToday();
-        var future = today.clone().endOf("year").add(1, 'year');
+        var future = today.clone().endOf('year').add(1, 'year');
         if (date.isAfter(future)) return today;
     }
 
@@ -155,7 +155,7 @@ export function roundTime(duration, round) {
 
 export function formatDurationHoursToLocale(time, fractions) {
     fractions = fractions || 2;
-    return time.asHours().toLocaleString('de-DE', {minimumFractionDigits: fractions}) + 'h';
+    return time.asHours().toLocaleString('de-DE', { minimumFractionDigits: fractions }) + 'h';
 }
 
 /**

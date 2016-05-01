@@ -18,7 +18,7 @@ export default React.createClass({
         onChangeDate: React.PropTypes.func.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    render: function() {
+    render: function () {
         return (
             <div id={styles.month}>
                 <div className={styles.pageHeader}>
@@ -27,7 +27,7 @@ export default React.createClass({
                     <DatePicker activeMonth={this.props.activeMonth}
                                 months={this.props.months}
                                 years={this.props.years}
-                                onChangeDate={this.props.onChangeDate}/>
+                                onChangeDate={this.props.onChangeDate} />
 
                     <div className="clearfix"></div>
                 </div>
@@ -44,7 +44,7 @@ export default React.createClass({
                 </fieldset>
 
                 <Weeks weeks={this.props.weeks} activeMonth={this.props.activeMonth} types={this.props.types}
-                       user={this.props.user} onSaveDay={this.props.onSaveDay}/>
+                       user={this.props.user} onSaveDay={this.props.onSaveDay} />
             </div>
         );
     }

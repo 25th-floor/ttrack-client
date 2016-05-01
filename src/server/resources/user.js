@@ -11,9 +11,9 @@ module.exports = {
                 }
                 cb(result.rows);
             });
-        })
+        });
     },
-    get: function(pg, userId, cb) {
+    get: function (pg, userId, cb) {
         pg(function (db)
         {
             var query = 'SELECT * FROM users WHERE usr_id = $1';
@@ -24,11 +24,11 @@ module.exports = {
                 }
                 cb(result.rows[0]);
             });
-        })
+        });
 
     },
     // get Users TargetTime for a specific date from the database
-    getTargetTime: function(pg, userId, date, cb) {
+    getTargetTime: function (pg, userId, date, cb) {
         pg(function (db)
         {
             var query = 'SELECT * FROM user_get_target_time($1, $2::DATE)';
@@ -39,6 +39,6 @@ module.exports = {
                 }
                 cb(result.rows[0].user_get_target_time);
             });
-        })
+        });
     }
 };

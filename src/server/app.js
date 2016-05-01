@@ -51,7 +51,7 @@ app.set('pg', function (fn) {
         }
         fn(client);
         done();
-    })
+    });
 });
 
 app.use('/api', resources.api);
@@ -59,7 +59,7 @@ app.use('/api', resources.api);
 app.use(express.static(__dirname + '/../../public'));
 
 app.all(/.*/, function (req, res) {
-    res.render('index', {css: assetsCSS, js: assetsJS, build: JSON.stringify(buildInfo)}, function (err, html) {
+    res.render('index', { css: assetsCSS, js: assetsJS, build: JSON.stringify(buildInfo) }, function (err, html) {
         if (err) {
             res.status(500).send('Internal Server Error').end();
         }
