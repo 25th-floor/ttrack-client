@@ -1,5 +1,3 @@
-'use strict';
-
 // local storage wrapper working with JSON
 export default {
     getItem: function (key, defaultValue) {

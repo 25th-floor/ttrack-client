@@ -1,5 +1,3 @@
-'use strict';
-
 // add styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootflat/bootflat/css/bootflat.min.css';

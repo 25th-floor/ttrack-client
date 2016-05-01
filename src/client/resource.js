@@ -1,5 +1,3 @@
-'use strict';
-
 const _ = require('lodash');
 const rest = require('rest');
 const mime = require('rest/interceptor/mime');

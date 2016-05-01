@@ -1,5 +1,3 @@
-'use strict';
-
 export default [
     { house: 'House Allyrion of Godsgrace', motto: "No Foe May Pass" },
     { house: 'House Ambrose', motto: "Never Resting" },

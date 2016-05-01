@@ -1,5 +1,3 @@
-'use strict';
-
 import * as timeUtils from './timeUtils';
 import moment from 'moment';
 import Immutable from 'immutable';

@@ -1,5 +1,3 @@
-'use strict';
-
 import _ from 'lodash';
 import Immutable from 'immutable';
 import moment from 'moment';
