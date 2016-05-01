@@ -125,12 +125,12 @@ export default class extends React.Component {
     }
 
     renderDurationRadio(elementName, value, duration, index) {
-        let id = elementName + '-' + duration.name;
+        let id = `${elementName}-${duration.name}`;
 
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
                 <label htmlFor={id} className="radio-inline">
-                    <input type="radio" name={ elementName + '[duration]' } id={id} value={duration.name} checked={duration.name == value}
+                    <input type="radio" name={ `${elementName}[duration]` } id={id} value={duration.name} checked={duration.name == value}
                            onChange={this.handleDurationChange} />
                     {duration.description}
                 </label>
@@ -153,7 +153,7 @@ export default class extends React.Component {
         let period = this.state.period;
         let isValid = periodUtils.validatePeriod(period);
 
-        let elementName = 'period-' + (period.get('per_id') ? period.get('per_id') : this.props.index);
+        let elementName = `period-${period.get('per_id') ? period.get('per_id') : this.props.index}`;
 
         let cfg = period.getIn(['type', 'pty_config', 'types']) || Immutable.Map();
 
@@ -161,12 +161,12 @@ export default class extends React.Component {
 
         let periodElements = [];
         let elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
-        let comment = { name: elementName + '[per_comment]', className: 'controls col-xs-12 col-lg-8' };
+        let comment = { name: `${elementName}[per_comment]`, className: 'controls col-xs-12 col-lg-8' };
         if (period.get('duration') == periodUtils.PERIOD) {
             periodElements = [{
                 id: 'per_start',
                 label: 'Startzeit',
-                name: elementName + '[per_start]',
+                name: `${elementName}[per_start]`,
                 className: elementCss,
                 placeholder: 'hh:mm',
                 value: period.get('per_start'),
@@ -175,7 +175,7 @@ export default class extends React.Component {
             }, {
                 id: 'per_stop',
                 label: 'Endzeit',
-                name: elementName + '[per_stop]',
+                name: `${elementName}[per_stop]`,
                 className: elementCss,
                 placeholder: 'hh:mm',
                 value: period.get('per_stop'),
@@ -184,7 +184,7 @@ export default class extends React.Component {
             }, {
                 id: 'per_break',
                 label: 'Pause',
-                name: elementName + '[per_break]',
+                name: `${elementName}[per_break]`,
                 className: elementCss,
                 placeholder: 'hh:mm',
                 value: period.get('per_break'),
@@ -202,7 +202,7 @@ export default class extends React.Component {
                 <div className="pull-right"><a onClick={this.props.onRemove}><i className="fa fa-trash text-danger" /></a></div>
                 <div className="row">
                     <label className="col-xs-12 col-sm-3 col-lg-2">
-                        <select className="col-xs-12 form-control" name={elementName + '[pty_id]'} value={period.getIn(['type', 'pty_id'])} onChange={this.handleTypeChange}
+                        <select className="col-xs-12 form-control" name={`${elementName}[pty_id]`} value={period.getIn(['type', 'pty_id'])} onChange={this.handleTypeChange}
                                 ref="selectType">
                             {this.props.types.toList().map(this.renderSelectOption)}
                         </select>

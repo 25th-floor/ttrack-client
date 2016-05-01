@@ -10,7 +10,7 @@ require('moment-duration-format');
 const util = require('./../common/util');
 const db = require('../server/db');
 
-const dbconfigfile = require(__dirname + '/../../database.json');
+const dbconfigfile = require(`${__dirname}/../../database.json`);
 const dbconfig = dbconfigfile.dev;
 
 nomnom.command('import')
@@ -78,7 +78,7 @@ function parseCsv(filename, opts) {
 }
 
 function readConfig(file) {
-    return require(__dirname + '/../../' + file);
+    return require(`${__dirname}/../../${file}`);
 }
 
 function getUser(client, userId) {
@@ -173,8 +173,8 @@ function transformData(data, user, existingDays) {
         return isValidPeriod(period)
             && !_.contains(existing, period.day.valueOf());
     });
-    console.log(rows.length + ' rows');
-    console.log(rows.length - filtered.length + ' left out (like duplicates, weekends etc...)');
+    console.log(`${rows.length} rows`);
+    console.log(`${rows.length - filtered.length} left out (like duplicates, weekends etc...)`);
 
     if (rows.length && !filtered.length) {
         console.log('bugger that!');
@@ -237,7 +237,7 @@ function insertPeriod(client, types, user, period) {
         }
         const typeId = types[period.type];
         if (!typeId) {
-            throw new Error('period type unknown: ' + JSON.stringify(period));
+            throw new Error(`period type unknown: ${JSON.stringify(period)}`);
         }
         const insertPeriod = db.periods.insert(
             db.periods.per_start.value(period.start),

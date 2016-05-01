@@ -7,8 +7,8 @@ const raven = require('raven');
 
 const app = express();
 
-const config = require(__dirname + '/../../config.json');
-const dbconfigfile = require(__dirname + '/../../database.json');
+const config = require(`${__dirname}/../../config.json`);
+const dbconfigfile = require(`${__dirname}/../../database.json`);
 const dbconfig = dbconfigfile.dev;
 
 // use NODE_ENV for defining which asset urls to use
@@ -22,7 +22,7 @@ console.log('nodeENV', process.env.NODE_ENV);
 
 let buildInfo = {};
 try {
-    const fileName = __dirname + '/../../buildinfo.json';
+    const fileName = `${__dirname}/../../buildinfo.json`;
     if (require.resolve(fileName)) {
         buildInfo = require(fileName);
     }
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production' && config.sentry_client) {
 
 app.engine('html', cons.mustache);
 app.set('view engine', 'html');
-app.set('views', __dirname + '/../../views');
+app.set('views', `${__dirname}/../../views`);
 app.set('sentry_client', sentry_client);
 
 app.set('pg', function (fn) {
@@ -59,7 +59,7 @@ app.set('pg', function (fn) {
 
 app.use('/api', resources.api);
 
-app.use(express.static(__dirname + '/../../public'));
+app.use(express.static(`${__dirname}/../../public`));
 
 app.all(/.*/, function (req, res) {
     res.render('index', { css: assetsCSS, js: assetsJS, build: JSON.stringify(buildInfo) }, function (err, html) {
@@ -73,7 +73,7 @@ app.all(/.*/, function (req, res) {
 const port = (config.webserver || {}).port || process.env.PORT || 8080;
 app.listen(port);
 
-console.log('listening on port ' + port + '...');
+console.log(`listening on port ${port}...`);
 
 process.on('SIGINT', function () {
     process.exit();

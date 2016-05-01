@@ -153,7 +153,7 @@ export function roundTime(duration, round) {
 
 export function formatDurationHoursToLocale(time, fractions) {
     fractions = fractions || 2;
-    return time.asHours().toLocaleString('de-DE', { minimumFractionDigits: fractions }) + 'h';
+    return `${time.asHours().toLocaleString('de-DE', { minimumFractionDigits: fractions })}h`;
 }
 
 /**
@@ -219,9 +219,9 @@ export function weekNr(date) {
     let weekNr = date.isoWeek();
     let weekYear = date.isoWeekYear();
     if (weekNr < 10) {
-        weekNr = '0' + weekNr;
+        weekNr = `0${weekNr}`;
     }
-    return weekYear + '-' + weekNr;
+    return `${weekYear}-${weekNr}`;
 }
 
 export function sumDuration(xs) {

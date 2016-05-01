@@ -35,8 +35,8 @@ export default class extends React.Component {
     render() {
         const users = this.props.users.sortBy(user => user.get('usr_lastname'));
         return (
-            <div className={'container ' + styles.userSelection}>
-                <ul className={styles.userlist + ' row'}>
+            <div className={`container ${styles.userSelection}`}>
+                <ul className={`${styles.userlist} row`}>
                 {users.map(this.renderUserItem)}
                 </ul>
                 <div className="clear"></div>

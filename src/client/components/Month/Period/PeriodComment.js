@@ -32,7 +32,7 @@ export default class extends React.Component {
             color: period.getIn(['type', 'pty_config', 'color']),
         };
 
-        let iconClassName = 'fa fa-fw ' + icon;
+        let iconClassName = `fa fa-fw ${icon}`;
 
         return (
             <span className={styles.periodComment}>
@@ -41,7 +41,7 @@ export default class extends React.Component {
                       title={name}>
                     <i className={iconClassName}></i>
                 </span>
-                <span className={styles.comment + ' hidden-xs'}>{comment}</span>
+                <span className={`${styles.comment} hidden-xs`}>{comment}</span>
             </span>
         );
     }

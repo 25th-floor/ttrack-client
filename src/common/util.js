@@ -42,21 +42,21 @@ function getHolidaysForDateRange(dateRange) {
 
 function getHolidaysForYear(year) {
     const holidays = {};
-    holidays[year + '-01-01'] = 'Neujahr';
-    holidays[year + '-01-06'] = 'Hl. Drei Könige';
+    holidays[`${year}-01-01`] = 'Neujahr';
+    holidays[`${year}-01-06`] = 'Hl. Drei Könige';
     holidays[calculateEasterSondayPlusXDate(year, 1)] = 'Ostermontag';
-    holidays[year + '-05-01'] = 'Staatsfeiertag';
+    holidays[`${year}-05-01`] = 'Staatsfeiertag';
     holidays[calculateEasterSondayPlusXDate(year, 39)] = 'Christi Himmelfahrt';
     holidays[calculateEasterSondayPlusXDate(year, 50)] = 'Pfingstmontag';
     holidays[calculateEasterSondayPlusXDate(year, 60)] = 'Fronleichnam';
-    holidays[year + '-08-15'] = 'Mariä Himmelfahrt';
-    holidays[year + '-10-26'] = 'Nationalfeiertag';
-    holidays[year + '-11-01'] = 'Allerheiligen';
-    holidays[year + '-12-08'] = 'Mariä Empfängnis';
-    holidays[year + '-12-24'] = 'Heiliger Abend';
-    holidays[year + '-12-25'] = 'Christtag';
-    holidays[year + '-12-26'] = 'Stefanitag';
-    holidays[year + '-12-31'] = 'Silvester';
+    holidays[`${year}-08-15`] = 'Mariä Himmelfahrt';
+    holidays[`${year}-10-26`] = 'Nationalfeiertag';
+    holidays[`${year}-11-01`] = 'Allerheiligen';
+    holidays[`${year}-12-08`] = 'Mariä Empfängnis';
+    holidays[`${year}-12-24`] = 'Heiliger Abend';
+    holidays[`${year}-12-25`] = 'Christtag';
+    holidays[`${year}-12-26`] = 'Stefanitag';
+    holidays[`${year}-12-31`] = 'Silvester';
     return holidays;
 }
 
@@ -107,11 +107,11 @@ function calculateEasterSondayPlusXDate(year, addDays) {
         if (month > 12) month = 1;
     }
 
-    return year + '-' + padout(month) + '-' + padout(day);
+    return `${year}-${padout(month)}-${padout(day)}`;
 }
 
 function padout(number) {
-    return (number < 10) ? '0' + number : number;
+    return (number < 10) ? `0${number}` : number;
 }
 
 // use timeUtils:getDayDuration DUPLICATES!!

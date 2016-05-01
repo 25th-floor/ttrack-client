@@ -124,10 +124,10 @@ export default class extends React.Component {
                     { isOverlapping ? <div className="alert alert-warning">Der Zeitraum überschneidet sich mit anderen Einträgen an diesem Tag!</div> : ''}
 
                     <div className={styles.row}>
-                        <button className={styles.btn + ' btn btn-primary pull-right'} disabled={disableSaveButton} onClick={this.onSave}>Speichern</button>
-                        <button className={styles.btn + ' btn btn-default pull-right'} onClick={this.onCancel}>Abbrechen</button>
+                        <button className={`${styles.btn} btn btn-primary pull-right`} disabled={disableSaveButton} onClick={this.onSave}>Speichern</button>
+                        <button className={`${styles.btn} btn btn-default pull-right`} onClick={this.onCancel}>Abbrechen</button>
 
-                        <button className={styles.btn + ' btn btn-success'} onClick={this.onAddPeriod}><i className="fa fa-fw fa-plus" /> Eintrag hinzufügen</button>
+                        <button className={`${styles.btn} btn btn-success`} onClick={this.onAddPeriod}><i className="fa fa-fw fa-plus" /> Eintrag hinzufügen</button>
                     </div>
                 </form>
             </div>

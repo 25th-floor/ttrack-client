@@ -17,7 +17,7 @@ export default class extends React.Component {
     render() {
         return (
             <div className={styles.dateSelection}>
-                <div className={'row ' + styles.touchVersion}>
+                <div className={`row ${styles.touchVersion}`}>
                     <YearSelection activeMonth={this.props.activeMonth}
                                    years={this.props.years}
                                    onChangeDate={this.props.onChangeDate} />

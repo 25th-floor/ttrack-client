@@ -102,7 +102,7 @@ export default class extends React.Component {
                     Tag {fullDate}
                 </legend>
 
-                <i className={'fa fa-pencil ' + styles.editIcon} />
+                <i className={`fa fa-pencil ${styles.editIcon}`} />
 
                 <dl>
                     <dt>Datum</dt>

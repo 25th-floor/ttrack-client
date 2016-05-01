@@ -63,7 +63,7 @@ export default class extends React.Component {
         }
 
         return (
-            <li className={styles.today + ' col-sm-1 ' + styles['tt-button-today']}>
+            <li className={`${styles.today} col-sm-1 ${styles['tt-button-today']}`}>
                 <a onClick={this.handleToday}> Today </a>
             </li>
         );
