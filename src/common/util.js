@@ -8,7 +8,8 @@ const moment = require('moment');
  */
 function calculateFirstLastDayOfMonth(date) {
     var date = new Date(date);
-    const year = date.getFullYear(), month = date.getMonth();
+    const year = date.getFullYear();
+    const month = date.getMonth();
     const firstDay = moment(new Date(year, month, 1));
     firstDay.subtract(parseInt(firstDay.format('E')) - 1, 'day');
 
