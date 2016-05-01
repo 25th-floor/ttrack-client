@@ -1,8 +1,8 @@
 jest.dontMock('../../timeUtils.js');
 
 describe('timeUtils.isValidTimeString', function() {
-    var timeUtils;
-    var strict;
+    let timeUtils;
+    let strict;
 
     beforeEach(function() {
         timeUtils = require('../../timeUtils.js');

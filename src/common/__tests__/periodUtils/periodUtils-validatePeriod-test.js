@@ -5,7 +5,7 @@ import Immutable from 'immutable';
 require('jasmine-check').install();
 
 describe('periodUtils', function() {
-    var periodUtils;
+    let periodUtils;
 
     beforeEach(function() {
         periodUtils = require('../../periodUtils.js');

@@ -69,14 +69,14 @@ export default React.createClass({
         let cfg = type.get('pty_config').get('types').toJS();
         let defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
 
-        var period = this.state.period.merge({
+        const period = this.state.period.merge({
             type: type,
             duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration
         });
         this.updateState(period);
     },
     handleDurationChange: function (event) {
-        var period = this.state.period.merge({
+        let period = this.state.period.merge({
             duration: event.target.value
         });
 
@@ -94,12 +94,12 @@ export default React.createClass({
     handleTimeChange: function (name, duration) {
         let value = {};
         value[name] = duration;
-        var period = this.state.period.merge(value);
+        const period = this.state.period.merge(value);
 
         this.updateState(period);
     },
     handleComment: function (event) {
-        var period = this.state.period.merge({
+        const period = this.state.period.merge({
             'per_comment': event.target.value
         });
         this.updateState(period);

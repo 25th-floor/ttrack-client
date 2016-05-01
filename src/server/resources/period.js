@@ -3,8 +3,8 @@ let Q = require('q');
 let dba = require('../db');
 let util = require('../../common/util');
 let moment = require('moment');
-var _ = require('lodash');
-var User = require('./user');
+const _ = require('lodash');
+const User = require('./user');
 
 /**
  * fetch day id for the specified date and user, creating the day if necessary
@@ -24,7 +24,7 @@ function fetchDayIdForUser(db, date, user) {
                 // todo use timehseets getTargetTime
                 let day = util.getDayDuration(moment.duration(user.usr_target_time));
 
-                var defaultWeekdayWorktime = {
+                const defaultWeekdayWorktime = {
                     hours: day.hours(),
                     minutes: day.minutes()
                 };
@@ -40,12 +40,12 @@ function fetchDayIdForUser(db, date, user) {
 }
 
 function createDayIdForUser(db, date, interval, userId) {
-    var hours = parseInt(interval.hours) || 0;
-    var minutes = parseInt(interval.minutes) || 0;
+    const hours = parseInt(interval.hours) || 0;
+    const minutes = parseInt(interval.minutes) || 0;
 
     // ugly hack because stupid query builder is buggy when converting interval object to database interval string himself,
     // and turns {hours: 7, minutes: 42} into interval '7 minutes, 42 seconds' ...
-    var queryString = "INSERT INTO days (day_date, day_usr_id, day_target_time) VALUES ($1, $2, interval '$3 hours, $4 minutes') RETURNING day_id";
+    let queryString = "INSERT INTO days (day_date, day_usr_id, day_target_time) VALUES ($1, $2, interval '$3 hours, $4 minutes') RETURNING day_id";
     queryString = queryString.replace('$3', hours);
     queryString = queryString.replace('$4', minutes);
 
@@ -58,7 +58,7 @@ function createDayIdForUser(db, date, interval, userId) {
 
 function fetchPeriodTypes(db) {
     return dba.query(db, 'SElECT * FROM period_types').then(function (result) {
-        var map = {};
+        const map = {};
         result.rows.forEach(function (row) {
             map[row.pty_name] = row.pty_id;
         });
@@ -151,7 +151,7 @@ module.exports = {
     },
     delete: function (pg, dataId, userId, cb) {
         pg(function (db) {
-            var query = 'DELETE FROM periods WHERE per_id = (SELECT per_id FROM periods INNER JOIN days ON (day_id = per_day_id) WHERE per_id = $1 AND day_usr_id = $2)';
+            const query = 'DELETE FROM periods WHERE per_id = (SELECT per_id FROM periods INNER JOIN days ON (day_id = per_day_id) WHERE per_id = $1 AND day_usr_id = $2)';
             db.query(query, [dataId, userId], function (err, result) {
                 if (err) {
                     return console.error('error running select query', err);

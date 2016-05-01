@@ -30,7 +30,7 @@ export default React.createClass({
         };
     },
     onAddPeriod: function () {
-        var maxId = this.state.periods.reduce(function (maxId, fi) {
+        const maxId = this.state.periods.reduce(function (maxId, fi) {
             return Math.max(maxId, fi.get('id'));
         }, 0);
         this.setState({

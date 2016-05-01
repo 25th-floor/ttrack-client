@@ -8,7 +8,7 @@ import { durationOfWork, durationOfBreak, weekNr, sumDuration } from '../common/
 function processDay(day) {
     let date = moment(day.get('day_date'));
     let today = moment();
-    var remaining = moment.duration(day.get('remaining').toJS());
+    const remaining = moment.duration(day.get('remaining').toJS());
     return day.merge({
         weekNr: weekNr(date),
         date: date,

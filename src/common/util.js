@@ -1,5 +1,5 @@
 'use strict';
-var moment = require('moment');
+const moment = require('moment');
 
 /**
  * returns the first and last day of a given date
@@ -9,26 +9,26 @@ var moment = require('moment');
  */
 function calculateFirstLastDayOfMonth(date) {
     var date = new Date(date);
-    var year = date.getFullYear(), month = date.getMonth();
-    var firstDay = moment(new Date(year, month, 1));
+    const year = date.getFullYear(), month = date.getMonth();
+    const firstDay = moment(new Date(year, month, 1));
     firstDay.subtract(parseInt(firstDay.format('E')) - 1, 'day');
 
-    var lastDay = moment(new Date(year, month + 1, 0));
+    const lastDay = moment(new Date(year, month + 1, 0));
     lastDay.add(7 - parseInt(lastDay.format('E')), 'day');
 
     return { 'start': firstDay.toDate(), 'end': lastDay.toDate() };
 }
 
 function getHolidaysForDateRange(dateRange) {
-    var holidays = {};
-    var start = moment(dateRange.start);
-    var end = moment(dateRange.end);
+    const holidays = {};
+    const start = moment(dateRange.start);
+    const end = moment(dateRange.end);
     do {
-        var yearHolidays = getHolidaysForYear(start.year());
+        const yearHolidays = getHolidaysForYear(start.year());
 
-        for (var date in yearHolidays) {
-            var holidayDate = moment(date, 'YYYY-MM-DD');
-            var holiday = yearHolidays[date];
+        for (let date in yearHolidays) {
+            const holidayDate = moment(date, 'YYYY-MM-DD');
+            const holiday = yearHolidays[date];
             if (holidayDate.isBefore(start)) continue;
             if (holidayDate.isAfter(end)) continue;
             holidays[date] = holiday;
@@ -41,7 +41,7 @@ function getHolidaysForDateRange(dateRange) {
 }
 
 function getHolidaysForYear(year) {
-    var holidays = {};
+    const holidays = {};
     holidays[year + '-01-01'] = 'Neujahr';
     holidays[year + '-01-06'] = 'Hl. Drei Könige';
     holidays[calculateEasterSondayPlusXDate(year, 1)] = 'Ostermontag';
@@ -80,26 +80,26 @@ function getHolidaysForYear(year) {
 function calculateEasterSondayPlusXDate(year, addDays) {
     addDays = addDays || 0;
 
-    var a = year % 19;
-    var b = year % 4;
-    var c = year % 7;
-    var k = Math.floor(year / 100);
+    const a = year % 19;
+    const b = year % 4;
+    const c = year % 7;
+    const k = Math.floor(year / 100);
 
-    var p = Math.floor((8 * k + 13) / 25);
-    var q = Math.floor(k / 4);
-    var M = (15 + k - p - q) % 30;
-    var d = (19 * a + M) % 30;
-    var N = (4 + k - q) % 7;
-    var e = (2 * b + 4 * c + 6 * d + N) % 7;
+    const p = Math.floor((8 * k + 13) / 25);
+    const q = Math.floor(k / 4);
+    const M = (15 + k - p - q) % 30;
+    const d = (19 * a + M) % 30;
+    const N = (4 + k - q) % 7;
+    const e = (2 * b + 4 * c + 6 * d + N) % 7;
 
-    var month = 3;
-    var day = 22 + d + e;
+    let month = 3;
+    let day = 22 + d + e;
 
     // add Days for "x days after Easter"-Holidays
     day += addDays;
 
     // Theoretical TODO: Fix for 29-day Februaries (not really needed for current holiday calculations)
-    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
     while (day > daysInMonth[month - 1]) {
         day -= daysInMonth[month - 1];
@@ -116,11 +116,11 @@ function padout(number) {
 
 // use timeUtils:getDayDuration DUPLICATES!!
 function getDayDuration(duration) {
-    var week = duration.asMinutes();
+    const week = duration.asMinutes();
     return moment.duration(Math.round(week / 5), 'minutes');
 }
 function getHalfDayDuration(duration) {
-    var week = duration.asMinutes();
+    const week = duration.asMinutes();
     return moment.duration(Math.round(week / 10), 'minutes');
 }
 

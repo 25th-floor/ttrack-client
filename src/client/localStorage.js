@@ -3,7 +3,7 @@
 // local storage wrapper working with JSON
 export default {
     getItem: function (key, defaultValue) {
-        var dataStr = localStorage.getItem(key);
+        const dataStr = localStorage.getItem(key);
         if (dataStr) {
             return JSON.parse(dataStr);
         }

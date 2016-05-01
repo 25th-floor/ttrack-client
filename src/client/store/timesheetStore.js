@@ -47,7 +47,7 @@ function fixDurations(period) {
         period = period.delete('per_duration');
     }
 
-    var durations = ['per_start', 'per_stop', 'per_duration', 'per_break'];
+    const durations = ['per_start', 'per_stop', 'per_duration', 'per_break'];
     return period.map((val, key) => _.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val);
 }
 

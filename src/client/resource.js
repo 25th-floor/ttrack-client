@@ -1,13 +1,13 @@
 'use strict';
 
-var _ = require('lodash');
-var rest = require('rest');
-var mime = require('rest/interceptor/mime');
-var mimeReg = require('rest/mime/registry');
-var errorCode = require('rest/interceptor/errorCode');
-var Immutable = require('immutable');
+const _ = require('lodash');
+const rest = require('rest');
+const mime = require('rest/interceptor/mime');
+const mimeReg = require('rest/mime/registry');
+const errorCode = require('rest/interceptor/errorCode');
+const Immutable = require('immutable');
 
-var myro = require('myro');
+const myro = require('myro');
 
 mimeReg.register('application/json', {
     read: function (str, opts) {
@@ -18,7 +18,7 @@ mimeReg.register('application/json', {
     }
 });
 
-var client = rest.wrap(mime).wrap(errorCode);
+const client = rest.wrap(mime).wrap(errorCode);
 
 function fetch(uri) {
     return client(uri).then(res => res.entity);
@@ -45,8 +45,8 @@ function save(method, uri, obj) {
 }
 
 function collection(uri) {
-    var route = myro({ [uri]: 'uri' });
-    var _data = Immutable.List();
+    const route = myro({ [uri]: 'uri' });
+    let _data = Immutable.List();
     let req = null;
     return {
         load: function () {
@@ -69,8 +69,8 @@ function collection(uri) {
 }
 
 function single(uri) {
-    var route = myro({ [uri]: 'uri' });
-    var _data = Immutable.Map();
+    const route = myro({ [uri]: 'uri' });
+    let _data = Immutable.Map();
     let req = null;
     return {
         load: function (params) {

@@ -91,8 +91,8 @@ export function isOverlapping(periods) {
     periods = periods.toList();
 
     return !periods.every((period, index) => {
-        var startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
-        var stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
+        const startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
+        const stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
 
         // if no startTime then there is nothing to do
         if (startTime == null) return true;
@@ -101,8 +101,8 @@ export function isOverlapping(periods) {
             // don't check myself
             if (i == index) return true;
 
-            var pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
-            var pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
+            const pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
+            const pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
 
             // if no startTime then there is nothing to do
             if (pStartTime == null) return true;
@@ -131,11 +131,11 @@ export function getAllErrors(period) {
     if (period.get('duration') === FULLDAY) return [];
     if (period.get('duration') === HALFDAY) return [];
 
-    var startTime = period.get('per_start');
-    var endTime = period.get('per_stop');
-    var breakTime = period.get('per_break') || false;
+    let startTime = period.get('per_start');
+    let endTime = period.get('per_stop');
+    const breakTime = period.get('per_break') || false;
 
-    var errors = [];
+    const errors = [];
 
     if (!startTime) {
         errors.push('Die Startzeit muss angegeben werden!');
@@ -163,12 +163,12 @@ export function validatePeriod(period) {
     if (period.get('duration') === HALFDAY) return true;
 
     // if there is no duration needed, don't ask for one (comment type for example)
-    var typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
+    const typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
     if (period.get('duration') === NONE && !typeConfig.every((t) => t)) return true;
 
-    var startTime = period.get('per_start');
-    var endTime = period.get('per_stop');
-    var breakTime = period.get('per_break') || false;
+    let startTime = period.get('per_start');
+    let endTime = period.get('per_stop');
+    const breakTime = period.get('per_break') || false;
 
     if (!startTime) return false;
 

@@ -34,7 +34,7 @@ export function isValidTimeString(time, strict = true) {
 export function getValidMoment(time) {
     if (!isValidTimeString(time)) return null;
 
-    var validTime = null;
+    let validTime = null;
 
     if (time.indexOf('.') > -1) {
         validTime = moment.duration(time * 60, 'minutes');
@@ -103,8 +103,8 @@ export function isDateInEmploymentInterval(date, user) {
  * @returns {boolean}
  */
 export function getNearestDateWithinEmployment(date, user) {
-    var startDate = user.get('usr_employment_start');
-    var endDate = user.get('usr_employment_stop');
+    let startDate = user.get('usr_employment_start');
+    let endDate = user.get('usr_employment_stop');
 
     // give one month more time before and after
 
@@ -118,8 +118,8 @@ export function getNearestDateWithinEmployment(date, user) {
         if (date.isAfter(endDate)) return endDate;
     } else {
         // check if we want more than a year into the future and stop it
-        var today = getMomentToday();
-        var future = today.clone().endOf('year').add(1, 'year');
+        const today = getMomentToday();
+        const future = today.clone().endOf('year').add(1, 'year');
         if (date.isAfter(future)) return today;
     }
 
@@ -139,7 +139,7 @@ export function getMomentToday() {
  * @returns moment.duration
  */
 export function roundTime(duration, round) {
-    var absRound = Math.abs(round);
+    const absRound = Math.abs(round);
 
     // no need to round
     if (duration.asMinutes() % absRound == 0) return duration;
@@ -173,8 +173,8 @@ function parseHumanDurationString(str) {
     if (_.contains(str, ':')) {
         return moment.duration(str);
     } else {
-        var matches = str.match(/(\d*\.)?\d+\s*(h(ours?)?|m(ins?)?)|minutes/gi);
-        var units = {
+        const matches = str.match(/(\d*\.)?\d+\s*(h(ours?)?|m(ins?)?)|minutes/gi);
+        const units = {
             h: 'hours',
             hour: 'hours',
             hours: 'hours',
@@ -184,7 +184,7 @@ function parseHumanDurationString(str) {
             minutes: 'minutes'
         };
         return matches.reduce(function (total, s) {
-            var duration = _.zipObject(['amount', 'unit'], _.rest(s.match(/^(.*\d)\s*(.*)$/)));
+            const duration = _.zipObject(['amount', 'unit'], _.rest(s.match(/^(.*\d)\s*(.*)$/)));
             return total.add(+duration.amount, units[duration.unit.toLowerCase().trim()]);
         }, moment.duration());
     }
@@ -198,10 +198,10 @@ export function isWeekend(moment) {
 
 export function durationOfWork(period) {
 
-    var ret = moment.duration();
+    let ret = moment.duration();
     if (period.per_pty_id == 'Work') {
         var duration = moment.duration(period.per_duration);
-        var breakDuration = durationOfBreak(period);
+        const breakDuration = durationOfBreak(period);
 
         if (duration.as('ms') > breakDuration.as('ms')) {
             ret = duration.subtract(breakDuration);

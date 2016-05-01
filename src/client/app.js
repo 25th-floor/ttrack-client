@@ -24,7 +24,7 @@ import Login from './components/Login';
 import Month from './components/Month';
 
 // EXTERNAL DEPENDENCY, maybe there is another way?
-var buildInfo = BUILD_INFO;
+const buildInfo = BUILD_INFO;
 
 let motto = _.sample(mottos);
 let users = userStore(renderApp);
@@ -114,7 +114,7 @@ initApp();
 let today = moment().format('YYYY-MM-DD');
 // setInterval(renderApp, 5000); // just rerender every 5 seconds
 setInterval(function () {
-    var now = moment().format('YYYY-MM-DD');
+    const now = moment().format('YYYY-MM-DD');
     if (today == now) return;
     today = now;
 

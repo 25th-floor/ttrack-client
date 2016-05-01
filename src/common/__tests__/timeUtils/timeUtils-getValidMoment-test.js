@@ -1,11 +1,11 @@
 jest.dontMock('../../timeUtils.js');
 
-var moment = require('moment');
+const moment = require('moment');
 
 require('jasmine-check').install();
 
 describe('timeUtils.getValidMoment', function() {
-    var timeUtils;
+    let timeUtils;
 
     beforeEach(function() {
         timeUtils = require('../../timeUtils.js');

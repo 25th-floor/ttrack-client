@@ -3,7 +3,7 @@ module.exports = {
     {
         pg(function (db)
         {
-            var query = 'SELECT * FROM users WHERE usr_employment_start IS NULL OR usr_employment_end IS NULL';
+            const query = 'SELECT * FROM users WHERE usr_employment_start IS NULL OR usr_employment_end IS NULL';
             db.query(query, function (err, result)
             {
                 if (err) {
@@ -16,7 +16,7 @@ module.exports = {
     get: function (pg, userId, cb) {
         pg(function (db)
         {
-            var query = 'SELECT * FROM users WHERE usr_id = $1';
+            const query = 'SELECT * FROM users WHERE usr_id = $1';
             db.query(query, [userId], function (err, result)
             {
                 if (err) {
@@ -31,7 +31,7 @@ module.exports = {
     getTargetTime: function (pg, userId, date, cb) {
         pg(function (db)
         {
-            var query = 'SELECT * FROM user_get_target_time($1, $2::DATE)';
+            const query = 'SELECT * FROM user_get_target_time($1, $2::DATE)';
             db.query(query, [userId, date], function (err, result)
             {
                 if (err) {

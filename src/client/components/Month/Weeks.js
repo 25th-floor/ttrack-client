@@ -86,7 +86,7 @@ export default React.createClass({
         );
     },
     render: function () {
-        var weeks = this.props.weeks;
+        const weeks = this.props.weeks;
         return (
             <div className={styles.weeks}>
                 {weeks.toList().map(this.renderWeekItem)}

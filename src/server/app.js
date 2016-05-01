@@ -1,28 +1,28 @@
-var resources = require('./resources.js');
-var express = require('express');
-var cons = require('consolidate');
-var pg = require('pg');
-var fs = require('fs');
-var raven = require('raven');
+const resources = require('./resources.js');
+const express = require('express');
+const cons = require('consolidate');
+const pg = require('pg');
+const fs = require('fs');
+const raven = require('raven');
 
-var app = express();
+const app = express();
 
-var config = require(__dirname + '/../../config.json');
-var dbconfigfile = require(__dirname + '/../../database.json');
-var dbconfig = dbconfigfile.dev;
+const config = require(__dirname + '/../../config.json');
+const dbconfigfile = require(__dirname + '/../../database.json');
+const dbconfig = dbconfigfile.dev;
 
 // use NODE_ENV for defining which asset urls to use
-var assetsJS = 'http://localhost:3000/app.js';
-var assetsCSS = 'http://localhost:3000/app.css';
+let assetsJS = 'http://localhost:3000/app.js';
+let assetsCSS = 'http://localhost:3000/app.css';
 if (process.env.NODE_ENV == 'production') {
     assetsJS = '/app.js';
     assetsCSS = '/app.css';
 }
 console.log('nodeENV', process.env.NODE_ENV);
 
-var buildInfo = {};
+let buildInfo = {};
 try {
-    var fileName = __dirname + '/../../buildinfo.json';
+    const fileName = __dirname + '/../../buildinfo.json';
     if (require.resolve(fileName)) {
         buildInfo = require(fileName);
     }
@@ -31,7 +31,7 @@ catch (e) {
 }
 
 // raven configuration
-var sentry_client = undefined;
+let sentry_client = undefined;
 if (process.env.NODE_ENV === 'production' && config.sentry_client) {
     sentry_client = new raven.Client(config.sentry_client, {
         release: buildInfo.git || ''
@@ -67,7 +67,7 @@ app.all(/.*/, function (req, res) {
     });
 });
 
-var port = (config.webserver || {}).port || process.env.PORT || 8080;
+const port = (config.webserver || {}).port || process.env.PORT || 8080;
 app.listen(port);
 
 console.log('listening on port ' + port + '...');
