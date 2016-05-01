@@ -11,8 +11,9 @@ import styles from './less/PeriodComment.less';
 
 export default React.createClass({
     propTypes: {
-        period: React.PropTypes.instanceOf(Immutable.Map).isRequired
+        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
     },
+
     render() {
         let period = this.props.period;
         let isPeriodDuration = period.get('duration') == periodUtils.PERIOD;
@@ -28,7 +29,7 @@ export default React.createClass({
 
         let style = {
             backgroundColor: period.getIn(['type', 'pty_config', 'bgcolor']),
-            color: period.getIn(['type', 'pty_config', 'color'])
+            color: period.getIn(['type', 'pty_config', 'color']),
         };
 
         let iconClassName = 'fa fa-fw ' + icon;
@@ -43,7 +44,7 @@ export default React.createClass({
                 <span className={styles.comment + ' hidden-xs'}>{comment}</span>
             </span>
         );
-    }
+    },
 });
 
 

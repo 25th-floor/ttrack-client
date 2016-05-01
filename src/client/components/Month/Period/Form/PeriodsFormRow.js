@@ -27,23 +27,25 @@ export default React.createClass({
         dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
         index: React.PropTypes.number.isRequired,
         onRemove: React.PropTypes.func.isRequired,
-        onUpdate: React.PropTypes.func.isRequired
+        onUpdate: React.PropTypes.func.isRequired,
     },
+
     componentDidMount() {
         // focus on select on first creation
         ReactDOM.findDOMNode(this.refs.selectType).focus();
     },
+
     getInitialState() {
         let period = this.props.period;
         if (!period.get('type')) {
             period = period.merge({
-                type: findType(this.props.types, 'Work')
+                type: findType(this.props.types, 'Work'),
             });
         }
         // handle default duration to be the first duration found in the config
         if (!period.get('duration')) {
             period = period.merge({
-                duration: period.get('type').get('pty_config').get('types').keySeq().first()
+                duration: period.get('type').get('pty_config').get('types').keySeq().first(),
             });
             // add duration per_duration object if needed
             period = period.merge(this.addDurationTime(period));
@@ -51,17 +53,20 @@ export default React.createClass({
 
         return { period };
     },
+
     updateState(period) {
         // add duration per_duration object if needed
         period = period.merge(this.addDurationTime(period));
         this.props.onUpdate(period);
         this.setState({ period });
     },
+
     addDurationTime(period) {
         return period.merge({
-            per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime)
+            per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime),
         });
     },
+
     handleTypeChange(event) {
         let type = findType(this.props.types, event.target.value);
         let cfg = type.get('pty_config').get('types').toJS();
@@ -69,13 +74,14 @@ export default React.createClass({
 
         const period = this.state.period.merge({
             type,
-            duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration
+            duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration,
         });
         this.updateState(period);
     },
+
     handleDurationChange(event) {
         let period = this.state.period.merge({
-            duration: event.target.value
+            duration: event.target.value,
         });
 
         // if duration type is not period, remove it
@@ -83,12 +89,13 @@ export default React.createClass({
             period = period.merge({
                 per_start: null,
                 per_stop: null,
-                per_break: null
+                per_break: null,
             });
         }
 
         this.updateState(period);
     },
+
     handleTimeChange(name, duration) {
         let value = {};
         value[name] = duration;
@@ -96,17 +103,20 @@ export default React.createClass({
 
         this.updateState(period);
     },
+
     handleComment(event) {
         const period = this.state.period.merge({
-            per_comment: event.target.value
+            per_comment: event.target.value,
         });
         this.updateState(period);
     },
+
     renderSelectOption(type) {
         return (
             <option value={type.get('pty_id')} key={type.get('pty_id')}>{type.get('pty_name')}</option>
         );
     },
+
     renderDurationRadio(elementName, value, duration, index) {
         let id = elementName + '-' + duration.name;
 
@@ -120,6 +130,7 @@ export default React.createClass({
             </div>
         );
     },
+
     renderErrorMessages() {
         let period = this.state.period;
         let errors = periodUtils.getAllErrors(period);
@@ -130,6 +141,7 @@ export default React.createClass({
             </div>
         );
     },
+
     render() {
         let period = this.state.period;
         let isValid = periodUtils.validatePeriod(period);
@@ -144,38 +156,34 @@ export default React.createClass({
         let elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
         let comment = { name: elementName + '[per_comment]', className: 'controls col-xs-12 col-lg-8' };
         if (period.get('duration') == periodUtils.PERIOD) {
-            periodElements = [
-                {
-                    id: 'per_start',
-                    label: 'Startzeit',
-                    name: elementName + '[per_start]',
-                    className: elementCss,
-                    placeholder: 'hh:mm',
-                    value: period.get('per_start'),
-                    required: true,
-                    round: -15
-                },
-                {
-                    id: 'per_stop',
-                    label: 'Endzeit',
-                    name: elementName + '[per_stop]',
-                    className: elementCss,
-                    placeholder: 'hh:mm',
-                    value: period.get('per_stop'),
-                    required: false,
-                    round: +15
-                },
-                {
-                    id: 'per_break',
-                    label: 'Pause',
-                    name: elementName + '[per_break]',
-                    className: elementCss,
-                    placeholder: 'hh:mm',
-                    value: period.get('per_break'),
-                    required: false,
-                    round: +15
-                }
-            ];
+            periodElements = [{
+                id: 'per_start',
+                label: 'Startzeit',
+                name: elementName + '[per_start]',
+                className: elementCss,
+                placeholder: 'hh:mm',
+                value: period.get('per_start'),
+                required: true,
+                round: -15,
+            }, {
+                id: 'per_stop',
+                label: 'Endzeit',
+                name: elementName + '[per_stop]',
+                className: elementCss,
+                placeholder: 'hh:mm',
+                value: period.get('per_stop'),
+                required: false,
+                round: +15,
+            }, {
+                id: 'per_break',
+                label: 'Pause',
+                name: elementName + '[per_break]',
+                className: elementCss,
+                placeholder: 'hh:mm',
+                value: period.get('per_break'),
+                required: false,
+                round: +15,
+            }];
 
             comment.className += ' col-sm-6';
         }
@@ -212,7 +220,7 @@ export default React.createClass({
 
             </div>
         );
-    }
+    },
 });
 
 

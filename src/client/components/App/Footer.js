@@ -7,8 +7,9 @@ import styles from './less/Footer.less';
 export default React.createClass({
     propTypes: {
         motto: React.PropTypes.object,
-        build: React.PropTypes.object
+        build: React.PropTypes.object,
     },
+
     render() {
         let buildInfo = '';
         if (this.props.build && Object.keys(this.props.build).length > 0) {
@@ -35,5 +36,5 @@ export default React.createClass({
                 </div>
             </footer>
         );
-    }
+    },
 });

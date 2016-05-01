@@ -15,7 +15,7 @@ function processDay(day) {
         remainingUntilToday: date <= today ? remaining : moment.duration(),
         workDuration: sumDuration(day.get('periods').map(per => durationOfWork(per.toJS()))),
         breakDuration: sumDuration(day.get('periods').map(per => durationOfBreak(per.toJS()))),
-        isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(period => (!!period.get('per_start') == !!period.get('per_stop')))
+        isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(period => (!!period.get('per_start') == !!period.get('per_stop'))),
     });
 }
 
@@ -40,7 +40,7 @@ export function createWeeks(days, carryTime) {
                 targetDuration,
                 diff,
                 diffUntilToday,
-                carry: moment.duration(carry)
+                carry: moment.duration(carry),
             });
         });
 }

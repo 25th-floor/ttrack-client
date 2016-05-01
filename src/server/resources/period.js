@@ -26,7 +26,7 @@ function fetchDayIdForUser(db, date, user) {
 
                 const defaultWeekdayWorktime = {
                     hours: day.hours(),
-                    minutes: day.minutes()
+                    minutes: day.minutes(),
                 };
 
                 console.log('create new day', date);
@@ -79,7 +79,7 @@ function preparePeriodForApiResponse(periodData) {
             let duration = moment.duration(val);
             return {
                 hours: duration.get('hours') + duration.get('days') * 24,
-                minutes: duration.get('minutes')
+                minutes: duration.get('minutes'),
             };
         }
         return val;
@@ -92,7 +92,7 @@ module.exports = {
             User.get(pg, userId, function (user) {
                 Q.all([
                     fetchPeriodTypes(db),
-                    fetchDayIdForUser(db, data.date, user)
+                    fetchDayIdForUser(db, data.date, user),
                 ]).spread(function (types, dayId) {
                     // TODO: check if pty_id is valid type if defined
                     if (data.per_pty_id === undefined) {
@@ -120,6 +120,7 @@ module.exports = {
 
         });
     },
+
     put(pg, userId, data, cb) {
         pg(function (db) {
             Q.all([
@@ -149,6 +150,7 @@ module.exports = {
             }).done();
         });
     },
+
     delete(pg, dataId, userId, cb) {
         pg(function (db) {
             const query = 'DELETE FROM periods WHERE per_id = (SELECT per_id FROM periods INNER JOIN days ON (day_id = per_day_id) WHERE per_id = $1 AND day_usr_id = $2)';
@@ -161,5 +163,6 @@ module.exports = {
             });
         });
     },
-    preparePeriodForApiResponse
+
+    preparePeriodForApiResponse,
 };

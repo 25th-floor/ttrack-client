@@ -58,7 +58,7 @@ export function getValidMoment(time) {
 export function getDateObjectFromMomentDuration(duration) {
     return {
         hours: duration.get('hours') + duration.get('days') * 24,
-        minutes: duration.get('minutes')
+        minutes: duration.get('minutes'),
     };
 }
 
@@ -179,7 +179,7 @@ function parseHumanDurationString(str) {
             m: 'minutes',
             min: 'minutes',
             mins: 'minutes',
-            minutes: 'minutes'
+            minutes: 'minutes',
         };
         return matches.reduce(function (total, s) {
             const duration = _.zipObject(['amount', 'unit'], _.rest(s.match(/^(.*\d)\s*(.*)$/)));

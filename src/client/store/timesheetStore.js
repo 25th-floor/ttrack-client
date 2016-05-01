@@ -63,16 +63,20 @@ export default function (onChange) {
                 notify();
             });
         },
+
         getTypes() {
             return periodTypes.list();
         },
+
         getTimesheet() {
             return timesheet;
         },
+
         resetTimesheet() {
             timesheet = Immutable.Map();
             loadParams = null;
         },
+
         loadTimesheet(month, userId) {
             // console.log('loadTimesheet', month, userId);
             if (!initialized) throw new Error('cannot load unitialized');
@@ -94,7 +98,7 @@ export default function (onChange) {
             tsResource.load({
                 from: boundries.firstDay.format('YYYY-MM-DD'),
                 to: boundries.lastDay.format('YYYY-MM-DD'),
-                user: userId
+                user: userId,
             }).then(function () {
                 let data = tsResource.get().updateIn(['days'], assocPeriodsWithTypes.bind(null, periodTypes.list()));
                 timesheet = createWeeks(data.get('days'), moment.duration(data.get('carryTime').toJS()));
@@ -102,6 +106,7 @@ export default function (onChange) {
                 return timesheet;
             });
         },
+
         saveDay(userId, date, periods, removed) {
             let periodCollectionResource = resource.collection('/api/users/:userId/periods');
             let periodSingleResource = resource.single('/api/users/:userId/periods/:per_id');
@@ -120,7 +125,7 @@ export default function (onChange) {
                 period = period.merge({
                     date: date.format('YYYY-MM-DD'),
                     userId,
-                    per_pty_id: period.get('type').get('pty_id')
+                    per_pty_id: period.get('type').get('pty_id'),
                 });
                 period = fixDurations(period);
 
@@ -135,6 +140,6 @@ export default function (onChange) {
 
             return Promise.all(promises);
 
-        }
+        },
     };
 }

@@ -12,6 +12,7 @@ module.exports = {
             });
         });
     },
+
     get(pg, userId, cb) {
         pg(function (db)
         {
@@ -26,6 +27,7 @@ module.exports = {
         });
 
     },
+
     // get Users TargetTime for a specific date from the database
     getTargetTime(pg, userId, date, cb) {
         pg(function (db)
@@ -39,5 +41,5 @@ module.exports = {
                 cb(result.rows[0].user_get_target_time);
             });
         });
-    }
+    },
 };

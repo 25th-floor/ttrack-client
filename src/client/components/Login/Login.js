@@ -11,8 +11,9 @@ export default React.createClass({
         users: React.PropTypes.any.isRequired,
         motto: React.PropTypes.object.isRequired,
         onUserSelect: React.PropTypes.func.isRequired,
-        build: React.PropTypes.object
+        build: React.PropTypes.object,
     },
+
     render() {
         let motto = this.props.motto;
         return (
@@ -47,6 +48,6 @@ export default React.createClass({
             </div>
 
         );
-    }
+    },
 });
 

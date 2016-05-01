@@ -13,22 +13,26 @@ export default React.createClass({
     propTypes: {
         activeMonth: React.PropTypes.object.isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        onChangeDate: React.PropTypes.func.isRequired
+        onChangeDate: React.PropTypes.func.isRequired,
     },
+
     getInitialState() {
         let today = timeUtils.getMomentToday();
 
         return {
-            today
+            today,
         };
     },
+
     selectYear(year) {
         let date = this.props.activeMonth.clone().year(year.format('YYYY'));
         this.props.onChangeDate(date);
     },
+
     handleToday() {
         this.props.onChangeDate(this.state.today);
     },
+
     renderYearItem(year, index) {
         let format = 'YYYY';
 
@@ -48,6 +52,7 @@ export default React.createClass({
             </li>
         );
     },
+
     renderTodayButton() {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
             return;
@@ -59,6 +64,7 @@ export default React.createClass({
             </li>
         );
     },
+
     render() {
         let years = this.props.years;
 
@@ -72,7 +78,7 @@ export default React.createClass({
                 </ul>
             </div>
         );
-    }
+    },
 });
 
 

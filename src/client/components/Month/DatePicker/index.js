@@ -11,8 +11,9 @@ export default React.createClass({
         activeMonth: React.PropTypes.object.isRequired,
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        onChangeDate: React.PropTypes.func.isRequired
+        onChangeDate: React.PropTypes.func.isRequired,
     },
+
     render() {
         return (
             <div className={styles.dateSelection}>
@@ -27,7 +28,7 @@ export default React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 

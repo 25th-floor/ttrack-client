@@ -9,11 +9,13 @@ export default React.createClass({
     propTypes: {
         activeUser: React.PropTypes.object.isRequired,
         motto: React.PropTypes.object.isRequired,
-        onLogout: React.PropTypes.func.isRequired
+        onLogout: React.PropTypes.func.isRequired,
     },
+
     logoutUser() {
         this.props.onLogout();
     },
+
     render() {
         let motto = this.props.motto;
 
@@ -67,7 +69,7 @@ export default React.createClass({
             </nav>
 
         );
-    }
+    },
 });
 
 

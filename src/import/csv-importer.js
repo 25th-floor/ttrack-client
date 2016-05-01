@@ -14,21 +14,30 @@ const dbconfigfile = require(__dirname + '/../../database.json');
 const dbconfig = dbconfigfile.dev;
 
 nomnom.command('import')
-    .option('file', {
+    .option(
+    'file',
+    {
         abbr: 'f',
         help: 'csv file to import',
-        required: true
-    })
-    .option('config', {
+        required: true,
+    },
+)
+    .option(
+    'config',
+    {
         abbr: 'c',
         default: 'config.json',
-        help: 'configuration as json'
-    })
-    .option('user', {
+        help: 'configuration as json',
+    },
+)
+    .option(
+    'user',
+    {
         abbr: 'u',
         required: true,
-        help: 'The userid of the user to insert the data'
-    })
+        help: 'The userid of the user to insert the data',
+    },
+)
     .callback(importFile)
     .help('Import shit');
 
@@ -45,13 +54,13 @@ var csvColumns = [
     'weekSum',
     'weekDelta',
     '_',
-    'default'
+    'default',
 ];
 const csvCommentSpecials = {
     urlaub: 'Urlaub',
     krank: 'Krankenstand',
     pflege: 'Pflegeurlaub',
-    feiertag: 'Feiertag'
+    feiertag: 'Feiertag',
 };
 const defaultPeriodType = 'Arbeitszeit';
 
@@ -135,11 +144,14 @@ function processCsvRow(row, day) {
         ? { start: row.start, stop: row.stop, break: row.break || '00:00' }
         : { duration: day };
 
-    return _.assign(data, {
-        day: moment(row.date.substring(0, 10), 'DD.MM.YYYY'),
-        comment: row.comment,
-        type
-    });
+    return _.assign(
+        data,
+        {
+            day: moment(row.date.substring(0, 10), 'DD.MM.YYYY'),
+            comment: row.comment,
+            type,
+        },
+    );
 }
 
 function isValidPeriod(period) {
@@ -210,7 +222,7 @@ function insertPeriod(client, types, user, period) {
     if (moment(period.day) && moment(period.day).isoWeekday() < 6) {
         target_time = {
             hours: day.hours(),
-            minutes: day.minutes()
+            minutes: day.minutes(),
         };
     } else {
         target_time = { hours: 0 };

@@ -7,14 +7,18 @@ const Immutable = require('immutable');
 
 const myro = require('myro');
 
-mimeReg.register('application/json', {
-    read(str, opts) {
-        return Immutable.fromJS(JSON.parse(str));
+mimeReg.register(
+    'application/json',
+    {
+        read(str, opts) {
+            return Immutable.fromJS(JSON.parse(str));
+        },
+
+        write(obj, opts) {
+            return JSON.stringify(obj.toJS());
+        },
     },
-    write(obj, opts) {
-        return JSON.stringify(obj.toJS());
-    }
-});
+);
 
 const client = rest.wrap(mime).wrap(errorCode);
 
@@ -55,14 +59,17 @@ function collection(uri) {
                 req = null;
             });
         },
+
         cancel() {
             if (req) cancelRequest(req);
             req = null;
         },
+
         save(obj) {
             return save('post', route.uri(obj.toJS()), obj);
         },
-        list: () => _data
+
+        list: () => _data,
     };
 }
 
@@ -79,21 +86,25 @@ function single(uri) {
                 req = null;
             });
         },
+
         cancel() {
             if (req) cancelRequest(req);
             req = null;
         },
+
         get: () => _data,
+
         save(obj) {
             return save('put', route.uri(obj.toJS()), obj);
         },
+
         remove(params) {
             return client({ method: 'delete', path: route.uri(params), headers: { 'Content-Type': 'application/json' } })
                 .then(function (response) {
                     console.log('delete response', response);
                     return response;
                 });
-        }
+        },
     };
 }
 

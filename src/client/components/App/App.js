@@ -11,8 +11,9 @@ export default React.createClass({
         motto: React.PropTypes.object.isRequired,
         logout: React.PropTypes.func.isRequired,
         user: React.PropTypes.object.isRequired,
-        build: React.PropTypes.object
+        build: React.PropTypes.object,
     },
+
     render() {
         return (
             <div className={styles['site-container']}>
@@ -25,6 +26,6 @@ export default React.createClass({
 
             </div>
         );
-    }
+    },
 });
 

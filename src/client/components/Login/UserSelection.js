@@ -6,11 +6,13 @@ import styles from './less/UserSelection.less';
 export default React.createClass({
     propTypes: {
         users: React.PropTypes.any.isRequired,
-        onSelect: React.PropTypes.func.isRequired
+        onSelect: React.PropTypes.func.isRequired,
     },
+
     changeUser(user) {
         this.props.onSelect(user);
     },
+
     renderUserItem(user, index) {
         let userId = user.get('usr_id');
         let imgSrc = `/images/users/${userId}.jpg`;
@@ -23,6 +25,7 @@ export default React.createClass({
             </li>
         );
     },
+
     render() {
         const users = this.props.users.sortBy(user => user.get('usr_lastname'));
         return (
@@ -33,7 +36,7 @@ export default React.createClass({
                 <div className="clear"></div>
             </div>
         );
-    }
+    },
 });
 
 

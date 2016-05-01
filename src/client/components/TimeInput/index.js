@@ -16,14 +16,16 @@ export default React.createClass({
         placeholder: React.PropTypes.string,
         required: React.PropTypes.bool,
         round: React.PropTypes.number,
-        onChange: React.PropTypes.func.isRequired
+        onChange: React.PropTypes.func.isRequired,
     },
+
     getInitialState() {
         // {hours: 2, minutes: 1}
         let duration = this.props.time ? moment.duration(this.props.time.toJS()).format('hh:mm', { trim:false }) : '';
 
         return { time: duration };
     },
+
     handleChange(event) {
         let duration = timeUtils.getValidMoment(event.target.value);
         if (duration != null) {
@@ -35,13 +37,17 @@ export default React.createClass({
 
         this.setState({ time : event.target.value });
     },
+
     render() {
         // time is a string
         let time = this.state.time;
 
-        let css = classSet(this.props.css || '', {
-            'has-error' : !timeUtils.isValidTimeString(time, this.props.required)
-        });
+        let css = classSet(
+            this.props.css || '',
+            {
+                'has-error' : !timeUtils.isValidTimeString(time, this.props.required),
+            },
+        );
 
         return (
             <div className={css}>
@@ -50,7 +56,7 @@ export default React.createClass({
                        name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange} />
             </div>
         );
-    }
+    },
 });
 
 

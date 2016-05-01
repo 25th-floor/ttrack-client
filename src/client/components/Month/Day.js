@@ -16,23 +16,28 @@ export default React.createClass({
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired
+        onSaveDay: React.PropTypes.func.isRequired,
     },
+
     getInitialState() {
         return { edit: false };
     },
+
     handleEditClick(event) {
         // don't let user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
     },
+
     handleCancel(event) {
         this.setState({ edit: false });
     },
+
     onSave(date, periods, removed) {
         this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
     },
+
     render() {
         let edit = this.state.edit;
 
@@ -114,7 +119,7 @@ export default React.createClass({
             </fieldset>
 
         );
-    }
+    },
 });
 
 

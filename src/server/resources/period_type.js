@@ -11,5 +11,5 @@ module.exports = {
                 cb(result.rows);
             }).done();
         });
-    }
+    },
 };

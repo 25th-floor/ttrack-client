@@ -17,21 +17,25 @@ export default function (onChange) {
                 notify();
             });
         },
+
         getUsers() {
             return users.list();
         },
+
         getActiveUser() {
             return activeUser;
         },
+
         login(user) {
             activeUser = user;
             localStorage.setItem(LS_USER, { activeUserId: user.get('usr_id') });
             notify();
         },
+
         logout() {
             activeUser = null;
             localStorage.setItem(LS_USER, {});
             notify();
-        }
+        },
     };
 }

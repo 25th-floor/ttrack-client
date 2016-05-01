@@ -16,7 +16,7 @@ export const FULLDAY = 'fullday';
 export const durationConfig = [
     { name: PERIOD, description: 'Zeitraum' },
     { name: FULLDAY, description: 'Ganzer Tag' },
-    { name: HALFDAY, description: 'Halber Tag' }
+    { name: HALFDAY, description: 'Halber Tag' },
 ];
 
 /**

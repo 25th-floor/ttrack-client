@@ -4,8 +4,9 @@ import styles from './less/ProfileWidget.less';
 
 export default React.createClass({
     propTypes: {
-        activeUser: React.PropTypes.object.isRequired
+        activeUser: React.PropTypes.object.isRequired,
     },
+
     render() {
         let activeUser = this.props.activeUser;
 
@@ -23,7 +24,7 @@ export default React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 

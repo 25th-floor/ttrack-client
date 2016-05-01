@@ -25,7 +25,7 @@ api.use(function (req, res, next) {
         url: req.originalUrl,
         method: req.method,
         params: req.params,
-        request: req
+        request: req,
     });
 
     next();

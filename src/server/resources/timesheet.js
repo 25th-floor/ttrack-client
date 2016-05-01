@@ -23,7 +23,7 @@ function getTargetTime(date, user) {
 
     const defaultWeekdayWorktime = {
         hours: day.hours(),
-        minutes: day.minutes()
+        minutes: day.minutes(),
     };
 
     if (parseInt(date.format('E')) < 6)
@@ -54,12 +54,14 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
                 return period.preparePeriodForApiResponse(periodData);
             }
 
-            return _.assign(day,
+            return _.assign(
+                day,
                 {
                     periods: _.filter(periods.map(transformPeriod), function (p) {
                         // filter empty periods
                         return p.per_id !== null;
                     }),
+
                     // calculate remaining target time after reducing holidays and all other non Work durations
                     // todo: maybe this should be done in the database
                     remaining: function () {
@@ -78,16 +80,16 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
 
                         return {
                             hours: duration.get('hours'),
-                            minutes: duration.get('minutes')
+                            minutes: duration.get('minutes'),
                         };
-                    }()
-                }
+                    }(),
+                },
             );
         });
         return {
             days: _.sortBy(_.values(data), function (day) {
                 return moment(day.day_date);
-            })
+            }),
         };
     });
 }
@@ -108,7 +110,7 @@ function calculateCarryData(client, user, until) {
         const carryData = {
             carryTime: { hours: 0, minutes: 0 },
             carryFrom: null,
-            carryTo: null
+            carryTo: null,
         };
 
         if (result.rowCount <= 0) {
@@ -181,7 +183,7 @@ function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPer
                     userId: user.usr_id,
                     per_duration: day.format('hh:mm'),
                     per_comment: comment,
-                    per_pty_id: holidayPeriodTypeId
+                    per_pty_id: holidayPeriodTypeId,
                 };
 
                 period.post(pg, newPeriod.userId, newPeriod, resolve);
@@ -235,5 +237,5 @@ module.exports = {
                 getTimesheetForTimeRange(pg, client, user, dateRange, cb);
             });
         });
-    }
+    },
 };

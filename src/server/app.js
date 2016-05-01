@@ -33,9 +33,12 @@ catch (e) {
 // raven configuration
 let sentry_client = undefined;
 if (process.env.NODE_ENV === 'production' && config.sentry_client) {
-    sentry_client = new raven.Client(config.sentry_client, {
-        release: buildInfo.git || ''
-    });
+    sentry_client = new raven.Client(
+        config.sentry_client,
+        {
+            release: buildInfo.git || '',
+        },
+    );
     sentry_client.patchGlobal();
 }
 

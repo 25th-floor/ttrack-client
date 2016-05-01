@@ -13,8 +13,9 @@ export default React.createClass({
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
         dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
         onCancel: React.PropTypes.func.isRequired,
-        onSave: React.PropTypes.func.isRequired
+        onSave: React.PropTypes.func.isRequired,
     },
+
     getInitialState() {
         // add at least one element if turning to edit mode
         let periods = this.props.periods.toList();
@@ -23,19 +24,24 @@ export default React.createClass({
         }
 
         return {
-            periods, // todo id setzen
-            removed: [] // todo immutable?
+            // todo id setzen
+            periods,
+
+            // todo immutable?
+            removed: [],
         };
     },
+
     onAddPeriod() {
         const maxId = this.state.periods.reduce(function (maxId, fi) {
             return Math.max(maxId, fi.get('id'));
         }, 0);
         this.setState({
             periods: this.state.periods.push(Immutable.Map({ id: maxId + 1 })),
-            removed: this.state.removed
+            removed: this.state.removed,
         });
     },
+
     onRemovePeriod(index) {
         let toBeRemoved = this.state.periods.get(index);
         let removed = this.state.removed;
@@ -46,18 +52,21 @@ export default React.createClass({
         var periods = this.state.periods.delete(index);
         this.setState({
             periods,
-            removed
+            removed,
         });
     },
+
     onUpdatePeriod(index, period) {
         this.setState({
             periods: this.state.periods.set(
                 index,
                 period
             ),
-            removed: this.state.removed
+
+            removed: this.state.removed,
         });
     },
+
     onSave(e) {
         e.preventDefault();
         if (this.isValid()) {
@@ -66,10 +75,12 @@ export default React.createClass({
             console.log('not valid');
         }
     },
+
     onCancel(event) {
         event.preventDefault();
         this.props.onCancel(event);
     },
+
     onKeyDown(event) {
         if (event.keyCode === 13) {
             this.onSave(event);
@@ -78,6 +89,7 @@ export default React.createClass({
             this.onCancel(event);
         }
     },
+
     isValid() {
         // no periods
         if (this.state.periods.size == 0 && this.state.removed.length == 0) return false;
@@ -85,6 +97,7 @@ export default React.createClass({
         if (!periodUtils.validatePeriods(this.state.periods)) return false;
         return true;
     },
+
     render() {
         let periods = this.state.periods;
         let disableSaveButton = !this.isValid();
@@ -112,7 +125,7 @@ export default React.createClass({
                 </form>
             </div>
         );
-    }
+    },
 });
 
 

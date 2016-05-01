@@ -14,8 +14,9 @@ export default React.createClass({
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired
+        onSaveDay: React.PropTypes.func.isRequired,
     },
+
     render() {
         return (
             <div id={styles.month}>
@@ -45,7 +46,7 @@ export default React.createClass({
                        user={this.props.user} onSaveDay={this.props.onSaveDay} />
             </div>
         );
-    }
+    },
 });
 
 
