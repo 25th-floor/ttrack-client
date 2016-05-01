@@ -29,11 +29,11 @@ export default React.createClass({
         onRemove: React.PropTypes.func.isRequired,
         onUpdate: React.PropTypes.func.isRequired
     },
-    componentDidMount: function () {
+    componentDidMount() {
         // focus on select on first creation
         ReactDOM.findDOMNode(this.refs.selectType).focus();
     },
-    getInitialState: function () {
+    getInitialState() {
         let period = this.props.period;
         if (!period.get('type')) {
             period = period.merge({
@@ -49,31 +49,31 @@ export default React.createClass({
             period = period.merge(this.addDurationTime(period));
         }
 
-        return { period: period };
+        return { period };
     },
-    updateState: function (period) {
+    updateState(period) {
         // add duration per_duration object if needed
         period = period.merge(this.addDurationTime(period));
         this.props.onUpdate(period);
-        this.setState({ period: period });
+        this.setState({ period });
     },
-    addDurationTime: function (period) {
+    addDurationTime(period) {
         return period.merge({
             per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime)
         });
     },
-    handleTypeChange: function (event) {
+    handleTypeChange(event) {
         let type = findType(this.props.types, event.target.value);
         let cfg = type.get('pty_config').get('types').toJS();
         let defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
 
         const period = this.state.period.merge({
-            type: type,
+            type,
             duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration
         });
         this.updateState(period);
     },
-    handleDurationChange: function (event) {
+    handleDurationChange(event) {
         let period = this.state.period.merge({
             duration: event.target.value
         });
@@ -89,25 +89,25 @@ export default React.createClass({
 
         this.updateState(period);
     },
-    handleTimeChange: function (name, duration) {
+    handleTimeChange(name, duration) {
         let value = {};
         value[name] = duration;
         const period = this.state.period.merge(value);
 
         this.updateState(period);
     },
-    handleComment: function (event) {
+    handleComment(event) {
         const period = this.state.period.merge({
             'per_comment': event.target.value
         });
         this.updateState(period);
     },
-    renderSelectOption: function (type) {
+    renderSelectOption(type) {
         return (
             <option value={type.get('pty_id')} key={type.get('pty_id')}>{type.get('pty_name')}</option>
         );
     },
-    renderDurationRadio: function (elementName, value, duration, index) {
+    renderDurationRadio(elementName, value, duration, index) {
         let id = elementName + '-' + duration.name;
 
         return (
@@ -120,7 +120,7 @@ export default React.createClass({
             </div>
         );
     },
-    renderErrorMessages: function () {
+    renderErrorMessages() {
         let period = this.state.period;
         let errors = periodUtils.getAllErrors(period);
 
@@ -130,7 +130,7 @@ export default React.createClass({
             </div>
         );
     },
-    render: function () {
+    render() {
         let period = this.state.period;
         let isValid = periodUtils.validatePeriod(period);
 

@@ -5,7 +5,7 @@ export default React.createClass({
         house: React.PropTypes.string.isRequired,
         motto: React.PropTypes.string.isRequired
     },
-    render: function () {
+    render() {
         return (
             <span title={this.props.house}>{this.props.motto}</span>
         );

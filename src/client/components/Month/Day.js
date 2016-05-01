@@ -18,22 +18,22 @@ export default React.createClass({
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    getInitialState: function () {
+    getInitialState() {
         return { edit: false };
     },
-    handleEditClick: function (event) {
+    handleEditClick(event) {
         // don't let user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
     },
-    handleCancel: function (event) {
+    handleCancel(event) {
         this.setState({ edit: false });
     },
-    onSave: function (date, periods, removed) {
+    onSave(date, periods, removed) {
         this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
     },
-    render: function () {
+    render() {
         let edit = this.state.edit;
 
         let day = this.props.day;

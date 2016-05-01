@@ -13,7 +13,7 @@ export default React.createClass({
         user: React.PropTypes.object.isRequired,
         build: React.PropTypes.object
     },
-    render: function () {
+    render() {
         return (
             <div className={styles['site-container']}>
                 <div className="container-fluid">

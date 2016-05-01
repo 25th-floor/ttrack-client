@@ -1,8 +1,7 @@
 const db = require('../db');
 
 module.exports = {
-    list: function (pg, cb)
-    {
+    list(pg, cb) {
         pg(function (client)
         {
             const query = db.periodTypes.select(db.periodTypes.star())

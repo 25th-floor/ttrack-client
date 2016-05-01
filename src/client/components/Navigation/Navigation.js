@@ -11,10 +11,10 @@ export default React.createClass({
         motto: React.PropTypes.object.isRequired,
         onLogout: React.PropTypes.func.isRequired
     },
-    logoutUser: function () {
+    logoutUser() {
         this.props.onLogout();
     },
-    render: function () {
+    render() {
         let motto = this.props.motto;
 
         return (

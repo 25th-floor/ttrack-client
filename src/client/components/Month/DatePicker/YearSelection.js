@@ -15,21 +15,21 @@ export default React.createClass({
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired
     },
-    getInitialState: function () {
+    getInitialState() {
         let today = timeUtils.getMomentToday();
 
         return {
-            today: today
+            today
         };
     },
-    selectYear: function (year) {
+    selectYear(year) {
         let date = this.props.activeMonth.clone().year(year.format('YYYY'));
         this.props.onChangeDate(date);
     },
-    handleToday: function () {
+    handleToday() {
         this.props.onChangeDate(this.state.today);
     },
-    renderYearItem: function (year, index) {
+    renderYearItem(year, index) {
         let format = 'YYYY';
 
         let className = classSet('col-xs-1',
@@ -48,7 +48,7 @@ export default React.createClass({
             </li>
         );
     },
-    renderTodayButton: function () {
+    renderTodayButton() {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
             return;
         }
@@ -59,7 +59,7 @@ export default React.createClass({
             </li>
         );
     },
-    render: function () {
+    render() {
         let years = this.props.years;
 
         return (

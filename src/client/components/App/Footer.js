@@ -9,7 +9,7 @@ export default React.createClass({
         motto: React.PropTypes.object,
         build: React.PropTypes.object
     },
-    render: function () {
+    render() {
         let buildInfo = '';
         if (this.props.build && Object.keys(this.props.build).length > 0) {
             buildInfo = ' | ';

@@ -6,7 +6,7 @@ export default React.createClass({
     propTypes: {
         activeUser: React.PropTypes.object.isRequired
     },
-    render: function () {
+    render() {
         let activeUser = this.props.activeUser;
 
         let userId = activeUser.get('usr_id');

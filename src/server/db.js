@@ -44,9 +44,9 @@ function query(db, query /* , vals */) {
 }
 
 module.exports = {
-    periods: periods,
-    days: days,
-    users: users,
-    periodTypes: periodTypes,
-    query: query
+    periods,
+    days,
+    users,
+    periodTypes,
+    query
 };

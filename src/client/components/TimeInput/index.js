@@ -18,13 +18,13 @@ export default React.createClass({
         round: React.PropTypes.number,
         onChange: React.PropTypes.func.isRequired
     },
-    getInitialState: function () {
+    getInitialState() {
         // {hours: 2, minutes: 1}
         let duration = this.props.time ? moment.duration(this.props.time.toJS()).format('hh:mm', { trim:false }) : '';
 
         return { time: duration };
     },
-    handleChange: function (event) {
+    handleChange(event) {
         let duration = timeUtils.getValidMoment(event.target.value);
         if (duration != null) {
             if (this.props.round) {
@@ -35,7 +35,7 @@ export default React.createClass({
 
         this.setState({ time : event.target.value });
     },
-    render: function () {
+    render() {
         // time is a string
         let time = this.state.time;
 

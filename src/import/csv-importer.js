@@ -138,7 +138,7 @@ function processCsvRow(row, day) {
     return _.assign(data, {
         day: moment(row.date.substring(0, 10), 'DD.MM.YYYY'),
         comment: row.comment,
-        type: type
+        type
     });
 }
 

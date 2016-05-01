@@ -177,7 +177,7 @@ function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPer
                 let day = moment.duration(val);
                 console.log('adding new Holiday', strDate, comment, val);
                 const newPeriod = {
-                    date: date,
+                    date,
                     userId: user.usr_id,
                     per_duration: day.format('hh:mm'),
                     per_comment: comment,
@@ -225,7 +225,7 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
 }
 
 module.exports = {
-    get: function (pg, userId, fromDate, toDate, cb) {
+    get(pg, userId, fromDate, toDate, cb) {
         pg(function (client) {
             const dateRange = {};
             dateRange.start = new Date(fromDate);

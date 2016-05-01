@@ -13,7 +13,7 @@ export default React.createClass({
     propTypes: {
         period: React.PropTypes.instanceOf(Immutable.Map).isRequired
     },
-    render: function () {
+    render() {
         let period = this.props.period;
         let isPeriodDuration = period.get('duration') == periodUtils.PERIOD;
         let comment = period.get('per_comment');

@@ -17,7 +17,7 @@ export default React.createClass({
     propTypes: {
         periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired
     },
-    renderPeriodItem: function (period, index) {
+    renderPeriodItem(period, index) {
         let start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim:false });
         let end = moment.duration(getDurationObject(period.get('per_stop'))).format('hh:mm', { trim:false });
         let pause = timeUtils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.get('per_break'))));
@@ -45,7 +45,7 @@ export default React.createClass({
             </div>
         );
     },
-    render: function () {
+    render() {
         let periods = this.props.periods;
         return (
             <div className={styles.periods}>

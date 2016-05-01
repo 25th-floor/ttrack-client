@@ -1,6 +1,5 @@
 module.exports = {
-    list: function (pg, cb)
-    {
+    list(pg, cb) {
         pg(function (db)
         {
             const query = 'SELECT * FROM users WHERE usr_employment_start IS NULL OR usr_employment_end IS NULL';
@@ -13,7 +12,7 @@ module.exports = {
             });
         });
     },
-    get: function (pg, userId, cb) {
+    get(pg, userId, cb) {
         pg(function (db)
         {
             const query = 'SELECT * FROM users WHERE usr_id = $1';
@@ -28,7 +27,7 @@ module.exports = {
 
     },
     // get Users TargetTime for a specific date from the database
-    getTargetTime: function (pg, userId, date, cb) {
+    getTargetTime(pg, userId, date, cb) {
         pg(function (db)
         {
             const query = 'SELECT * FROM user_get_target_time($1, $2::DATE)';

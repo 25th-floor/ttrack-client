@@ -15,7 +15,7 @@ export default React.createClass({
         onCancel: React.PropTypes.func.isRequired,
         onSave: React.PropTypes.func.isRequired
     },
-    getInitialState: function () {
+    getInitialState() {
         // add at least one element if turning to edit mode
         let periods = this.props.periods.toList();
         if (periods.size == 0) {
@@ -23,11 +23,11 @@ export default React.createClass({
         }
 
         return {
-            periods: periods, // todo id setzen
+            periods, // todo id setzen
             removed: [] // todo immutable?
         };
     },
-    onAddPeriod: function () {
+    onAddPeriod() {
         const maxId = this.state.periods.reduce(function (maxId, fi) {
             return Math.max(maxId, fi.get('id'));
         }, 0);
@@ -36,7 +36,7 @@ export default React.createClass({
             removed: this.state.removed
         });
     },
-    onRemovePeriod: function (index) {
+    onRemovePeriod(index) {
         let toBeRemoved = this.state.periods.get(index);
         let removed = this.state.removed;
         if (toBeRemoved.get('per_id')) {
@@ -45,11 +45,11 @@ export default React.createClass({
 
         var periods = this.state.periods.delete(index);
         this.setState({
-            periods: periods,
-            removed: removed
+            periods,
+            removed
         });
     },
-    onUpdatePeriod: function (index, period) {
+    onUpdatePeriod(index, period) {
         this.setState({
             periods: this.state.periods.set(
                 index,
@@ -58,7 +58,7 @@ export default React.createClass({
             removed: this.state.removed
         });
     },
-    onSave: function (e) {
+    onSave(e) {
         e.preventDefault();
         if (this.isValid()) {
             this.props.onSave(this.state.periods, this.state.removed);
@@ -66,11 +66,11 @@ export default React.createClass({
             console.log('not valid');
         }
     },
-    onCancel: function (event) {
+    onCancel(event) {
         event.preventDefault();
         this.props.onCancel(event);
     },
-    onKeyDown: function (event) {
+    onKeyDown(event) {
         if (event.keyCode === 13) {
             this.onSave(event);
             // escape just cancel everything
@@ -78,14 +78,14 @@ export default React.createClass({
             this.onCancel(event);
         }
     },
-    isValid: function () {
+    isValid() {
         // no periods
         if (this.state.periods.size == 0 && this.state.removed.length == 0) return false;
         // not valid
         if (!periodUtils.validatePeriods(this.state.periods)) return false;
         return true;
     },
-    render: function () {
+    render() {
         let periods = this.state.periods;
         let disableSaveButton = !this.isValid();
         let isOverlapping = periodUtils.isOverlapping(periods);

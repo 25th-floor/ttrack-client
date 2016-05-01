@@ -15,11 +15,11 @@ export default React.createClass({
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired
     },
-    selectMonth: function (month) {
+    selectMonth(month) {
         let date = this.props.activeMonth.clone().month(month.format('MMMM'));
         this.props.onChangeDate(date);
     },
-    renderMonthItem: function (month, index) {
+    renderMonthItem(month, index) {
         let className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,
             month.isSame(this.today, 'month') ? styles.today : null,
@@ -37,7 +37,7 @@ export default React.createClass({
             </li>
         );
     },
-    render: function () {
+    render() {
         let months = this.props.months;
 
         return (

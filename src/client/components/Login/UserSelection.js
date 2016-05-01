@@ -8,10 +8,10 @@ export default React.createClass({
         users: React.PropTypes.any.isRequired,
         onSelect: React.PropTypes.func.isRequired
     },
-    changeUser: function (user) {
+    changeUser(user) {
         this.props.onSelect(user);
     },
-    renderUserItem: function (user, index) {
+    renderUserItem(user, index) {
         let userId = user.get('usr_id');
         let imgSrc = `/images/users/${userId}.jpg`;
         return (
@@ -23,7 +23,7 @@ export default React.createClass({
             </li>
         );
     },
-    render: function () {
+    render() {
         const users = this.props.users.sortBy(user => user.get('usr_lastname'));
         return (
             <div className={'container ' + styles.userSelection}>

@@ -16,7 +16,7 @@ export default React.createClass({
         onChangeDate: React.PropTypes.func.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    render: function () {
+    render() {
         return (
             <div id={styles.month}>
                 <div className={styles.pageHeader}>

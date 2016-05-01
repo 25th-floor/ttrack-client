@@ -17,13 +17,13 @@ export default React.createClass({
         activeMonth: React.PropTypes.object.isRequired,
         onSaveDay: React.PropTypes.func.isRequired
     },
-    renderDayItem: function (day) {
+    renderDayItem(day) {
         return (
             <Day day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
                  user={this.props.user} onSaveDay={this.props.onSaveDay} />
         );
     },
-    renderDeltaItem: function (classes, delta) {
+    renderDeltaItem(classes, delta) {
         let str = delta.format('hh:mm', { trim: false });
         let className = classSet(classes || '', {
             'text-success': delta.as('ms') >= 0,
@@ -31,7 +31,7 @@ export default React.createClass({
         });
         return <dd className={className}>{str}</dd>;
     },
-    renderWeekSum: function (week) {
+    renderWeekSum(week) {
         let workDuration = week.get('workDuration').format('hh:mm', { trim:false });
 
         let diff = week.get('diffUntilToday');
@@ -74,7 +74,7 @@ export default React.createClass({
             </fieldset>
         );
     },
-    renderWeekItem: function (week) {
+    renderWeekItem(week) {
         return (
             <fieldset className={styles.week} key={week.get('weekNr')}>
                 <legend>Week {week.get('weekNr')}</legend>
@@ -83,7 +83,7 @@ export default React.createClass({
             </fieldset>
         );
     },
-    render: function () {
+    render() {
         const weeks = this.props.weeks;
         return (
             <div className={styles.weeks}>

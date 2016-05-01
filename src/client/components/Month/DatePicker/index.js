@@ -13,7 +13,7 @@ export default React.createClass({
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired
     },
-    render: function () {
+    render() {
         return (
             <div className={styles.dateSelection}>
                 <div className={'row ' + styles.touchVersion}>

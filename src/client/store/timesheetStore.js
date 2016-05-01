@@ -113,13 +113,13 @@ export default function (onChange) {
 
             // delete all removed ones
             removed.forEach((id) => {
-                promises.push(periodSingleResource.remove({ per_id: id, userId: userId }));
+                promises.push(periodSingleResource.remove({ per_id: id, userId }));
             });
             // update/create
             periods.forEach((period) => {
                 period = period.merge({
                     date: date.format('YYYY-MM-DD'),
-                    userId: userId,
+                    userId,
                     per_pty_id: period.get('type').get('pty_id')
                 });
                 period = fixDurations(period);

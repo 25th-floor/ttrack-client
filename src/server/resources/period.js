@@ -87,7 +87,7 @@ function preparePeriodForApiResponse(periodData) {
 }
 
 module.exports = {
-    post: function (pg, userId, data, cb) {
+    post(pg, userId, data, cb) {
         pg(function (db) {
             User.get(pg, userId, function (user) {
                 Q.all([
@@ -120,7 +120,7 @@ module.exports = {
 
         });
     },
-    put: function (pg, userId, data, cb) {
+    put(pg, userId, data, cb) {
         pg(function (db) {
             Q.all([
                 fetchPeriodTypes(db),
@@ -149,7 +149,7 @@ module.exports = {
             }).done();
         });
     },
-    delete: function (pg, dataId, userId, cb) {
+    delete(pg, dataId, userId, cb) {
         pg(function (db) {
             const query = 'DELETE FROM periods WHERE per_id = (SELECT per_id FROM periods INNER JOIN days ON (day_id = per_day_id) WHERE per_id = $1 AND day_usr_id = $2)';
             db.query(query, [dataId, userId], function (err, result) {
@@ -161,5 +161,5 @@ module.exports = {
             });
         });
     },
-    preparePeriodForApiResponse: preparePeriodForApiResponse
+    preparePeriodForApiResponse
 };

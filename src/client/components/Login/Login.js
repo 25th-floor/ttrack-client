@@ -13,7 +13,7 @@ export default React.createClass({
         onUserSelect: React.PropTypes.func.isRequired,
         build: React.PropTypes.object
     },
-    render: function () {
+    render() {
         let motto = this.props.motto;
         return (
             <div id="login" className={styles.login}>

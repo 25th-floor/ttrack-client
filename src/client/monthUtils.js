@@ -9,9 +9,9 @@ function processDay(day) {
     const remaining = moment.duration(day.get('remaining').toJS());
     return day.merge({
         weekNr: weekNr(date),
-        date: date,
+        date,
         day_target_time: moment.duration(day.get('day_target_time').toJS()),
-        remaining: remaining,
+        remaining,
         remainingUntilToday: date <= today ? remaining : moment.duration(),
         workDuration: sumDuration(day.get('periods').map(per => durationOfWork(per.toJS()))),
         breakDuration: sumDuration(day.get('periods').map(per => durationOfBreak(per.toJS()))),
@@ -34,12 +34,12 @@ export function createWeeks(days, carryTime) {
             carry.add(diff);
 
             return Immutable.Map({
-                days: days,
+                days,
                 weekNr,
-                workDuration: workDuration,
-                targetDuration: targetDuration,
-                diff: diff,
-                diffUntilToday: diffUntilToday,
+                workDuration,
+                targetDuration,
+                diff,
+                diffUntilToday,
                 carry: moment.duration(carry)
             });
         });

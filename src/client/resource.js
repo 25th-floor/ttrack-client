@@ -8,10 +8,10 @@ const Immutable = require('immutable');
 const myro = require('myro');
 
 mimeReg.register('application/json', {
-    read: function (str, opts) {
+    read(str, opts) {
         return Immutable.fromJS(JSON.parse(str));
     },
-    write: function (obj, opts) {
+    write(obj, opts) {
         return JSON.stringify(obj.toJS());
     }
 });
@@ -35,7 +35,7 @@ function cancelRequest(req) {
 }
 
 function save(method, uri, obj) {
-    return client({ method: method, path: uri, entity: obj, headers: { 'Content-Type': 'application/json' } })
+    return client({ method, path: uri, entity: obj, headers: { 'Content-Type': 'application/json' } })
         .then(function (response) {
             console.log('response', response);
             return response.entity;
@@ -47,7 +47,7 @@ function collection(uri) {
     let _data = Immutable.List();
     let req = null;
     return {
-        load: function () {
+        load() {
             if (req) cancelRequest(req);
             req = { path: uri };
             return fetch(req).then(entity => {
@@ -55,11 +55,11 @@ function collection(uri) {
                 req = null;
             });
         },
-        cancel: function () {
+        cancel() {
             if (req) cancelRequest(req);
             req = null;
         },
-        save: function (obj) {
+        save(obj) {
             return save('post', route.uri(obj.toJS()), obj);
         },
         list: () => _data
@@ -71,7 +71,7 @@ function single(uri) {
     let _data = Immutable.Map();
     let req = null;
     return {
-        load: function (params) {
+        load(params) {
             if (req) cancelRequest(req);
             req = { path: route.uri(params) };
             return fetch(req).then(entity => {
@@ -84,10 +84,10 @@ function single(uri) {
             req = null;
         },
         get: () => _data,
-        save: function (obj) {
+        save(obj) {
             return save('put', route.uri(obj.toJS()), obj);
         },
-        remove: function (params) {
+        remove(params) {
             return client({ method: 'delete', path: route.uri(params), headers: { 'Content-Type': 'application/json' } })
                 .then(function (response) {
                     console.log('delete response', response);
