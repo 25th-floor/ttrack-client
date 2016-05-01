@@ -98,7 +98,7 @@ export default React.createClass({
     },
     handleComment(event) {
         const period = this.state.period.merge({
-            'per_comment': event.target.value
+            per_comment: event.target.value
         });
         this.updateState(period);
     },

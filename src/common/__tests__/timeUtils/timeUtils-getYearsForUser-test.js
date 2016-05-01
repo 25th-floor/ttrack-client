@@ -41,7 +41,7 @@ describe('timeUtils.getYearsForUser', function() {
             describe('test with user that has a startDate 2000', function() {
                 beforeEach(function() {
                     user = Immutable.fromJS({
-                        'usr_employment_start': '2000-01-01'
+                        usr_employment_start: '2000-01-01'
                     });
                 });
 
@@ -71,8 +71,8 @@ describe('timeUtils.getYearsForUser', function() {
             describe('test with user that has a stopDate 2005', function() {
                 beforeEach(function() {
                     user = Immutable.fromJS({
-                        'usr_employment_start': '2000-01-01',
-                        'usr_employment_stop': '2005-06-01'
+                        usr_employment_start: '2000-01-01',
+                        usr_employment_stop: '2005-06-01'
                     });
                 });
 
@@ -102,8 +102,8 @@ describe('timeUtils.getYearsForUser', function() {
             describe('test special case with user that started and stopped in 2005', function() {
                 beforeEach(function() {
                     user = Immutable.fromJS({
-                        'usr_employment_start': '2005-01-01',
-                        'usr_employment_stop': '2005-06-01'
+                        usr_employment_start: '2005-01-01',
+                        usr_employment_stop: '2005-06-01'
                     });
                 });
 

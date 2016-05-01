@@ -28,7 +28,7 @@ function getTargetTime(date, user) {
 
     if (parseInt(date.format('E')) < 6)
         return defaultWeekdayWorktime;
-    return { 'hours': 0 };
+    return { hours: 0 };
 }
 
 /**
