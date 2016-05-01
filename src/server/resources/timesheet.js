@@ -67,7 +67,7 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
                     remaining: function () {
                         let duration = _.reduce(periods, function (result, period) {
                             // map period type to period
-                            let type = _.find(periodTypes, function (t) { return t.pty_id == period.per_pty_id });
+                            let type = _.find(periodTypes, function (t) { return t.pty_id == period.per_pty_id; });
 
                             if (!type || type.pty_id == 'Work') {
                                 return result;

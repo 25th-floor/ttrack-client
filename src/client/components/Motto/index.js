@@ -11,6 +11,6 @@ export default class extends React.Component {
             <span title={this.props.house}>{this.props.motto}</span>
         );
     }
-};
+}
 
 
