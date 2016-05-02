@@ -13,21 +13,22 @@ import _ from 'lodash';
  * ,5
  * 8
  *
- * @param time
- * @param strict
- * @returns boolean
+ * @param {string}  time      the time string for validation
+ * @param {boolean} strict    should we be strict on our validation
+ * @returns {boolean} is it valid
  */
 export function isValidTimeString(time, strict = true) {
     if (typeof time !== 'string') return false;
-    if (!strict && time == '') return true;
+    if (!strict && time === '') return true;
     if (time.match(/^(\d+)$/)) return true;
     return time.match(/^(\d*)[.,:](\d*)$/) !== null;
 }
 
 /**
  * get a valid moment object or null if string is not valid
- * @param time
- * @returns {*}
+ *
+ * @param   {string} time       the time
+ * @returns {moment.duration}   the moment.duration
  */
 export function getValidMoment(time) {
     if (!isValidTimeString(time)) return null;
@@ -52,8 +53,9 @@ export function getValidMoment(time) {
 
 /**
  * convert a duration object into a dateObject {hours: xx, minutes: yy}
- * @param duration
- * @returns {{hours: *, minutes: *}}
+ *
+ * @param {moment.duration} duration the duration
+ * @returns {{hours: *, minutes: *}} dateObject
  */
 export function getDateObjectFromMomentDuration(duration) {
     return {
@@ -72,12 +74,12 @@ export function reduceMomentArray(moments, user) {
 
     if (startDate) {
         startDate = moment(startDate).subtract(1, 'month');
-        dates = dates.filter((m) => m.isAfter(startDate) || m.isSame(startDate));
+        dates = dates.filter(m => m.isAfter(startDate) || m.isSame(startDate));
     }
 
     if (endDate) {
         endDate = moment(endDate).add(1, 'month');
-        dates = dates.filter((m) => m.isBefore(endDate) || m.isSame(endDate));
+        dates = dates.filter(m => m.isBefore(endDate) || m.isSame(endDate));
     }
 
     return dates;
@@ -86,19 +88,20 @@ export function reduceMomentArray(moments, user) {
 /**
  * check if moment is out of employment scope
  *
- * @param date
- * @param user
- * @returns {boolean}
+ * @param {moment}      date    date to be checked
+ * @param {Immutable}   user    userdata
+ * @returns {boolean}           true if date is in employment interval
  */
 export function isDateInEmploymentInterval(date, user) {
-    return getNearestDateWithinEmployment(date, user) == false;
+    return getNearestDateWithinEmployment(date, user) === false;
 }
 
 /**
  * check if date is without the emploment or more than a year into the future and move user back.
- * @param date
- * @param user
- * @returns {boolean}
+ *
+ * @param {moment}      date    date to be looked at
+ * @param {Immutable}   user    userdata
+ * @returns {moment}            nearest date
  */
 export function getNearestDateWithinEmployment(date, user) {
     let startDate = user.get('usr_employment_start');
@@ -131,74 +134,40 @@ export function getMomentToday() {
 /**
  * round example: +15, -15 (in minutes)
  *
- * @param duration
- * @param round
+ * @param {moment.duration} duration the duration
+ * @param {number}          round    how to round
  *
- * @returns moment.duration
+ * @returns {moment.duration} the new duration
  */
 export function roundTime(duration, round) {
     const absRound = Math.abs(round);
 
     // no need to round
-    if (duration.asMinutes() % absRound == 0) return duration;
+    if (duration.asMinutes() % absRound === 0) return duration;
 
-    let factor = Math.trunc(duration.asMinutes() / absRound);
+    const factor = Math.trunc(duration.asMinutes() / absRound);
 
-    let minRounded = factor * absRound;
+    const minRounded = factor * absRound;
 
-    let minutes = round > 0 ? minRounded + absRound : minRounded;
+    const minutes = round > 0 ? minRounded + absRound : minRounded;
 
     return moment.duration(minutes, 'minutes');
 }
 
-export function formatDurationHoursToLocale(time, fractions) {
-    fractions = fractions || 2;
+export function formatDurationHoursToLocale(time, fractions = 2) {
     return `${time.asHours().toLocaleString('de-DE', { minimumFractionDigits: fractions })}h`;
 }
 
-/**
- * parse a time duration string
- *
- * If the string contains a colon ":" it is expected to be in a format understood
- * by the moment.js duration constructor.
- *
- * Otherwise we match strings like '1h 15m' or '7 minutes, 1.5 hours' etc.
- *
- * @param str the string to parse
- * @returns {*} a moment.duration object
- */
-function parseHumanDurationString(str) {
-    if (_.contains(str, ':')) {
-        return moment.duration(str);
-    } else {
-        const matches = str.match(/(\d*\.)?\d+\s*(h(ours?)?|m(ins?)?)|minutes/gi);
-        const units = {
-            h: 'hours',
-            hour: 'hours',
-            hours: 'hours',
-            m: 'minutes',
-            min: 'minutes',
-            mins: 'minutes',
-            minutes: 'minutes',
-        };
-        return matches.reduce(function (total, s) {
-            const duration = _.zipObject(['amount', 'unit'], _.rest(s.match(/^(.*\d)\s*(.*)$/)));
-            return total.add(+duration.amount, units[duration.unit.toLowerCase().trim()]);
-        }, moment.duration());
-    }
-}
-
-export function isWeekend(moment) {
+export function isWeekend(date) {
     // iso weekday -> 1=monday, 6=saturday, 7=sunday
-    return moment.isoWeekday() > 5;
+    return date.isoWeekday() > 5;
 }
 
 
 export function durationOfWork(period) {
-
     let ret = moment.duration();
-    if (period.per_pty_id == 'Work') {
-        var duration = moment.duration(period.per_duration);
+    if (period.per_pty_id === 'Work') {
+        const duration = moment.duration(period.per_duration);
         const breakDuration = durationOfBreak(period);
 
         if (duration.as('ms') > breakDuration.as('ms')) {
@@ -211,27 +180,25 @@ export function durationOfWork(period) {
 }
 
 export function durationOfBreak(period) {
-    if (!period) return;
+    if (!period) return null;
     return moment.duration(period.per_break || 0);
 }
 
 export function weekNr(date) {
-    let weekNr = date.isoWeek();
-    let weekYear = date.isoWeekYear();
-    if (weekNr < 10) {
-        weekNr = `0${weekNr}`;
+    let weekNumber = date.isoWeek();
+    const yearOfTheWeek = date.isoWeekYear();
+    if (weekNumber < 10) {
+        weekNumber = `0${weekNumber}`;
     }
-    return `${weekYear}-${weekNr}`;
+    return `${yearOfTheWeek}-${weekNumber}`;
 }
 
 export function sumDuration(xs) {
-    return xs.reduce(function (total, x) {
-        return total.add(x);
-    }, moment.duration());
+    return xs.reduce((total, x) => total.add(x), moment.duration());
 }
 
 export function getFirstAndLastDayOfMonth(month) {
-    let ret = {};
+    const ret = {};
     ret.firstDay = month.clone();
 
     // get first day of that month
@@ -252,9 +219,9 @@ export function getFirstAndLastDayOfMonth(month) {
 /**
  * returns a moment.duration object or null
  *
- * @param obj
- * @param attr
- * @returns {moment.duration|null}
+ * @param {Immutable}   obj     the immutable object
+ * @param {string}      attr    attribute
+ * @returns {moment.duration|null}  the duration
  */
 export function getMomentFromImmutable(obj, attr) {
     return obj.get(attr) ? moment.duration(obj.get(attr).toJS()) : null;
@@ -263,12 +230,14 @@ export function getMomentFromImmutable(obj, attr) {
 /**
  * get Year Array of Moments for a specific user
  *
- * @param user
- * @param today moment
- * @param limit optional, defaults to 6
+ * @param {Immutable}   user    userdata
+ * @param {moment}      today   moment
+ * @param {number}      limit   optional, defaults to 6
+ *
+ * @returns {[moment]}  array of moments
  */
-export function getYearsForUser(user, today, limit) {
-    limit = limit || 6;
+export function getYearsForUser(user, today, limit = 6) {
+    let day = today;
 
     if (!Immutable.Map.isMap(user)) {
         throw new Error('getYearsForUser expects an Immutable Map Object!');
@@ -282,35 +251,32 @@ export function getYearsForUser(user, today, limit) {
     let startDate = user.get('usr_employment_start');
     if (startDate) {
         startDate = moment(startDate);
-        today = today.clone().month(startDate.month()).day(startDate.day()).add(1, 'day');
+        day = day.clone().month(startDate.month()).day(startDate.day()).add(1, 'day');
     }
 
-    let years = _.times(limit, function (i) {
-        return today.clone().add(1, 'year').subtract(i, 'years');
-    });
+    const years = _.times(limit, i => day.clone().add(1, 'year').subtract(i, 'years'));
 
+    // eslint-disable-next-line new-cap
     return Immutable.List(reduceMomentArray(years, user));
 }
 
 /**
  * get month array for moments for a specific user
  *
- * @param user
- * @param activeMonth moment
- * @returns {List|Immutable.List|any}
+ * @param {Immutable}   user        userdata
+ * @param {moment}      activeMonth moment
+ * @returns {List|Immutable.List|any} month array
  */
 export function getMonthsForUser(user, activeMonth) {
-    let months = _.times(12, function (n) {
-        return activeMonth.clone().months(n);
-    });
+    const months = _.times(12, n => activeMonth.clone().months(n));
 
+    // eslint-disable-next-line new-cap
     return Immutable.List(reduceMomentArray(months, user));
 }
 
 /**
- *
- * @param week
- * @returns {boolean}
+ * @param {Immutable} week weekdata
+ * @returns {boolean} if week is in future
  */
 export function isWeekInFuture(week) {
     return week.get('weekNr') > moment().format('YYYY-w');
