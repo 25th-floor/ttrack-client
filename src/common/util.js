@@ -1,24 +1,5 @@
 const moment = require('moment');
 
-/**
- * returns the first and last day of a given date
- *
- * @param date
- * @returns {{start: Date, end: Date}}
- */
-function calculateFirstLastDayOfMonth(date) {
-    var date = new Date(date);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = moment(new Date(year, month, 1));
-    firstDay.subtract(parseInt(firstDay.format('E')) - 1, 'day');
-
-    const lastDay = moment(new Date(year, month + 1, 0));
-    lastDay.add(7 - parseInt(lastDay.format('E')), 'day');
-
-    return { start: firstDay.toDate(), end: lastDay.toDate() };
-}
-
 function getHolidaysForDateRange(dateRange) {
     const holidays = {};
     const start = moment(dateRange.start);
@@ -26,12 +7,14 @@ function getHolidaysForDateRange(dateRange) {
     do {
         const yearHolidays = getHolidaysForYear(start.year());
 
-        for (let date in yearHolidays) {
-            const holidayDate = moment(date, 'YYYY-MM-DD');
-            const holiday = yearHolidays[date];
-            if (holidayDate.isBefore(start)) continue;
-            if (holidayDate.isAfter(end)) continue;
-            holidays[date] = holiday;
+        for (const date in yearHolidays) {
+            if (yearHolidays.hasOwnProperty(date)) {
+                const holidayDate = moment(date, 'YYYY-MM-DD');
+                const holiday = yearHolidays[date];
+                if (holidayDate.isBefore(start)) continue;
+                if (holidayDate.isAfter(end)) continue;
+                holidays[date] = holiday;
+            }
         }
 
         start.add(1, 'year');
@@ -77,9 +60,7 @@ function getHolidaysForYear(year) {
  (Der 32. März ist der 1. April usf.)
  */
 
-function calculateEasterSondayPlusXDate(year, addDays) {
-    addDays = addDays || 0;
-
+function calculateEasterSondayPlusXDate(year, addDays = 0) {
     const a = year % 19;
     const b = year % 4;
     const c = year % 7;
@@ -124,7 +105,6 @@ function getHalfDayDuration(duration) {
     return moment.duration(Math.round(week / 10), 'minutes');
 }
 
-exports.calculateFirstLastDayOfMonth = calculateFirstLastDayOfMonth;
 exports.getHolidaysForDateRange = getHolidaysForDateRange;
 
 exports.getDayDuration = getDayDuration;
