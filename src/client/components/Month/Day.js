@@ -28,7 +28,7 @@ export default class extends React.Component {
     };
 
     handleEditClick(event) {
-        // don't let user get out with this click
+        // don't var user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
     }
@@ -43,21 +43,21 @@ export default class extends React.Component {
     }
 
     render() {
-        let edit = this.state.edit;
+        const edit = this.state.edit;
 
-        let day = this.props.day;
-        let date = day.get('date');
-        let isToday = date.isSame(moment(), 'day');
-        let isFuture = date.isAfter(moment(), 'day');
+        const day = this.props.day;
+        const date = day.get('date');
+        const isToday = date.isSame(moment(), 'day');
+        const isFuture = date.isAfter(moment(), 'day');
 
-        let fullDate = date.format('DD.MM.YYYY');
-        let shortDate = date.format('DD.MM');
-        let weekDayShort = date.format('dd');
-        let weekDayFull = date.format('dddd');
-        let workDuration = timeUtils.formatDurationHoursToLocale(day.get('workDuration'));
-        let breakDuration = timeUtils.formatDurationHoursToLocale(day.get('breakDuration'));
+        const fullDate = date.format('DD.MM.YYYY');
+        const shortDate = date.format('DD.MM');
+        const weekDayShort = date.format('dd');
+        const weekDayFull = date.format('dddd');
+        const workDuration = timeUtils.formatDurationHoursToLocale(day.get('workDuration'));
+        const breakDuration = timeUtils.formatDurationHoursToLocale(day.get('breakDuration'));
 
-        let diff = moment.duration(day.get('workDuration')).subtract(day.get('remaining'));
+        const diff = moment.duration(day.get('workDuration')).subtract(day.get('remaining'));
         let diffDuration = timeUtils.formatDurationHoursToLocale(diff);
 
         // hide target time diff if there is no workDuration isToday
@@ -66,8 +66,8 @@ export default class extends React.Component {
             diffDuration = '';
         }
 
-        let dateOutOfEmploymentScope = !timeUtils.isDateInEmploymentInterval(date, this.props.user);
-        let className = classSet(styles.day,
+        const dateOutOfEmploymentScope = !timeUtils.isDateInEmploymentInterval(date, this.props.user);
+        const className = classSet(styles.day,
             !edit ? styles.editable : null,
             timeUtils.isWeekend(date) ? styles.dayWeekend : null,
             isFuture ? styles.dayFuture : null,
@@ -76,9 +76,9 @@ export default class extends React.Component {
             isToday ? styles.dayCurrent : null
         );
 
-        let showDurations = day.get('workDuration') != 0 || day.get('remaining') != 0 || day.get('breakDuration') != 0;
+        const showDurations = day.get('workDuration') != 0 || day.get('remaining') != 0 || day.get('breakDuration') != 0;
 
-        let durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
+        const durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
             diff.as('ms') >= 0 ? styles['text-success'] : null,
             diff.as('ms') < 0 ? styles['text-danger'] : null
         );

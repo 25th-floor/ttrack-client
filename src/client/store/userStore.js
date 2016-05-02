@@ -4,10 +4,10 @@ import resource from '../resource';
 const LS_USER = 'ls.user';
 
 export default function (onChange) {
-    let users = resource.collection('/api/users');
-    let activeUserId = localStorage.getItem(LS_USER, {}).activeUserId;
+    const users = resource.collection('/api/users');
+    const activeUserId = localStorage.getItem(LS_USER, {}).activeUserId;
     let activeUser = null;
-    let notify = () => onChange ? onChange() : null;
+    const notify = () => onChange ? onChange() : null;
     return {
         init() {
             return users.load().then(function () {

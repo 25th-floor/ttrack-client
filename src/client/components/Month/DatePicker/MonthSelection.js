@@ -23,20 +23,20 @@ export default class extends React.Component {
     };
 
     selectMonth(month) {
-        let date = this.props.activeMonth.clone().month(month.format('MMMM'));
+        const date = this.props.activeMonth.clone().month(month.format('MMMM'));
         this.props.onChangeDate(date);
     }
 
     renderMonthItem(month, index) {
-        let className = classSet('col-xs-1',
+        const className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,
             month.isSame(this.today, 'month') ? styles.today : null,
             month.isAfter(this.today, 'month') ? styles.future : null
         );
 
-        let monthNumber = month.format('M');
-        let monthShort = month.format('MMM');
-        let monthFull = month.format('MMMM');
+        const monthNumber = month.format('M');
+        const monthShort = month.format('MMM');
+        const monthFull = month.format('MMMM');
 
         return (
             <li className={className} key={index}>
@@ -47,7 +47,7 @@ export default class extends React.Component {
     }
 
     render() {
-        let months = this.props.months;
+        const months = this.props.months;
 
         return (
             <div className={styles.monthSelection}>

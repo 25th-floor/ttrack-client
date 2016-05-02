@@ -3,7 +3,7 @@ import myro from 'myro';
 
 import * as timeUtils from '../../common/timeUtils';
 
-let router = myro({
+const router = myro({
     '/month/:month': 'month',
 });
 
@@ -22,11 +22,11 @@ function activeMonthFromRoute(route) {
 
 export default function (onChange) {
 
-    let notify = () => onChange ? onChange() : null;
+    const notify = () => onChange ? onChange() : null;
     let activeMonth = timeUtils.getMomentToday();
 
-    let dispatch = () => {
-        let route = dispatchRouter();
+    const dispatch = () => {
+        const route = dispatchRouter();
         activeMonth = activeMonthFromRoute(route);
     };
 
@@ -45,7 +45,7 @@ export default function (onChange) {
         },
 
         gotoMonth(month) {
-            let path = router.month({ month: month.format('YYYY-MM') });
+            const path = router.month({ month: month.format('YYYY-MM') });
             activeMonth = month;
             window.history.pushState(null, '', path);
             notify();

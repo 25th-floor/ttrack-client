@@ -7,12 +7,12 @@ import { createWeeks } from '../monthUtils';
 import * as timeUtils from '../../common/timeUtils';
 
 function getDurationType(period, targetTime, type) {
-    let cfg = type.get('pty_config').get('types').toJS();
+    const cfg = type.get('pty_config').get('types').toJS();
 
     if (period.get('per_id') != null) {
-        let start = period.get('per_start');
-        let duration = moment.duration(period.get('per_duration').toJS());
-        let target = moment.duration(targetTime.toJS());
+        const start = period.get('per_start');
+        const duration = moment.duration(period.get('per_duration').toJS());
+        const target = moment.duration(targetTime.toJS());
 
         if (cfg.period && start && moment.duration(start.toJS()).as('minutes') >= 0) return 'period';
         if (cfg.halfday && duration.as('hours') == (target.as('hours') / 2)) return 'halfday';
@@ -27,13 +27,13 @@ function getDurationType(period, targetTime, type) {
 }
 
 function assocPeriodWithType(typeMap, targetTime, period) {
-    let type = typeMap.get(period.get('per_pty_id'));
-    let duration = getDurationType(period, targetTime, type);
+    const type = typeMap.get(period.get('per_pty_id'));
+    const duration = getDurationType(period, targetTime, type);
     return period.merge({ type, duration });
 }
 
 function assocPeriodsWithTypes(types, days) {
-    let typeMap = types.groupBy(type => type.get('pty_id')).map(types => types.first());
+    const typeMap = types.groupBy(type => type.get('pty_id')).map(types => types.first());
     return days.map(day =>
         day.updateIn(['periods'], periods =>
             periods.map(assocPeriodWithType.bind(null, typeMap, day.get('day_target_time')))));
@@ -50,9 +50,9 @@ function fixDurations(period) {
 }
 
 export default function (onChange) {
-    let periodTypes = resource.collection('/api/period-types');
+    const periodTypes = resource.collection('/api/period-types');
     let timesheet = Immutable.Map();
-    let notify = () => onChange ? onChange() : null;
+    const notify = () => onChange ? onChange() : null;
     let initialized = false;
     let tsResource = null;
     let loadParams = null;
@@ -81,7 +81,7 @@ export default function (onChange) {
             // console.log('loadTimesheet', month, userId);
             if (!initialized) throw new Error('cannot load unitialized');
 
-            let newLoadParams = JSON.stringify([month, userId]);
+            const newLoadParams = JSON.stringify([month, userId]);
             if (loadParams && loadParams === newLoadParams) {
                 console.debug('already loading timesheet', newLoadParams);
                 return; // load already in progress for given params
@@ -91,7 +91,7 @@ export default function (onChange) {
             if (tsResource) tsResource.cancel();
             timesheet = Immutable.Map();
 
-            let boundries = timeUtils.getFirstAndLastDayOfMonth(month);
+            const boundries = timeUtils.getFirstAndLastDayOfMonth(month);
 
             tsResource = resource.single('/api/users/:user/timesheet/:from/:to');
 
@@ -100,7 +100,7 @@ export default function (onChange) {
                 to: boundries.lastDay.format('YYYY-MM-DD'),
                 user: userId,
             }).then(function () {
-                let data = tsResource.get().updateIn(['days'], assocPeriodsWithTypes.bind(null, periodTypes.list()));
+                const data = tsResource.get().updateIn(['days'], assocPeriodsWithTypes.bind(null, periodTypes.list()));
                 timesheet = createWeeks(data.get('days'), moment.duration(data.get('carryTime').toJS()));
                 notify();
                 return timesheet;
@@ -108,10 +108,10 @@ export default function (onChange) {
         },
 
         saveDay(userId, date, periods, removed) {
-            let periodCollectionResource = resource.collection('/api/users/:userId/periods');
-            let periodSingleResource = resource.single('/api/users/:userId/periods/:per_id');
+            const periodCollectionResource = resource.collection('/api/users/:userId/periods');
+            const periodSingleResource = resource.single('/api/users/:userId/periods/:per_id');
 
-            let promises = [];
+            const promises = [];
 
             // disable loadParams, we saved something so load the data new
             loadParams = null;

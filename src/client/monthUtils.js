@@ -4,8 +4,8 @@ import moment from 'moment';
 import { durationOfWork, durationOfBreak, weekNr, sumDuration } from '../common/timeUtils';
 
 function processDay(day) {
-    let date = moment(day.get('day_date'));
-    let today = moment();
+    const date = moment(day.get('day_date'));
+    const today = moment();
     const remaining = moment.duration(day.get('remaining').toJS());
     return day.merge({
         weekNr: weekNr(date),
@@ -21,16 +21,16 @@ function processDay(day) {
 
 export function createWeeks(days, carryTime) {
 
-    let carry = moment.duration(carryTime);
+    const carry = moment.duration(carryTime);
     return days
         .map(processDay)
         .groupBy(day => day.get('weekNr'))
         .map((days, weekNr) => {
-            let workDuration = sumDuration(days.map(day => day.get('workDuration')));
-            let targetDuration = sumDuration(days.map(day => day.get('remaining')));
-            let targetDurationUntilToday = sumDuration(days.map(day => day.get('remainingUntilToday')));
-            let diff = moment.duration(workDuration).subtract(targetDuration);
-            let diffUntilToday = moment.duration(workDuration).subtract(targetDurationUntilToday);
+            const workDuration = sumDuration(days.map(day => day.get('workDuration')));
+            const targetDuration = sumDuration(days.map(day => day.get('remaining')));
+            const targetDurationUntilToday = sumDuration(days.map(day => day.get('remainingUntilToday')));
+            const diff = moment.duration(workDuration).subtract(targetDuration);
+            const diffUntilToday = moment.duration(workDuration).subtract(targetDurationUntilToday);
             carry.add(diff);
 
             return Immutable.Map({

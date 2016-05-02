@@ -20,8 +20,8 @@ export default class extends React.Component {
     }
 
     renderUserItem(user, index) {
-        let userId = user.get('usr_id');
-        let imgSrc = `/images/users/${userId}.jpg`;
+        const userId = user.get('usr_id');
+        const imgSrc = `/images/users/${userId}.jpg`;
         return (
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={this.changeUser.bind(this, user)}>

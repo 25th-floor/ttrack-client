@@ -32,8 +32,8 @@ export default class extends React.Component {
     }
 
     renderDeltaItem(classes, delta) {
-        let str = delta.format('hh:mm', { trim: false });
-        let className = classSet(
+        const str = delta.format('hh:mm', { trim: false });
+        const className = classSet(
             classes || '',
             {
                 'text-success': delta.as('ms') >= 0,
@@ -44,15 +44,15 @@ export default class extends React.Component {
     }
 
     renderWeekSum(week) {
-        let workDuration = week.get('workDuration').format('hh:mm', { trim:false });
+        const workDuration = week.get('workDuration').format('hh:mm', { trim:false });
 
-        let diff = week.get('diffUntilToday');
-        let carry = week.get('carry');
+        const diff = week.get('diffUntilToday');
+        const carry = week.get('carry');
 
-        let firstDate = week.get('days').first().get('date');
-        let lastDate = week.get('days').last().get('date');
+        const firstDate = week.get('days').first().get('date');
+        const lastDate = week.get('days').last().get('date');
 
-        let className = classSet(styles.weekSumRow,
+        const className = classSet(styles.weekSumRow,
             !timeUtils.isDateInEmploymentInterval(firstDate, this.props.user)
             && !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null
         );

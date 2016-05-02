@@ -24,14 +24,14 @@ export default class extends React.Component {
     };
 
     renderPeriodItem(period, index) {
-        let start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim:false });
-        let end = moment.duration(getDurationObject(period.get('per_stop'))).format('hh:mm', { trim:false });
-        let pause = timeUtils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.get('per_break'))));
+        const start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim:false });
+        const end = moment.duration(getDurationObject(period.get('per_stop'))).format('hh:mm', { trim:false });
+        const pause = timeUtils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.get('per_break'))));
 
-        let duration = timeUtils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.get('per_duration'))));
+        var duration = timeUtils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.get('per_duration'))));
 
         if (period.get('per_start') == null && period.get('per_stop') == null) {
-            let offsetClass = index == 0 ? 'col-sm-4 col-lg-5' : 'col-sm-4 col-sm-offset-5 col-lg-5';
+            const offsetClass = index == 0 ? 'col-sm-4 col-lg-5' : 'col-sm-4 col-sm-offset-5 col-lg-5';
 
             return (
                 <span className={offsetClass} key={period.get('per_id')}>
@@ -40,7 +40,7 @@ export default class extends React.Component {
             );
         }
 
-        let showBreak = period.get('per_break') !== null;
+        const showBreak = period.get('per_break') !== null;
 
         return (
             <div className={styles.periodRow} key={period.get('per_id')}>
@@ -53,7 +53,7 @@ export default class extends React.Component {
     }
 
     render() {
-        let periods = this.props.periods;
+        const periods = this.props.periods;
         return (
             <div className={styles.periods}>
                 {periods.map(this.renderPeriodItem)}

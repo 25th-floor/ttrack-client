@@ -15,7 +15,7 @@ export default class extends React.Component {
         this.handleToday = this.handleToday.bind(this);
         this.renderYearItem = this.renderYearItem.bind(this);
         this.selectYear = this.selectYear.bind(this);
-        let today = timeUtils.getMomentToday();
+        const today = timeUtils.getMomentToday();
 
         this.state = {
             today,
@@ -29,7 +29,7 @@ export default class extends React.Component {
     };
 
     selectYear(year) {
-        let date = this.props.activeMonth.clone().year(year.format('YYYY'));
+        const date = this.props.activeMonth.clone().year(year.format('YYYY'));
         this.props.onChangeDate(date);
     }
 
@@ -38,16 +38,16 @@ export default class extends React.Component {
     }
 
     renderYearItem(year, index) {
-        let format = 'YYYY';
+        const format = 'YYYY';
 
-        let className = classSet('col-xs-1',
+        const className = classSet('col-xs-1',
             year.isSame(this.props.activeMonth, 'year') ? styles.active : null,
             year.isSame(this.state.today, 'year') ? styles.today : null,
             year.isAfter(this.state.today, 'year') ? styles.future : null
         );
 
-        let yearNumber = year.format('YY');
-        let yearShort = year.format(format);
+        const yearNumber = year.format('YY');
+        const yearShort = year.format(format);
 
         return (
             <li className={className} key={index}>
@@ -70,7 +70,7 @@ export default class extends React.Component {
     }
 
     render() {
-        let years = this.props.years;
+        const years = this.props.years;
 
         return (
             <div className={styles.yearSelection}>

@@ -75,9 +75,9 @@ export default class extends React.Component {
     }
 
     handleTypeChange(event) {
-        let type = findType(this.props.types, event.target.value);
-        let cfg = type.get('pty_config').get('types').toJS();
-        let defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
+        const type = findType(this.props.types, event.target.value);
+        const cfg = type.get('pty_config').get('types').toJS();
+        const defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
 
         const period = this.state.period.merge({
             type,
@@ -104,7 +104,7 @@ export default class extends React.Component {
     }
 
     handleTimeChange(name, duration) {
-        let value = {};
+        const value = {};
         value[name] = duration;
         const period = this.state.period.merge(value);
 
@@ -125,7 +125,7 @@ export default class extends React.Component {
     }
 
     renderDurationRadio(elementName, value, duration, index) {
-        let id = `${elementName}-${duration.name}`;
+        const id = `${elementName}-${duration.name}`;
 
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
@@ -139,8 +139,8 @@ export default class extends React.Component {
     }
 
     renderErrorMessages() {
-        let period = this.state.period;
-        let errors = periodUtils.getAllErrors(period);
+        const period = this.state.period;
+        const errors = periodUtils.getAllErrors(period);
 
         return (
             <div className="alert alert-warning">
@@ -150,18 +150,18 @@ export default class extends React.Component {
     }
 
     render() {
-        let period = this.state.period;
-        let isValid = periodUtils.validatePeriod(period);
+        const period = this.state.period;
+        const isValid = periodUtils.validatePeriod(period);
 
-        let elementName = `period-${period.get('per_id') ? period.get('per_id') : this.props.index}`;
+        const elementName = `period-${period.get('per_id') ? period.get('per_id') : this.props.index}`;
 
-        let cfg = period.getIn(['type', 'pty_config', 'types']) || Immutable.Map();
+        const cfg = period.getIn(['type', 'pty_config', 'types']) || Immutable.Map();
 
-        let durations = periodUtils.durationConfig.filter((d) => cfg.get(d.name) == true);
+        const durations = periodUtils.durationConfig.filter((d) => cfg.get(d.name) == true);
 
         let periodElements = [];
-        let elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
-        let comment = { name: `${elementName}[per_comment]`, className: 'controls col-xs-12 col-lg-8' };
+        const elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
+        const comment = { name: `${elementName}[per_comment]`, className: 'controls col-xs-12 col-lg-8' };
         if (period.get('duration') == periodUtils.PERIOD) {
             periodElements = [{
                 id: 'per_start',

@@ -50,8 +50,8 @@ export default class extends React.Component {
     }
 
     onRemovePeriod(index) {
-        let toBeRemoved = this.state.periods.get(index);
-        let removed = this.state.removed;
+        const toBeRemoved = this.state.periods.get(index);
+        const removed = this.state.removed;
         if (toBeRemoved.get('per_id')) {
             removed.push(toBeRemoved.get('per_id'));
         }
@@ -106,9 +106,9 @@ export default class extends React.Component {
     }
 
     render() {
-        let periods = this.state.periods;
-        let disableSaveButton = !this.isValid();
-        let isOverlapping = periodUtils.isOverlapping(periods);
+        const periods = this.state.periods;
+        const disableSaveButton = !this.isValid();
+        const isOverlapping = periodUtils.isOverlapping(periods);
 
         return (
             <div className={styles.form}>

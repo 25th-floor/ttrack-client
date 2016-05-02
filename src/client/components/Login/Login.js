@@ -15,7 +15,7 @@ export default class extends React.Component {
     };
 
     render() {
-        let motto = this.props.motto;
+        const motto = this.props.motto;
         return (
             <div id="login" className={styles.login}>
                 <div className={styles.loginBrand}>

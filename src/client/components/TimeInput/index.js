@@ -11,7 +11,7 @@ export default class extends React.Component {
         super(props, context);
         this.handleChange = this.handleChange.bind(this);
         // {hours: 2, minutes: 1}
-        let duration = props.time ? moment.duration(props.time.toJS()).format('hh:mm', { trim:false }) : '';
+        const duration = props.time ? moment.duration(props.time.toJS()).format('hh:mm', { trim:false }) : '';
 
         this.state = { time: duration };
     }
@@ -42,9 +42,9 @@ export default class extends React.Component {
 
     render() {
         // time is a string
-        let time = this.state.time;
+        const time = this.state.time;
 
-        let css = classSet(
+        const css = classSet(
             this.props.css || '',
             {
                 'has-error' : !timeUtils.isValidTimeString(time, this.props.required),

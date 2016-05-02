@@ -8,10 +8,10 @@ export default class extends React.Component {
     };
 
     render() {
-        let activeUser = this.props.activeUser;
+        const activeUser = this.props.activeUser;
 
-        let userId = activeUser.get('usr_id');
-        let imgSrc = `/images/users/${userId}.jpg`;
+        const userId = activeUser.get('usr_id');
+        const imgSrc = `/images/users/${userId}.jpg`;
 
         return (
             <div id={styles.profileWidget}>

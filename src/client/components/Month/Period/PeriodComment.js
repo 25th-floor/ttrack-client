@@ -15,8 +15,8 @@ export default class extends React.Component {
     };
 
     render() {
-        let period = this.props.period;
-        let isPeriodDuration = period.get('duration') == periodUtils.PERIOD;
+        const period = this.props.period;
+        const isPeriodDuration = period.get('duration') == periodUtils.PERIOD;
         let comment = period.get('per_comment');
 
         if (!comment || !comment.length) {
@@ -24,15 +24,15 @@ export default class extends React.Component {
             comment = periodUtils.getDurationDescription(period.get('duration'));
         }
 
-        let icon = period.getIn(['type', 'pty_config', 'icon']);
-        let name = period.getIn(['type', 'pty_name']);
+        const icon = period.getIn(['type', 'pty_config', 'icon']);
+        const name = period.getIn(['type', 'pty_name']);
 
-        let style = {
+        const style = {
             backgroundColor: period.getIn(['type', 'pty_config', 'bgcolor']),
             color: period.getIn(['type', 'pty_config', 'color']),
         };
 
-        let iconClassName = `fa fa-fw ${icon}`;
+        const iconClassName = `fa fa-fw ${icon}`;
 
         return (
             <span className={styles.periodComment}>

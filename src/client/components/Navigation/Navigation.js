@@ -22,7 +22,7 @@ export default class extends React.Component {
     }
 
     render() {
-        let motto = this.props.motto;
+        const motto = this.props.motto;
 
         return (
             <nav className={`navbar navbar-inverse navbar-fixed-top ${styles.navbar}`} role="navigation">
