@@ -22,7 +22,7 @@ import Login from './components/Login';
 import Month from './components/Month';
 
 // EXTERNAL DEPENDENCY, maybe there is another way?
-const buildInfo = BUILD_INFO;
+const buildInfo = global.BUILD_INFO || {};
 
 const motto = _.sample(mottos);
 const users = userStore(renderApp);
