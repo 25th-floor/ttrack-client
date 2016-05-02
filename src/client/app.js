@@ -82,7 +82,7 @@ function renderMainComponent() {
     return (
         <App user={users.getActiveUser()}
             motto={motto}
-            logout={logout}
+            onLogout={logout}
             build={buildInfo}
         >
             <Month
