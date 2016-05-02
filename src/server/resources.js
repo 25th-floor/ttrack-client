@@ -1,20 +1,20 @@
-const express = require('express');
-const api = express();
-const bodyParser = require('body-parser');
+var express = require('express');
+var api = express();
+var bodyParser = require('body-parser');
 
-const User = require('./resources/user');
-const Period = require('./resources/period');
-const PeriodType = require('./resources/period_type');
-const Timesheet = require('./resources/timesheet');
+var User = require('./resources/user');
+var Period = require('./resources/period');
+var PeriodType = require('./resources/period_type');
+var Timesheet = require('./resources/timesheet');
 
 api.use(bodyParser.json()); // for parsing application/json
-api.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+api.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
 /**
  * add extra debug information to sentry
  */
 api.use(function (req, res, next) {
-    const sentry_client = api.get('sentry_client');
+    var sentry_client = api.get('sentry_client');
     if (!sentry_client) {
         next();
         return;
@@ -25,7 +25,7 @@ api.use(function (req, res, next) {
         url: req.originalUrl,
         method: req.method,
         params: req.params,
-        request: req,
+        request: req
     });
 
     next();
@@ -38,7 +38,7 @@ api.param('user', function (req, res, next, id) {
     // try to get the user details from the User model and attach it to the request object
     User.get(api.get('pg'), id, function (user) {
         if (user) {
-            const sentry_client = api.get('sentry_client');
+            var sentry_client = api.get('sentry_client');
             if (sentry_client) {
                 sentry_client.setUserContext(user);
             }
@@ -53,7 +53,7 @@ api.get('/users', function (req, res) {
     console.log('API GET Request for Users');
     User.list(api.get('pg'), function (users) {
         res.json(users);
-    });
+    })
 });
 
 api.get('/period-types', function (req, res) {
@@ -72,7 +72,7 @@ api.get('/users/:user/timesheet/:from/:to', function (req, res) {
 
 api.post('/users/:user/periods', function (req, res) {
     console.log('API POST Request for Period for user', req.params.user);
-    const data = req.body;
+    var data = req.body;
     validateData(data, res);
 
     Period.post(api.get('pg'), req.params.user, data, function (period) {
@@ -83,7 +83,7 @@ api.post('/users/:user/periods', function (req, res) {
 api.put('/users/:user/periods/:id', function (req, res) {
     console.log('API PUT Request for Period', req.params.id, 'for user', req.params.user);
 
-    const data = req.body;
+    var data = req.body;
     if (req.params.id != data.per_id) {
         res.status(400).send('Invalid Id!').end();
     }

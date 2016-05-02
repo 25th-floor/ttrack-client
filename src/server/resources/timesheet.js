@@ -1,11 +1,11 @@
-const _ = require('lodash');
-const moment = require('moment');
+var _ = require('lodash');
+var moment = require('moment');
 
-const Q = require('q');
-const db = require('../db');
-const util = require('../../common/util');
-const period = require('./period');
-const User = require('./user');
+var Q = require('q');
+var db = require('../db');
+var util = require('../../common/util');
+var period = require('./period');
+var User = require('./user');
 
 function fmtDayDate(row) {
     return moment(row.day_date).format('YYYY-MM-DD');
@@ -21,14 +21,14 @@ function hasKeyPrefix(prefix) {
 function getTargetTime(date, user) {
     let day = util.getDayDuration(moment.duration(user.usr_target_time));
 
-    const defaultWeekdayWorktime = {
+    var defaultWeekdayWorktime = {
         hours: day.hours(),
-        minutes: day.minutes(),
+        minutes: day.minutes()
     };
 
     if (parseInt(date.format('E')) < 6)
         return defaultWeekdayWorktime;
-    return { hours: 0 };
+    return {'hours': 0};
 }
 
 /**
@@ -40,13 +40,13 @@ function getTargetTime(date, user) {
  * @returns {*}
  */
 function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
-    const periodQuery = 'SELECT * FROM user_get_day_periods($1, $2::timestamp, $3::timestamp)';
+    var periodQuery = 'SELECT * FROM user_get_day_periods($1, $2::timestamp, $3::timestamp)';
 
-    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(), dateRange.end.toISOString()]).then(function (result) {
-        const grouped = _.groupBy(result.rows, fmtDayDate);
-        const data = _.mapValues(grouped, function (periods) {
+    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(),  dateRange.end.toISOString()]).then(function (result) {
+        var grouped = _.groupBy(result.rows, fmtDayDate);
+        var data = _.mapValues(grouped, function (periods) {
             // pick day fields from first period in list to get all props for the day
-            const day = _.pick(_.first(periods), hasKeyPrefix('day_'));
+            var day = _.pick(_.first(periods), hasKeyPrefix('day_'));
 
             function transformPeriod(data) {
                 // only pick props that *do not* have a "day_" prefix
@@ -54,20 +54,18 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
                 return period.preparePeriodForApiResponse(periodData);
             }
 
-            return _.assign(
-                day,
+            return _.assign(day,
                 {
-                    periods: _.filter(periods.map(transformPeriod), function (p) {
+                    periods: _.filter(periods.map(transformPeriod), function(p) {
                         // filter empty periods
                         return p.per_id !== null;
                     }),
-
                     // calculate remaining target time after reducing holidays and all other non Work durations
                     // todo: maybe this should be done in the database
-                    remaining: function () {
+                    remaining: function() {
                         let duration = _.reduce(periods, function (result, period) {
                             // map period type to period
-                            let type = _.find(periodTypes, function (t) { return t.pty_id == period.per_pty_id; });
+                            let type = _.find(periodTypes, function(t) { return t.pty_id == period.per_pty_id});
 
                             if (!type || type.pty_id == 'Work') {
                                 return result;
@@ -80,16 +78,16 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
 
                         return {
                             hours: duration.get('hours'),
-                            minutes: duration.get('minutes'),
+                            minutes: duration.get('minutes')
                         };
-                    }(),
-                },
+                    }()
+                }
             );
         });
         return {
             days: _.sortBy(_.values(data), function (day) {
                 return moment(day.day_date);
-            }),
+            })
         };
     });
 }
@@ -104,20 +102,20 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
  * @returns {*}
  */
 function calculateCarryData(client, user, until) {
-    const query = 'SELECT * FROM user_calculate_carry_time($1, $2::DATE)';
+    var query = 'SELECT * FROM user_calculate_carry_time($1, $2::DATE)';
 
     return db.query(client, query, [user.usr_id, until]).then(function (result) {
-        const carryData = {
-            carryTime: { hours: 0, minutes: 0 },
+        var carryData = {
+            carryTime: {hours: 0, minutes: 0},
             carryFrom: null,
-            carryTo: null,
+            carryTo: null
         };
 
         if (result.rowCount <= 0) {
             return carryData;
         }
 
-        const data = result.rows[0];
+        var data = result.rows[0];
         if (data.uw_carry_time != null) {
             carryData.carryTime = data.uw_carry_time;
             carryData.carryFrom = data.uw_date_from;
@@ -129,7 +127,7 @@ function calculateCarryData(client, user, until) {
 }
 
 function fetchHolidays(client, userId, dateRange) {
-    const holidayQuery = db.days.select(db.days.star(), db.periods.star())
+    var holidayQuery = db.days.select(db.days.star(), db.periods.star())
         .from(db.days
             .join(db.periods)
             .on(db.periods.per_day_id.equals(db.days.day_id))
@@ -145,7 +143,7 @@ function fetchHolidays(client, userId, dateRange) {
 }
 
 function fetchHolidayPeriodTypeId(client) {
-    const periodTypeQuery = db.periodTypes.select(db.periodTypes.pty_id)
+    var periodTypeQuery = db.periodTypes.select(db.periodTypes.pty_id)
         .from(db.periodTypes)
         .where(db.periodTypes.pty_name.equals('Feiertag'))
         .toQuery();
@@ -155,35 +153,35 @@ function fetchHolidayPeriodTypeId(client) {
 }
 
 function fetchPeriodTypes(client) {
-    const periodTypeQuery = db.periodTypes.select(db.periodTypes.star())
+    var periodTypeQuery = db.periodTypes.select(db.periodTypes.star())
         .from(db.periodTypes)
         .toQuery();
     return db.query(client, periodTypeQuery).then(_.property('rows'));
 }
 
 function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPeriodTypeId) {
-    const expectedHolidays = util.getHolidaysForDateRange(dateRange);
+    var expectedHolidays = util.getHolidaysForDateRange(dateRange);
 
     // omit all holidays that are in the database already
-    const newHolidays = _.omit(expectedHolidays, function (comment, strDate) {
+    var newHolidays = _.omit(expectedHolidays, function (comment, strDate) {
         return existingHolidays.some(function (holiday) {
             return moment(holiday.day_date).format('YYYY-MM-DD') == strDate;
         });
     });
     // and insert the rest
-    const newPeriodPromises = _.map(newHolidays, function (comment, strDate) {
+    var newPeriodPromises = _.map(newHolidays, function (comment, strDate) {
         return Q.Promise(function (resolve) {
-            const date = moment(strDate, 'YYYY-MM-DD').toDate();
+            var date = moment(strDate, 'YYYY-MM-DD').toDate();
             // get user target time for that specific date (handles weekends correct)
-            User.getTargetTime(pg, user.usr_id, date, function (val) {
+            User.getTargetTime(pg, user.usr_id, date, function(val) {
                 let day = moment.duration(val);
                 console.log('adding new Holiday', strDate, comment, val);
-                const newPeriod = {
-                    date,
+                var newPeriod = {
+                    date: date,
                     userId: user.usr_id,
                     per_duration: day.format('hh:mm'),
                     per_comment: comment,
-                    per_pty_id: holidayPeriodTypeId,
+                    per_pty_id: holidayPeriodTypeId
                 };
 
                 period.post(pg, newPeriod.userId, newPeriod, resolve);
@@ -195,22 +193,22 @@ function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPer
 }
 
 function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
-    const userId = user.usr_id;
+    var userId = user.usr_id;
 
     // don't start with range start, but 1 day before for carry data calculation
-    const carryStart = moment(dateRange.start);
+    var carryStart = moment(dateRange.start);
     carryStart.subtract(1, 'days');
 
-    const carryDataPromise = calculateCarryData(client, user, carryStart.toDate());
+    var carryDataPromise = calculateCarryData(client, user, carryStart.toDate());
 
     // fetch existing holidays within dateRange
-    const holidayPromise = fetchHolidays(client, userId, dateRange);
+    var holidayPromise = fetchHolidays(client, userId, dateRange);
 
     // fetch holiday period type
-    const periodTypePromise = fetchHolidayPeriodTypeId(client);
+    var periodTypePromise = fetchHolidayPeriodTypeId(client);
 
     // fetch period types
-    const periodTypesPromise = fetchPeriodTypes(client);
+    var periodTypesPromise = fetchPeriodTypes(client);
 
     Q.all([holidayPromise, periodTypePromise, periodTypesPromise])
         .spread(function (existingHolidays, holidayPeriodTypeId, periodTypes) {
@@ -227,15 +225,15 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
 }
 
 module.exports = {
-    get(pg, userId, fromDate, toDate, cb) {
+    get: function (pg, userId, fromDate, toDate, cb) {
         pg(function (client) {
-            const dateRange = {};
+            var dateRange = {};
             dateRange.start = new Date(fromDate);
             dateRange.end = new Date(toDate);
 
-            User.get(pg, userId, function (user) {
+            User.get(pg, userId, function(user) {
                 getTimesheetForTimeRange(pg, client, user, dateRange, cb);
             });
         });
-    },
+    }
 };
