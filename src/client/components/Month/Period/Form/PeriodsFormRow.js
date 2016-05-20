@@ -10,7 +10,7 @@ import * as periodUtils from '../../../../../common/periodUtils';
 import styles from './less/PeriodsForm.less';
 
 function findType(types, value) {
-    return types.find((type) => type.get('pty_id') === value);
+    return types.find(type => type.get('pty_id') === value);
 }
 
 export default class extends React.Component {
@@ -57,7 +57,7 @@ export default class extends React.Component {
     handleTypeChange(event) {
         const type = findType(this.props.types, event.target.value);
         const cfg = type.get('pty_config').get('types').toJS();
-        const defaultDuration = _.findKey(cfg, (value) => value) || periodUtils.NONE;
+        const defaultDuration = _.findKey(cfg, value => value) || periodUtils.NONE;
 
         const period = this.state.period.merge({
             type,
