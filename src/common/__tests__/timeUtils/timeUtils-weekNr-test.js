@@ -1,9 +1,9 @@
 jest.dontMock('../../timeUtils.js');
 
-const moment = require('moment');
+var moment = require('moment');
 
 describe('timeUtils.weekNr', function() {
-    let timeUtils;
+    var timeUtils;
 
     beforeEach(function() {
         timeUtils = require('../../timeUtils.js');

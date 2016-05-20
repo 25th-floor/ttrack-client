@@ -1,11 +1,11 @@
 jest.dontMock('../../timeUtils.js');
 
-const moment = require('moment');
+var moment = require('moment');
 
 require('jasmine-check').install();
 
 describe('timeUtils.getValidMoment', function() {
-    let timeUtils;
+    var timeUtils;
 
     beforeEach(function() {
         timeUtils = require('../../timeUtils.js');
@@ -23,7 +23,7 @@ describe('timeUtils.getValidMoment', function() {
             expect(timeUtils.getValidMoment('1:2,3')).toBeNull();
             expect(timeUtils.getValidMoment('1.2:3')).toBeNull();
             expect(timeUtils.getValidMoment('0.,:25')).toBeNull();
-            expect(timeUtils.getValidMoment(`${-21}`)).toBeNull();
+            expect(timeUtils.getValidMoment("" + -21)).toBeNull();
         });
 
         describe('returns the correct moment duration', function() {
@@ -35,23 +35,23 @@ describe('timeUtils.getValidMoment', function() {
             });
 
             check.it('is a float string', [gen.map((n) => n[0]/n[1], gen.array([gen.strictPosInt, gen.strictPosInt]))], function (f) {
-                expect(timeUtils.getValidMoment(`${f}`).toJSON()).toEqual(moment.duration(f*60, "minutes").toJSON());
+                expect(timeUtils.getValidMoment("" + f).toJSON()).toEqual(moment.duration(f*60, "minutes").toJSON());
             });
 
             check.it('is a timestring without leading zero  (:<minutes.)', [gen.strictPosInt], function (minutes) {
-                expect(timeUtils.getValidMoment(`:${minutes}`).toJSON()).toEqual(moment.duration(minutes, "minutes").toJSON());
+                expect(timeUtils.getValidMoment(":" + minutes).toJSON()).toEqual(moment.duration(minutes, "minutes").toJSON());
             });
 
             check.it('is a timestring with one leading zero (0:<minutes.)', [gen.strictPosInt], function (minutes) {
-                expect(timeUtils.getValidMoment(`0:${minutes}`).toJSON()).toEqual(moment.duration(minutes, "minutes").toJSON());
+                expect(timeUtils.getValidMoment("0:" + minutes).toJSON()).toEqual(moment.duration(minutes, "minutes").toJSON());
             });
 
             check.it('is a complete timestring', [gen.strictPosInt,gen.strictPosInt], function (hours, minutes) {
-                expect(timeUtils.getValidMoment(`${hours}:${minutes}`).toJSON()).toEqual(moment.duration(hours*60 + minutes, "minutes").toJSON());
+                expect(timeUtils.getValidMoment("" + hours + ":" + minutes).toJSON()).toEqual(moment.duration(hours*60 + minutes, "minutes").toJSON());
             });
 
             check.it('is just a string number', [gen.strictPosInt], function (number) {
-                expect(timeUtils.getValidMoment(`${number}`).toJSON()).toEqual(moment.duration(number, "hours").toJSON());
+                expect(timeUtils.getValidMoment("" + number).toJSON()).toEqual(moment.duration(number, "hours").toJSON());
             });
         });
     });

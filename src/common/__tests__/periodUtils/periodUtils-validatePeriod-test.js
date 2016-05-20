@@ -5,7 +5,7 @@ import Immutable from 'immutable';
 require('jasmine-check').install();
 
 describe('periodUtils', function() {
-    let periodUtils;
+    var periodUtils;
 
     beforeEach(function() {
         periodUtils = require('../../periodUtils.js');
@@ -63,39 +63,47 @@ describe('periodUtils', function() {
         describe('if there is an endtime', function() {
             it('returns false if endtime is before starttime', function() {
                 expect(periodUtils.validatePeriod(
-                    Immutable.Map(Immutable.fromJS({
-                        per_start: {hours: 8, minutes: 45},
-                        per_stop: {hours: 8},
-                    })))
+                    Immutable.Map(Immutable.fromJS(
+                        {
+                            per_start: {hours: 8, minutes: 45},
+                            per_stop: {hours: 8}
+                        }
+                    )))
                 ).toBeFalsy();
             });
 
             it('returns true if endtime is after starttime', function() {
                 expect(periodUtils.validatePeriod(
-                    Immutable.Map(Immutable.fromJS({
-                        per_start: {hours: 8, minutes: 45},
-                        per_stop: {hours: 9},
-                    })))
+                    Immutable.Map(Immutable.fromJS(
+                        {
+                            per_start: {hours: 8, minutes: 45},
+                            per_stop: {hours: 9}
+                        }
+                    )))
                 ).toBeTruthy();
             });
 
             it('returns false if there is a breaktime and it is invalid', function() {
                 expect(periodUtils.validatePeriod(
-                    Immutable.Map(Immutable.fromJS({
-                        per_start: {hours: 8},
-                        per_stop: {hours: 9},
-                        per_break: {hours: 2},
-                    })))
+                    Immutable.Map(Immutable.fromJS(
+                        {
+                            per_start: {hours: 8},
+                            per_stop: {hours: 9},
+                            per_break: {hours: 2}
+                        }
+                    )))
                 ).toBeFalsy();
             });
 
             it('returns true if there is a breaktime and it valid', function() {
                 expect(periodUtils.validatePeriod(
-                    Immutable.Map(Immutable.fromJS({
-                        per_start: {hours: 8},
-                        per_stop: {hours: 9},
-                        per_break: {minutes: 30},
-                    })))
+                    Immutable.Map(Immutable.fromJS(
+                        {
+                            per_start: {hours: 8},
+                            per_stop: {hours: 9},
+                            per_break: {minutes: 30}
+                        }
+                    )))
                 ).toBeTruthy();
             });
 

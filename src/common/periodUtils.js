@@ -1,3 +1,5 @@
+'use strict';
+
 import * as timeUtils from './timeUtils';
 import moment from 'moment';
 import Immutable from 'immutable';
@@ -14,9 +16,9 @@ export const FULLDAY = 'fullday';
  * Duration Config
  */
 export const durationConfig = [
-    { name: PERIOD, description: 'Zeitraum' },
-    { name: FULLDAY, description: 'Ganzer Tag' },
-    { name: HALFDAY, description: 'Halber Tag' },
+    {name: PERIOD, description: 'Zeitraum'},
+    {name: FULLDAY, description: 'Ganzer Tag'},
+    {name: HALFDAY, description: 'Halber Tag'}
 ];
 
 /**
@@ -41,7 +43,7 @@ export function calculateDuration(period, fullDay) {
 
     if (name == FULLDAY) return timeUtils.getDateObjectFromMomentDuration(fullDay);
     if (name == HALFDAY) return timeUtils.getDateObjectFromMomentDuration(halfDay);
-    if (name == NONE) return { hours: 0 };
+    if (name == NONE) return {hours: 0};
 
     let duration = {};
 
@@ -89,8 +91,8 @@ export function isOverlapping(periods) {
     periods = periods.toList();
 
     return !periods.every((period, index) => {
-        const startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
-        const stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
+        var startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
+        var stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
 
         // if no startTime then there is nothing to do
         if (startTime == null) return true;
@@ -99,8 +101,8 @@ export function isOverlapping(periods) {
             // don't check myself
             if (i == index) return true;
 
-            const pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
-            const pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
+            var pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
+            var pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
 
             // if no startTime then there is nothing to do
             if (pStartTime == null) return true;
@@ -129,11 +131,11 @@ export function getAllErrors(period) {
     if (period.get('duration') === FULLDAY) return [];
     if (period.get('duration') === HALFDAY) return [];
 
-    let startTime = period.get('per_start');
-    let endTime = period.get('per_stop');
-    const breakTime = period.get('per_break') || false;
+    var startTime = period.get('per_start');
+    var endTime = period.get('per_stop');
+    var breakTime = period.get('per_break') || false;
 
-    const errors = [];
+    var errors = [];
 
     if (!startTime) {
         errors.push('Die Startzeit muss angegeben werden!');
@@ -161,12 +163,12 @@ export function validatePeriod(period) {
     if (period.get('duration') === HALFDAY) return true;
 
     // if there is no duration needed, don't ask for one (comment type for example)
-    const typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
+    var typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
     if (period.get('duration') === NONE && !typeConfig.every((t) => t)) return true;
 
-    let startTime = period.get('per_start');
-    let endTime = period.get('per_stop');
-    const breakTime = period.get('per_break') || false;
+    var startTime = period.get('per_start');
+    var endTime = period.get('per_stop');
+    var breakTime = period.get('per_break') || false;
 
     if (!startTime) return false;
 
