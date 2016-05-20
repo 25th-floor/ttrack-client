@@ -1,6 +1,5 @@
 import React from 'react';
 
-import _ from 'lodash';
 import moment from 'moment';
 import classSet from 'class-set';
 import Immutable from 'immutable';
@@ -10,6 +9,12 @@ import * as timeUtils from '../../../../common/timeUtils';
 import styles from './less/DatePicker.less';
 
 export default class extends React.Component {
+    static propTypes = {
+        activeMonth: React.PropTypes.object.isRequired,
+        years: React.PropTypes.instanceOf(Immutable.List).isRequired,
+        onChangeDate: React.PropTypes.func.isRequired,
+    };
+
     constructor(props, context) {
         super(props, context);
         this.handleToday = this.handleToday.bind(this);
@@ -22,19 +27,13 @@ export default class extends React.Component {
         };
     }
 
-    static propTypes = {
-        activeMonth: React.PropTypes.object.isRequired,
-        years: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        onChangeDate: React.PropTypes.func.isRequired,
-    };
+    handleToday() {
+        this.props.onChangeDate(this.state.today);
+    }
 
     selectYear(year) {
         const date = this.props.activeMonth.clone().year(year.format('YYYY'));
         this.props.onChangeDate(date);
-    }
-
-    handleToday() {
-        this.props.onChangeDate(this.state.today);
     }
 
     renderYearItem(year, index) {
@@ -49,17 +48,21 @@ export default class extends React.Component {
         const yearNumber = year.format('YY');
         const yearShort = year.format(format);
 
+        const onSelectYear = this.selectYear.bind(this, year);
+
         return (
             <li className={className} key={index}>
-                <a onClick={this.selectYear.bind(this, year)}> <span className={styles.number}>{yearNumber}</span> <span
-                    className={styles.short}>{yearShort}</span> </a>
+                <a onClick={onSelectYear}>
+                    <span className={styles.number}>{yearNumber}</span>
+                    <span className={styles.short}>{yearShort}</span>
+                </a>
             </li>
         );
     }
 
     renderTodayButton() {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
-            return;
+            return '';
         }
 
         return (
@@ -84,5 +87,3 @@ export default class extends React.Component {
         );
     }
 }
-
-

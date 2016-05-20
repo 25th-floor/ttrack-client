@@ -1,7 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
-import momentDuration from 'moment-duration-format';
 import classSet from 'class-set';
 
 import Period from './Period';
@@ -11,14 +10,6 @@ import * as timeUtils from './../../../common/timeUtils';
 import styles from './less/Day.less';
 
 export default class extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.onSave = this.onSave.bind(this);
-        this.state = { edit: false };
-    }
-
     static propTypes = {
         day: React.PropTypes.instanceOf(Immutable.Map).isRequired,
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
@@ -27,13 +18,21 @@ export default class extends React.Component {
         onSaveDay: React.PropTypes.func.isRequired,
     };
 
-    handleEditClick(event) {
+    constructor(props, context) {
+        super(props, context);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleEditClick = this.handleEditClick.bind(this);
+        this.onSave = this.onSave.bind(this);
+        this.state = { edit: false };
+    }
+
+    handleEditClick() {
         // don't var user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
     }
 
-    handleCancel(event) {
+    handleCancel() {
         this.setState({ edit: false });
     }
 
@@ -62,7 +61,7 @@ export default class extends React.Component {
 
         // hide target time diff if there is no workDuration isToday
         // aka don't start with a negative value into the day
-        if ((isToday || isFuture) && day.get('workDuration').asSeconds() == 0) {
+        if ((isToday || isFuture) && day.get('workDuration').asSeconds() === 0) {
             diffDuration = '';
         }
 
@@ -76,7 +75,10 @@ export default class extends React.Component {
             isToday ? styles.dayCurrent : null
         );
 
-        const showDurations = day.get('workDuration') != 0 || day.get('remaining') != 0 || day.get('breakDuration') != 0;
+        const showDurations =
+            day.get('workDuration') !== 0 ||
+            day.get('remaining') !== 0 ||
+            day.get('breakDuration') !== 0;
 
         const durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
             diff.as('ms') >= 0 ? styles['text-success'] : null,
@@ -85,9 +87,9 @@ export default class extends React.Component {
 
         let durationBlock = <dl>
             <dt>Arbeitszeit</dt>
-            <dd className="col-sm-1 hidden-xs col-lg-1">{day.get('workDuration') != 0 ? workDuration : null}</dd>
+            <dd className="col-sm-1 hidden-xs col-lg-1">{day.get('workDuration') !== 0 ? workDuration : null}</dd>
             <dt>Pause</dt>
-            <dd className="col-sm-1 hidden-xs tt-col-lg-1">{day.get('breakDuration') != 0 ? breakDuration : null}</dd>
+            <dd className="col-sm-1 hidden-xs tt-col-lg-1">{day.get('breakDuration') !== 0 ? breakDuration : null}</dd>
             <dt>Differenz</dt>
             <dd className={durationClass}>{diffDuration}</dd>
         </dl>;
@@ -96,8 +98,12 @@ export default class extends React.Component {
             durationBlock = <div className="col-xs-2 col-sm-3 col-lg-3 tt-col-lg-3"></div>;
         }
 
+        const onSaveDate = this.onSave.bind(this, date);
+
         return (
-            <fieldset className={className} key={fullDate} onClick={dateOutOfEmploymentScope ? null : this.handleEditClick}>
+            <fieldset className={className} key={fullDate}
+                onClick={dateOutOfEmploymentScope ? null : this.handleEditClick}
+            >
                 <legend>
                     Tag {fullDate}
                 </legend>
@@ -116,8 +122,9 @@ export default class extends React.Component {
                 {durationBlock}
 
                 {edit ? <PeriodsForm periods={day.get('periods')} types={this.props.types} date={date}
-                                     dayTargetTime={day.get('day_target_time')}
-                                     onCancel={this.handleCancel} onSave={this.onSave.bind(this, date)} />
+                    dayTargetTime={day.get('day_target_time')}
+                    onCancel={this.handleCancel} onSave={onSaveDate}
+                />
                     : <Period periods={day.get('periods')} />}
 
             </fieldset>
@@ -125,5 +132,3 @@ export default class extends React.Component {
         );
     }
 }
-
-

@@ -24,9 +24,10 @@ export default class extends React.Component {
                     <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
 
                     <DatePicker activeMonth={this.props.activeMonth}
-                                months={this.props.months}
-                                years={this.props.years}
-                                onChangeDate={this.props.onChangeDate} />
+                        months={this.props.months}
+                        years={this.props.years}
+                        onChangeDate={this.props.onChangeDate}
+                    />
 
                     <div className="clearfix"></div>
                 </div>
@@ -43,10 +44,9 @@ export default class extends React.Component {
                 </fieldset>
 
                 <Weeks weeks={this.props.weeks} activeMonth={this.props.activeMonth} types={this.props.types}
-                       user={this.props.user} onSaveDay={this.props.onSaveDay} />
+                    user={this.props.user} onSaveDay={this.props.onSaveDay}
+                />
             </div>
         );
     }
 }
-
-

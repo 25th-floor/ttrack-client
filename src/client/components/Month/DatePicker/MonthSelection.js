@@ -1,26 +1,22 @@
 import React from 'react';
 
-import _ from 'lodash';
-import moment from 'moment';
 import classSet from 'class-set';
 import Immutable from 'immutable';
-
-import * as timeUtils from '../../../../common/timeUtils';
 
 import styles from './less/DatePicker.less';
 
 export default class extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.renderMonthItem = this.renderMonthItem.bind(this);
-        this.selectMonth = this.selectMonth.bind(this);
-    }
-
     static propTypes = {
         activeMonth: React.PropTypes.object.isRequired,
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
     };
+
+    constructor(props, context) {
+        super(props, context);
+        this.renderMonthItem = this.renderMonthItem.bind(this);
+        this.selectMonth = this.selectMonth.bind(this);
+    }
 
     selectMonth(month) {
         const date = this.props.activeMonth.clone().month(month.format('MMMM'));
@@ -38,10 +34,15 @@ export default class extends React.Component {
         const monthShort = month.format('MMM');
         const monthFull = month.format('MMMM');
 
+        const onSelectMonth = this.selectMonth.bind(this, month);
+
         return (
             <li className={className} key={index}>
-                <a onClick={this.selectMonth.bind(this, month)}> <span className={styles.number}>{monthNumber}</span> <span
-                    className={styles.short}>{monthShort}</span> <span className={styles.full}>{monthFull}</span> </a>
+                <a onClick={onSelectMonth}>
+                    <span className={styles.number}>{monthNumber}</span>
+                    <span className={styles.short}>{monthShort}</span>
+                    <span className={styles.full}>{monthFull}</span>
+                </a>
             </li>
         );
     }
@@ -59,5 +60,3 @@ export default class extends React.Component {
         );
     }
 }
-
-
