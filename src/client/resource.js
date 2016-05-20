@@ -31,7 +31,7 @@ function cancelRequest(req) {
         req.cancel();
     } else if (req.canceled !== true) {
         // req not initialized -> precancel
-        req.canceled = true;
+        req.canceled = true; // eslint-disable-line no-param-reassign
     } else {
         throw new Error('unexpected request state');
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
-import momentDuration from 'moment-duration-format';
+import momentDuration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
 
 import PeriodComment from './PeriodComment';
 import * as timeUtils from './../../../../common/timeUtils';
