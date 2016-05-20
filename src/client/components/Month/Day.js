@@ -75,10 +75,7 @@ export default class extends React.Component {
             isToday ? styles.dayCurrent : null
         );
 
-        const showDurations =
-            day.get('workDuration') !== 0 ||
-            day.get('remaining') !== 0 ||
-            day.get('breakDuration') !== 0;
+        const showDurations = day.get('workDuration') != 0 || day.get('remaining') != 0 || day.get('breakDuration') != 0;
 
         const durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
             diff.as('ms') >= 0 ? styles['text-success'] : null,
@@ -87,9 +84,9 @@ export default class extends React.Component {
 
         let durationBlock = <dl>
             <dt>Arbeitszeit</dt>
-            <dd className="col-sm-1 hidden-xs col-lg-1">{day.get('workDuration') !== 0 ? workDuration : null}</dd>
+            <dd className="col-sm-1 hidden-xs col-lg-1">{day.get('workDuration') != 0 ? workDuration : null}</dd>
             <dt>Pause</dt>
-            <dd className="col-sm-1 hidden-xs tt-col-lg-1">{day.get('breakDuration') !== 0 ? breakDuration : null}</dd>
+            <dd className="col-sm-1 hidden-xs tt-col-lg-1">{day.get('breakDuration') != 0 ? breakDuration : null}</dd>
             <dt>Differenz</dt>
             <dd className={durationClass}>{diffDuration}</dd>
         </dl>;
