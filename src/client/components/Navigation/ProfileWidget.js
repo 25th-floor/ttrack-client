@@ -19,12 +19,10 @@ export default class extends React.Component {
                     <img src={imgSrc} />
                 </div>
                 <div className={styles.name}>
-                    <span className="firstname">{activeUser.get('usr_firstname')} </span> <span
-                    className="lastname">{activeUser.get('usr_lastname')}</span>
+                    <span className="firstname">{activeUser.get('usr_firstname')} </span>
+                    <span className="lastname">{activeUser.get('usr_lastname')}</span>
                 </div>
             </div>
         );
     }
 }
-
-

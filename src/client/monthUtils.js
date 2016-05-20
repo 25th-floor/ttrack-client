@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Immutable from 'immutable';
 import moment from 'moment';
 import { durationOfWork, durationOfBreak, weekNr, sumDuration } from '../common/timeUtils';
@@ -15,27 +14,28 @@ function processDay(day) {
         remainingUntilToday: date <= today ? remaining : moment.duration(),
         workDuration: sumDuration(day.get('periods').map(per => durationOfWork(per.toJS()))),
         breakDuration: sumDuration(day.get('periods').map(per => durationOfBreak(per.toJS()))),
-        isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(period => (!!period.get('per_start') == !!period.get('per_stop'))),
+        isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(
+            period => (!!period.get('per_start') === !!period.get('per_stop'))
+        ),
     });
 }
 
 export function createWeeks(days, carryTime) {
-
     const carry = moment.duration(carryTime);
     return days
         .map(processDay)
         .groupBy(day => day.get('weekNr'))
-        .map((days, weekNr) => {
-            const workDuration = sumDuration(days.map(day => day.get('workDuration')));
-            const targetDuration = sumDuration(days.map(day => day.get('remaining')));
-            const targetDurationUntilToday = sumDuration(days.map(day => day.get('remainingUntilToday')));
+        .map((weekDays, weekNumber) => {
+            const workDuration = sumDuration(weekDays.map(day => day.get('workDuration')));
+            const targetDuration = sumDuration(weekDays.map(day => day.get('remaining')));
+            const targetDurationUntilToday = sumDuration(weekDays.map(day => day.get('remainingUntilToday')));
             const diff = moment.duration(workDuration).subtract(targetDuration);
             const diffUntilToday = moment.duration(workDuration).subtract(targetDurationUntilToday);
             carry.add(diff);
 
-            return Immutable.Map({
-                days,
-                weekNr,
+            return new Immutable.Map({
+                weekDays,
+                weekNumber,
                 workDuration,
                 targetDuration,
                 diff,

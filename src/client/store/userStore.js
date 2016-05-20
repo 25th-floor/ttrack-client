@@ -10,7 +10,7 @@ export default function (onChange) {
     const notify = () => onChange ? onChange() : null;
     return {
         init() {
-            return users.load().then(function () {
+            return users.load().then(() => {
                 if (activeUserId) {
                     activeUser = users.list().find(user => user.get('usr_id') === activeUserId);
                 }

@@ -12,7 +12,7 @@ function dispatchRouter() {
 }
 
 function activeMonthFromRoute(route) {
-    if (route && route.$name == 'month' && route.$params.month) {
+    if (route && route.$name === 'month' && route.$params.month) {
         // todo : check if month is valid!
         return moment(route.$params.month, 'YYYY-MM', true);
     } else {
@@ -21,7 +21,6 @@ function activeMonthFromRoute(route) {
 }
 
 export default function (onChange) {
-
     const notify = () => onChange ? onChange() : null;
     let activeMonth = timeUtils.getMomentToday();
 

@@ -1,9 +1,5 @@
 import React from 'react';
 import Immutable from 'immutable';
-import _ from 'lodash';
-import moment from 'moment';
-import momentDuration from 'moment-duration-format';
-import classSet from 'class-set';
 
 import * as periodUtils from '../../../../common/periodUtils';
 
@@ -16,7 +12,7 @@ export default class extends React.Component {
 
     render() {
         const period = this.props.period;
-        const isPeriodDuration = period.get('duration') == periodUtils.PERIOD;
+        const isPeriodDuration = period.get('duration') === periodUtils.PERIOD;
         let comment = period.get('per_comment');
 
         if (!comment || !comment.length) {
@@ -37,8 +33,9 @@ export default class extends React.Component {
         return (
             <span className={styles.periodComment}>
                 <span key={period.get('per_id')} className="badge badge-primary"
-                      style={style}
-                      title={name}>
+                    style={style}
+                    title={name}
+                >
                     <i className={iconClassName}></i>
                 </span>
                 <span className={`${styles.comment} hidden-xs`}>{comment}</span>
@@ -46,5 +43,3 @@ export default class extends React.Component {
         );
     }
 }
-
-

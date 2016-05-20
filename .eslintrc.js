@@ -10,6 +10,6 @@ module.exports = {
         }],
         'react/prop-types': [2, { ignore: ['children'] }],
         'no-use-before-define': 0,
-        'no-console': [1, { allow: ["error"] }],
+        'no-console': [1, { allow: ["error", "info"] }],
     }
 };

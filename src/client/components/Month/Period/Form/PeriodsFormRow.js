@@ -2,25 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import moment from 'moment';
-import momentDuration from 'moment-duration-format';
+import _ from 'lodash';
 
-import PeriodComment from '../PeriodComment';
 import TimeInput from '../../../TimeInput';
 import * as periodUtils from '../../../../../common/periodUtils';
-import * as timeUtils from '../../../../../common/timeUtils';
 
 import styles from './less/PeriodsForm.less';
 
-function getDurationObject(immutable) {
-    if (immutable == null) return immutable;
-    return immutable.toJS();
-}
-
 function findType(types, value) {
-    return types.find((type) => type.get('pty_id') == value);
+    return types.find((type) => type.get('pty_id') === value);
 }
 
 export default class extends React.Component {
+    static propTypes = {
+        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
+        index: React.PropTypes.number.isRequired,
+        onRemove: React.PropTypes.func.isRequired,
+        onUpdate: React.PropTypes.func.isRequired,
+    };
+
     constructor(props, context) {
         super(props, context);
         this.handleComment = this.handleComment.bind(this);
@@ -47,31 +49,9 @@ export default class extends React.Component {
         this.state = { period };
     }
 
-    static propTypes = {
-        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        index: React.PropTypes.number.isRequired,
-        onRemove: React.PropTypes.func.isRequired,
-        onUpdate: React.PropTypes.func.isRequired,
-    };
-
     componentDidMount() {
         // focus on select on first creation
         ReactDOM.findDOMNode(this.refs.selectType).focus();
-    }
-
-    updateState(period) {
-        // add duration per_duration object if needed
-        period = period.merge(this.addDurationTime(period));
-        this.props.onUpdate(period);
-        this.setState({ period });
-    }
-
-    addDurationTime(period) {
-        return period.merge({
-            per_duration : periodUtils.calculateDuration(period, this.props.dayTargetTime),
-        });
     }
 
     handleTypeChange(event) {
@@ -92,7 +72,7 @@ export default class extends React.Component {
         });
 
         // if duration type is not period, remove it
-        if (event.target.value != periodUtils.PERIOD) {
+        if (event.target.value !== periodUtils.PERIOD) {
             period = period.merge({
                 per_start: null,
                 per_stop: null,
@@ -118,6 +98,19 @@ export default class extends React.Component {
         this.updateState(period);
     }
 
+    addDurationTime(period) {
+        return period.merge({
+            per_duration: periodUtils.calculateDuration(period, this.props.dayTargetTime),
+        });
+    }
+
+    updateState(period) {
+        // add duration per_duration object if needed
+        const updatedPeriod = period.merge(this.addDurationTime(period));
+        this.props.onUpdate(updatedPeriod);
+        this.setState({ updatedPeriod });
+    }
+
     renderSelectOption(type) {
         return (
             <option value={type.get('pty_id')} key={type.get('pty_id')}>{type.get('pty_name')}</option>
@@ -130,8 +123,10 @@ export default class extends React.Component {
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
                 <label htmlFor={id} className="radio-inline">
-                    <input type="radio" name={ `${elementName}[duration]` } id={id} value={duration.name} checked={duration.name == value}
-                           onChange={this.handleDurationChange} />
+                    <input type="radio" name={ `${elementName}[duration]` } id={id} value={duration.name}
+                        checked={duration.name === value}
+                        onChange={this.handleDurationChange}
+                    />
                     {duration.description}
                 </label>
             </div>
@@ -155,14 +150,14 @@ export default class extends React.Component {
 
         const elementName = `period-${period.get('per_id') ? period.get('per_id') : this.props.index}`;
 
-        const cfg = period.getIn(['type', 'pty_config', 'types']) || Immutable.Map();
+        const cfg = period.getIn(['type', 'pty_config', 'types']) || new Immutable.Map();
 
-        const durations = periodUtils.durationConfig.filter((d) => cfg.get(d.name) == true);
+        const durations = periodUtils.durationConfig.filter(d => cfg.get(d.name) === true);
 
         let periodElements = [];
         const elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
         const comment = { name: `${elementName}[per_comment]`, className: 'controls col-xs-12 col-lg-8' };
-        if (period.get('duration') == periodUtils.PERIOD) {
+        if (period.get('duration') === periodUtils.PERIOD) {
             periodElements = [{
                 id: 'per_start',
                 label: 'Startzeit',
@@ -199,11 +194,19 @@ export default class extends React.Component {
             <div className={styles.row} key={period.get('per_id')}>
                 {!isValid ? this.renderErrorMessages() : ''}
 
-                <div className="pull-right"><a onClick={this.props.onRemove}><i className="fa fa-trash text-danger" /></a></div>
+                <div className="pull-right">
+                    <a onClick={this.props.onRemove}>
+                        <i className="fa fa-trash text-danger" />
+                    </a>
+                </div>
                 <div className="row">
                     <label className="col-xs-12 col-sm-3 col-lg-2">
-                        <select className="col-xs-12 form-control" name={`${elementName}[pty_id]`} value={period.getIn(['type', 'pty_id'])} onChange={this.handleTypeChange}
-                                ref="selectType">
+                        <select className="col-xs-12 form-control"
+                            name={`${elementName}[pty_id]`}
+                            value={period.getIn(['type', 'pty_id'])}
+                            onChange={this.handleTypeChange}
+                            ref="selectType"
+                        >
                             {this.props.types.toList().map(this.renderSelectOption)}
                         </select>
                     </label>
@@ -213,15 +216,18 @@ export default class extends React.Component {
 
                 <div className="row">
                     {periodElements.map((p, index) => <TimeInput id={p.id} label={p.label} name={p.name}
-                                                                 css={p.className} placeholder={p.placeholder}
-                                                                 time={p.value} required={p.required} key={index}
-                                                                 round={p.round}
-                                                                 onChange={this.handleTimeChange} />)}
+                        css={p.className} placeholder={p.placeholder}
+                        time={p.value} required={p.required} key={index}
+                        round={p.round}
+                        onChange={this.handleTimeChange}
+                    />)}
 
                     <div className={comment.className}>
                         <label htmlFor={comment.name}>Kommentar</label>
                         <input type="text" placeholder="Kommentar" className="form-control"
-                               name={comment.name} id={comment.name} value={period.get('per_comment')} onChange={this.handleComment} />
+                            name={comment.name} id={comment.name} value={period.get('per_comment')}
+                            onChange={this.handleComment}
+                        />
                     </div>
                 </div>
 
@@ -229,5 +235,3 @@ export default class extends React.Component {
         );
     }
 }
-
-

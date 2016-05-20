@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const rest = require('rest');
 const mime = require('rest/interceptor/mime');
 const mimeReg = require('rest/mime/registry');
@@ -10,11 +9,11 @@ const myro = require('myro');
 mimeReg.register(
     'application/json',
     {
-        read(str, opts) {
+        read(str) {
             return Immutable.fromJS(JSON.parse(str));
         },
 
-        write(obj, opts) {
+        write(obj) {
             return JSON.stringify(obj.toJS());
         },
     }
@@ -40,15 +39,15 @@ function cancelRequest(req) {
 
 function save(method, uri, obj) {
     return client({ method, path: uri, entity: obj, headers: { 'Content-Type': 'application/json' } })
-        .then(function (response) {
-            console.log('response', response);
+        .then(response => {
+            console.info('response', response);
             return response.entity;
         });
 }
 
 function collection(uri) {
     const route = myro({ [uri]: 'uri' });
-    let _data = Immutable.List();
+    let _data = new Immutable.List();
     let req = null;
     return {
         load() {
@@ -75,7 +74,7 @@ function collection(uri) {
 
 function single(uri) {
     const route = myro({ [uri]: 'uri' });
-    let _data = Immutable.Map();
+    let _data = new Immutable.Map();
     let req = null;
     return {
         load(params) {
@@ -99,9 +98,13 @@ function single(uri) {
         },
 
         remove(params) {
-            return client({ method: 'delete', path: route.uri(params), headers: { 'Content-Type': 'application/json' } })
-                .then(function (response) {
-                    console.log('delete response', response);
+            return client({
+                method: 'delete',
+                path: route.uri(params),
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(response => {
+                    console.info('delete response', response);
                     return response;
                 });
         },

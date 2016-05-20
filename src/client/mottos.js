@@ -63,5 +63,5 @@ export default [
     { house: 'House Westerling of the Crag', motto: 'Honor, not Honors' },
     { house: 'House Wode', motto: 'Touch Me Not' },
     { house: 'House Wydman', motto: 'Right Conquers Might' },
-    { house: 'House Yronwood of Yronwood', motto: 'We Guard the Way' }
+    { house: 'House Yronwood of Yronwood', motto: 'We Guard the Way' },
 ];
