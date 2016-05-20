@@ -9,3 +9,5 @@
 src/server/**/*
 # Ignore import
 src/import/**/*
+# Ignore common
+src/common/**/*
