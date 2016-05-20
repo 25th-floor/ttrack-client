@@ -38,7 +38,7 @@ export default class extends React.Component {
             {
                 'text-success': delta.as('ms') >= 0,
                 'text-danger': delta.as('ms') < 0,
-            },
+            }
         );
         return <dd className={className}>{str}</dd>;
     }

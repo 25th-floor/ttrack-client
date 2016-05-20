@@ -17,7 +17,7 @@ mimeReg.register(
         write(obj, opts) {
             return JSON.stringify(obj.toJS());
         },
-    },
+    }
 );
 
 const client = rest.wrap(mime).wrap(errorCode);
