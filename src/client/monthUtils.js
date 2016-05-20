@@ -34,8 +34,8 @@ export function createWeeks(days, carryTime) {
             carry.add(diff);
 
             return new Immutable.Map({
-                weekDays,
-                weekNumber,
+                days: weekDays,
+                weekNr: weekNumber,
                 workDuration,
                 targetDuration,
                 diff,
