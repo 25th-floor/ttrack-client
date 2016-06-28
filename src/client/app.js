@@ -1,5 +1,3 @@
-'use strict';
-
 // add styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootflat/bootflat/css/bootflat.min.css';
@@ -24,22 +22,22 @@ import Login from './components/Login';
 import Month from './components/Month';
 
 // EXTERNAL DEPENDENCY, maybe there is another way?
-var buildInfo = BUILD_INFO;
+const buildInfo = global.BUILD_INFO || {};
 
-let motto = _.sample(mottos);
-let users = userStore(renderApp);
-let timesheet = timesheetStore(renderApp);
-let nav = navStore(() => {
+const motto = _.sample(mottos);
+const users = userStore(renderApp);
+const timesheet = timesheetStore(renderApp);
+const nav = navStore(() => {
     loadTimesheet();
     renderApp();
 });
 
 function loadTimesheet() {
-    let activeMonth = nav.getActiveMonth();
-    let activeUser = users.getActiveUser();
+    const activeMonth = nav.getActiveMonth();
+    const activeUser = users.getActiveUser();
 
     // check if activeMonth is out of scope of employment or too far in the future
-    let found = timeUtils.getNearestDateWithinEmployment(activeMonth, activeUser);
+    const found = timeUtils.getNearestDateWithinEmployment(activeMonth, activeUser);
     if (found) {
         changeDate(found);
         return;
@@ -72,18 +70,21 @@ function saveDay(date, periods, removed) {
 function renderMainComponent() {
     if (!users.getActiveUser()) {
         return (
-            <Login motto={motto}
-                   users={users.getUsers()}
-                   onUserSelect={login}
-                   build={buildInfo} />
+            <Login
+                motto={motto}
+                users={users.getUsers()}
+                onUserSelect={login}
+                build={buildInfo}
+            />
         );
     }
 
     return (
         <App user={users.getActiveUser()}
-             motto={motto}
-             logout={logout}
-             build={buildInfo}>
+            motto={motto}
+            onLogout={logout}
+            build={buildInfo}
+        >
             <Month
                 user={users.getActiveUser()}
                 activeMonth={nav.getActiveMonth()}
@@ -92,7 +93,8 @@ function renderMainComponent() {
                 weeks={timesheet.getTimesheet()}
                 types={timesheet.getTypes()}
                 onChangeDate={changeDate}
-                onSaveDay={saveDay}/>
+                onSaveDay={saveDay}
+            />
         </App>
     );
 }
@@ -111,11 +113,11 @@ function initApp() {
 initApp();
 
 // check if time has changed and if it has, move along and reload everything (this helps with the calculations)
-let today = moment().format("YYYY-MM-DD");
-//setInterval(renderApp, 5000); // just rerender every 5 seconds
-setInterval(function() {
-    var now = moment().format("YYYY-MM-DD");
-    if (today == now) return;
+let today = moment().format('YYYY-MM-DD');
+// setInterval(renderApp, 5000); // just rerender every 5 seconds
+setInterval(() => {
+    const now = moment().format('YYYY-MM-DD');
+    if (today === now) return;
     today = now;
 
     timesheet.resetTimesheet();

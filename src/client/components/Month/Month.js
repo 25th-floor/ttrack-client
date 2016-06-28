@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import Immutable from 'immutable';
 import DatePicker from './DatePicker';
@@ -7,8 +5,8 @@ import Weeks from './Weeks';
 
 import styles from './less/Month.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
         weeks: React.PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -16,18 +14,20 @@ export default React.createClass({
         months: React.PropTypes.instanceOf(Immutable.List).isRequired,
         years: React.PropTypes.instanceOf(Immutable.List).isRequired,
         onChangeDate: React.PropTypes.func.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired
-    },
-    render: function() {
+        onSaveDay: React.PropTypes.func.isRequired,
+    };
+
+    render() {
         return (
             <div id={styles.month}>
                 <div className={styles.pageHeader}>
                     <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
 
                     <DatePicker activeMonth={this.props.activeMonth}
-                                months={this.props.months}
-                                years={this.props.years}
-                                onChangeDate={this.props.onChangeDate}/>
+                        months={this.props.months}
+                        years={this.props.years}
+                        onChangeDate={this.props.onChangeDate}
+                    />
 
                     <div className="clearfix"></div>
                 </div>
@@ -44,10 +44,9 @@ export default React.createClass({
                 </fieldset>
 
                 <Weeks weeks={this.props.weeks} activeMonth={this.props.activeMonth} types={this.props.types}
-                       user={this.props.user} onSaveDay={this.props.onSaveDay}/>
+                    user={this.props.user} onSaveDay={this.props.onSaveDay}
+                />
             </div>
         );
     }
-});
-
-
+}

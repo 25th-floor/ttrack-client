@@ -1,9 +1,5 @@
-'use strict';
-
 import React from 'react';
 import Immutable from 'immutable';
-import _ from 'lodash';
-import moment from 'moment';
 import classSet from 'class-set';
 
 import Day from './Day';
@@ -11,47 +7,62 @@ import * as timeUtils from './../../../common/timeUtils';
 
 import styles from './less/Weeks.less';
 
-export default React.createClass({
-    propTypes: {
+export default class extends React.Component {
+    static propTypes = {
         weeks: React.PropTypes.instanceOf(Immutable.Map).isRequired,
         types: React.PropTypes.instanceOf(Immutable.List).isRequired,
         user: React.PropTypes.object.isRequired,
         activeMonth: React.PropTypes.object.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired
-    },
-    renderDayItem: function(day) {
+        onSaveDay: React.PropTypes.func.isRequired,
+    };
+
+    constructor(props, context) {
+        super(props, context);
+        this.renderDayItem = this.renderDayItem.bind(this);
+        this.renderWeekItem = this.renderWeekItem.bind(this);
+    }
+
+    renderDayItem(day) {
         return (
             <Day day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
-                 user={this.props.user} onSaveDay={this.props.onSaveDay}/>
+                user={this.props.user} onSaveDay={this.props.onSaveDay}
+            />
         );
-    },
-    renderDeltaItem: function(classes, delta) {
-        let str = delta.format('hh:mm', {trim: false});
-        let className = classSet(classes || '', {
-            'text-success': delta.as('ms') >= 0,
-            'text-danger': delta.as('ms') < 0
-        });
+    }
+
+    renderDeltaItem(classes, delta) {
+        const str = delta.format('hh:mm', { trim: false });
+        const className = classSet(
+            classes || '',
+            {
+                'text-success': delta.as('ms') >= 0,
+                'text-danger': delta.as('ms') < 0,
+            }
+        );
         return <dd className={className}>{str}</dd>;
-    },
-    renderWeekSum: function(week) {
-        let workDuration = week.get('workDuration').format('hh:mm', {trim:false});
+    }
 
-        let diff = week.get('diffUntilToday');
-        let carry = week.get('carry');
+    renderWeekSum(week) {
+        const workDuration = week.get('workDuration').format('hh:mm', { trim: false });
 
-        let firstDate = week.get('days').first().get('date');
-        let lastDate = week.get('days').last().get('date');
+        const diff = week.get('diffUntilToday');
+        const carry = week.get('carry');
 
-        let className = classSet(styles.weekSumRow,
-            !timeUtils.isDateInEmploymentInterval(firstDate, this.props.user)
-            && !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null
+        const firstDate = week.get('days').first().get('date');
+        const lastDate = week.get('days').last().get('date');
+
+        const className = classSet(styles.weekSumRow,
+            !timeUtils.isDateInEmploymentInterval(firstDate, this.props.user) &&
+            !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null
         );
 
         let carryTime = '';
         let diffTime = '';
 
         if (!timeUtils.isWeekInFuture(week)) {
-            carryTime = this.renderDeltaItem('col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry);
+            carryTime = this.renderDeltaItem(
+                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry
+            );
             diffTime = this.renderDeltaItem('col-xs-2 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1', diff);
         }
         return (
@@ -75,8 +86,9 @@ export default React.createClass({
                 </dl>
             </fieldset>
         );
-    },
-    renderWeekItem: function (week) {
+    }
+
+    renderWeekItem(week) {
         return (
             <fieldset className={styles.week} key={week.get('weekNr')}>
                 <legend>Week {week.get('weekNr')}</legend>
@@ -84,15 +96,14 @@ export default React.createClass({
                 {this.renderWeekSum(week)}
             </fieldset>
         );
-    },
-    render: function () {
-        var weeks = this.props.weeks;
+    }
+
+    render() {
+        const weeks = this.props.weeks;
         return (
             <div className={styles.weeks}>
                 {weeks.toList().map(this.renderWeekItem)}
             </div>
         );
     }
-});
-
-
+}

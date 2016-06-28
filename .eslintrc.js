@@ -7,7 +7,10 @@ module.exports = {
     'rules': {
         'react/jsx-no-bind': [2, {
             'ignoreRefs': true,
+            'allowBind': true,
         }],
+        'react/prop-types': [2, { ignore: ['children'] }],
         'no-use-before-define': 0,
+        'no-console': [1, { allow: ["error", "info"] }],
     }
 };
