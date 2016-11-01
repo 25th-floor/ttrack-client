@@ -19,6 +19,6 @@ jasmine.getEnv().addReporter(reporter);
 
 // Enable Teamcity Reporter if a Teamcity environment is detected
 if (process.env.TEAMCITY_VERSION) {
-    var teamcity = new jasmine.TeamcityReporter();
+    var teamcity = new jasmine.TeamCityReporter();
     jasmine.getEnv().addReporter(teamcity);
 }
