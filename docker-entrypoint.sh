@@ -5,8 +5,10 @@ if [ "$1" = 'ttrack-server' ]; then
 
 	if [[ "$2" = "prod" || "$2" = "beta" ]]; then
 		__conf="config/env_${2}.list"
-		echo "Loading config from ${__conf}"
-		source ${__conf}
+		if [[ -f ${__conf} ]]; then
+			echo "Loading config from ${__conf}"
+			source ${__conf}
+		fi
 	fi
 
 	# Required parameters
