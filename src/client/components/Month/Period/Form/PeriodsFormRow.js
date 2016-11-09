@@ -108,7 +108,7 @@ export default class extends React.Component {
         // add duration per_duration object if needed
         const updatedPeriod = period.merge(this.addDurationTime(period));
         this.props.onUpdate(updatedPeriod);
-        this.setState({ updatedPeriod });
+        this.setState({ period: updatedPeriod });
     }
 
     renderSelectOption(type) {
