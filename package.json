@@ -113,7 +113,7 @@
     "consolidate": "^0.10.0",
     "csv": "^0.4.0",
     "csv-parse": "0.0.5",
-    "db-migrate": "^0.9.7",
+    "db-migrate": "^0.10.0-beta.20",
     "express": "4.8.7",
     "font-awesome": "FortAwesome/Font-Awesome#v4.3.0",
     "immutable": "^3.7.4",
