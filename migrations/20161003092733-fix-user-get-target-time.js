@@ -28,4 +28,3 @@ exports.down = function (db, callback) {
         });
     });
 };
-  Promise = options.Promise;
