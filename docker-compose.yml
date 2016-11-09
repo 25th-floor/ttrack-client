@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_DB=ttrack
+      - POSTGRES_PASSWORD=postgres
+
+  ttrack:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_DATABASE=ttrack
+      - DB_HOST=pg
+      - NODE_ENV=development
+    links:
+      - db:pg
+    ports:
+      - 8080:8080
