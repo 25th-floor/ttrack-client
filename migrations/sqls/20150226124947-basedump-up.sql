@@ -1,3 +1,5 @@
+CREATE EXTENSION btree_gist;
+
 CREATE SEQUENCE ttrack_seq;
 
 CREATE TABLE users (
