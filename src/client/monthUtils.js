@@ -31,7 +31,7 @@ export function createWeeks(days, carryTime) {
             const targetDurationUntilToday = sumDuration(weekDays.map(day => day.get('remainingUntilToday')));
             const diff = moment.duration(workDuration).subtract(targetDuration);
             const diffUntilToday = moment.duration(workDuration).subtract(targetDurationUntilToday);
-            carry.add(diff);
+            carry.add(diffUntilToday);
 
             return new Immutable.Map({
                 days: weekDays,
