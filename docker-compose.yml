@@ -7,7 +7,7 @@ services:
       - POSTGRES_DB=ttrack
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5432"
+      - 5432:5432
 
   ttrack:
     build:
