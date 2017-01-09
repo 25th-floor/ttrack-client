@@ -1,14 +1,15 @@
 // @flow
 
 export type DBPeriodTypeConfig = {
-    icon: string,
-    bgcolor: string,
-    color: string,
-    nobadge: boolean,
+    icon: string,           // font awesome icon name
+    bgcolor: string,        // background color of the icon
+    color: string,          // color of the icon
+    nobadge?: boolean,      // ??
     types: {
-        period: boolean,
-        fullday: boolean,
-        halfday: boolean
+        period: boolean,    // type period shows all period input fields
+        fullday: boolean,   // allows option full day
+        halfday: boolean,   // allows option half day
+        duration: boolean   // allows just the duration field
     }
 };
 
