@@ -12,6 +12,7 @@
     "dev": "webpack-dev-server",
     "lint": "eslint src || true",
     "fix": "eslint --fix src || true",
+    "flow": "flow check",
     "test": "NODE_ENV=test node --harmony-proxies `npm bin`/jest --no-cache"
   },
   "author": "25th floor",
@@ -83,6 +84,7 @@
     "eslint-loader": "~1.6",
     "eslint-plugin-react": "~6.9",
     "extract-text-webpack-plugin": "~1.0",
+    "flow-bin": "^0.33.0",
     "file-loader": "^0.9.0",
     "istanbul": "^0.4.5",
     "jasmine": "~2.5",
