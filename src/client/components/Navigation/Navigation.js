@@ -29,7 +29,7 @@ export default class extends React.Component {
                 <div className={`container-fluid ${styles.container}`}>
                     <div className={`navbar-header ${styles.header}`}>
                         <a className={`navbar-brand ${styles.brand}`} href="/">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" space="preserve">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                                 <path d="M 100.00,0.00
                                        C 100.00,0.00 100.00,20.00 100.00,20.00
                                          100.00,20.00 80.00,20.00 80.00,20.00
