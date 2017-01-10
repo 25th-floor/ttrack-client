@@ -303,7 +303,7 @@ export function getYearsForUser(user, today, limit) {
  */
 export function getMonthsForUser(user, activeMonth) {
     let months = _.times(12, function (n) {
-        return activeMonth.clone().months(n);
+        return activeMonth.clone().month(n);
     });
 
     return Immutable.List(reduceMomentArray(months, user));

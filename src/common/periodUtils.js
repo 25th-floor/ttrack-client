@@ -11,6 +11,7 @@ export const NONE = 'none';
 export const PERIOD = 'period';
 export const HALFDAY = 'halfday';
 export const FULLDAY = 'fullday';
+export const DURATION = 'duration';
 
 /**
  * Duration Config
@@ -18,7 +19,8 @@ export const FULLDAY = 'fullday';
 export const durationConfig = [
     {name: PERIOD, description: 'Zeitraum'},
     {name: FULLDAY, description: 'Ganzer Tag'},
-    {name: HALFDAY, description: 'Halber Tag'}
+    {name: HALFDAY, description: 'Halber Tag'},
+    {name: DURATION, description: 'Zeitdauer'}
 ];
 
 /**
@@ -38,11 +40,13 @@ export function getDurationDescription(name) {
  * @returns {*}
  */
 export function calculateDuration(period, fullDay) {
+    console.log('calculateDuration', period);
     let halfDay = moment.duration(Math.round(fullDay.asSeconds() / 2), 's');
     let name = period.get('duration');
 
     if (name == FULLDAY) return timeUtils.getDateObjectFromMomentDuration(fullDay);
     if (name == HALFDAY) return timeUtils.getDateObjectFromMomentDuration(halfDay);
+    if (name == DURATION) return period.get('per_duration');
     if (name == NONE) return {hours: 0};
 
     let duration = {};
@@ -130,6 +134,7 @@ export function getAllErrors(period) {
 
     if (period.get('duration') === FULLDAY) return [];
     if (period.get('duration') === HALFDAY) return [];
+    if (period.get('duration') === DURATION) return [];
 
     var startTime = period.get('per_start');
     var endTime = period.get('per_stop');
@@ -161,6 +166,7 @@ export function validatePeriod(period) {
     if (!period || !Immutable.Map.isMap(period)) return false;
     if (period.get('duration') === FULLDAY) return true;
     if (period.get('duration') === HALFDAY) return true;
+    if (period.get('duration') === DURATION) return true;
 
     // if there is no duration needed, don't ask for one (comment type for example)
     var typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();

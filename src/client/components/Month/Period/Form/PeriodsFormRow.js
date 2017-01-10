@@ -25,12 +25,7 @@ export default class extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.handleComment = this.handleComment.bind(this);
-        this.handleDurationChange = this.handleDurationChange.bind(this);
-        this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.renderDurationRadio = this.renderDurationRadio.bind(this);
-        this.renderSelectOption = this.renderSelectOption.bind(this);
+
         let period = props.period;
         if (!period.get('type')) {
             period = period.merge({
@@ -47,6 +42,13 @@ export default class extends React.Component {
         }
 
         this.state = { period };
+
+        this.handleComment = this.handleComment.bind(this);
+        this.handleDurationChange = this.handleDurationChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.renderDurationRadio = this.renderDurationRadio.bind(this);
+        this.renderSelectOption = this.renderSelectOption.bind(this);
     }
 
     componentDidMount() {
@@ -188,6 +190,18 @@ export default class extends React.Component {
             }];
 
             comment.className += ' col-sm-6';
+        } else if (period.get('duration') === periodUtils.DURATION) {
+            console.log('duration:', period.get('per_duration').toJS(), moment.duration(period.get('per_duration').toJS()));
+            periodElements = [{
+                id: 'per_duration',
+                label: 'Zeit',
+                name: `${elementName}[per_duration]`,
+                className: elementCss,
+                placeholder: 'hh:mm',
+                value: period.get('per_duration'),
+                required: true,
+                round: null,
+            }];
         }
 
         return (
