@@ -17,22 +17,25 @@ import _ from 'lodash';
  *
  * @param time
  * @param strict
+ * @param allowNegativeValue
  * @returns boolean
  */
-export function isValidTimeString(time, strict = true) {
+export function isValidTimeString(time, strict = true, allowNegativeValue = false) {
     if (typeof time !== 'string') return false;
-    if (!strict && time == '') return true;
-    if (time.match(/^(\d+)$/)) return true;
+    if (!strict && time === '') return true;
+    if (time.match(/^(\d+)$/) || (allowNegativeValue && time.match(/^-(\d+)$/))) return true;
+    if (allowNegativeValue && time.match(/^-(\d*)[.,:](\d*)$/) !== null) return true;
     return time.match(/^(\d*)[.,:](\d*)$/) !== null;
 }
 
 /**
  * get a valid moment object or null if string is not valid
  * @param time
+ * @param allowNegativeValue
  * @returns {*}
  */
-export function getValidMoment(time) {
-    if (!isValidTimeString(time)) return null;
+export function getValidMoment(time, allowNegativeValue = false) {
+    if (!isValidTimeString(time, true, allowNegativeValue)) return null;
 
     var validTime = null;
 

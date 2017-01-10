@@ -36,37 +36,44 @@ describe('timeUtils.isValidTimeString', function() {
         });
 
         describe('it returns true', function() {
-            it('if there are only digits', function() {
-                expect(timeUtils.isValidTimeString('2')).toBeTruthy();
-            });
+            for(var negative in [false, true]) {
+                var description = negative ? 'negative values allowed' : 'only positive values allowed';
+                var prefix = negative ? '-' : '';
+                describe(description, function() {
+                    it(`if there are only digits (${prefix}2)`, function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}2`, true, negative)).toBeTruthy();
+                    });
 
-            it('if there it is a german floor number', function() {
-                expect(timeUtils.isValidTimeString('2,13')).toBeTruthy();
-            });
+                    it('if there it is a german floor number', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}2,13`, true, negative)).toBeTruthy();
+                    });
 
-            it('if there it is a german floor number with only fractions', function() {
-                expect(timeUtils.isValidTimeString(',13')).toBeTruthy();
-            });
+                    it('if there it is a german floor number with only fractions', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix},13`, true, negative)).toBeTruthy();
+                    });
 
-            it('if there it is a floor number', function() {
-                expect(timeUtils.isValidTimeString('2.13')).toBeTruthy();
-            });
+                    it('if there it is a floor number', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}2.13`, true, negative)).toBeTruthy();
+                    });
 
-            it('if there it is a floor fraction number', function() {
-                expect(timeUtils.isValidTimeString('.13')).toBeTruthy();
-            });
+                    it('if there it is a floor fraction number', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}.13`, true, negative)).toBeTruthy();
+                    });
 
-            it('if it is a timestring', function() {
-                expect(timeUtils.isValidTimeString('02:15')).toBeTruthy();
-            });
+                    it('if it is a timestring', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}02:15`, true, negative)).toBeTruthy();
+                    });
 
-            it('if it is a timestring with one leading zero', function() {
-                expect(timeUtils.isValidTimeString('0:15')).toBeTruthy();
-            });
+                    it('if it is a timestring with one leading zero', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}0:15`, true, negative)).toBeTruthy();
+                    });
 
-            it('if it is a timestring with only minutes', function() {
-                expect(timeUtils.isValidTimeString(':15')).toBeTruthy();
-            });
+                    it('if it is a timestring with only minutes', function() {
+                        expect(timeUtils.isValidTimeString(`${prefix}:15`, true, negative)).toBeTruthy();
+                    });
+                });
+
+            }
         });
 
         describe('it returns false', function() {
