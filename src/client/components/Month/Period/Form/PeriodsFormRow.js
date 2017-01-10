@@ -191,7 +191,6 @@ export default class extends React.Component {
 
             comment.className += ' col-sm-6';
         } else if (period.get('duration') === periodUtils.DURATION) {
-            console.log('duration:', period.get('per_duration').toJS(), moment.duration(period.get('per_duration').toJS()));
             periodElements = [{
                 id: 'per_duration',
                 label: 'Zeit',
@@ -201,6 +200,7 @@ export default class extends React.Component {
                 value: period.get('per_duration'),
                 required: true,
                 round: null,
+                negative: true,
             }];
         }
 
@@ -229,12 +229,21 @@ export default class extends React.Component {
                 </div>
 
                 <div className="row">
-                    {periodElements.map((p, index) => <TimeInput id={p.id} label={p.label} name={p.name}
-                        css={p.className} placeholder={p.placeholder}
-                        time={p.value} required={p.required} key={index}
-                        round={p.round}
-                        onChange={this.handleTimeChange}
-                    />)}
+                    {periodElements.map((p, index) => (
+                        <TimeInput
+                            id={p.id}
+                            label={p.label}
+                            name={p.name}
+                            css={p.className}
+                            placeholder={p.placeholder}
+                            time={p.value}
+                            required={p.required}
+                            key={index}
+                            round={p.round}
+                            allowNegativeValues={p.negative || false}
+                            onChange={this.handleTimeChange}
+                        />
+                    ))}
 
                     <div className={comment.className}>
                         <label htmlFor={comment.name}>Kommentar</label>

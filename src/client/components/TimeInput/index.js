@@ -16,6 +16,7 @@ export default class extends React.Component {
         required: React.PropTypes.bool,
         round: React.PropTypes.number,
         onChange: React.PropTypes.func.isRequired,
+        allowNegativeValues: React.PropTypes.bool,
     };
 
     constructor(props, context) {
@@ -28,7 +29,7 @@ export default class extends React.Component {
     }
 
     handleChange(event) {
-        let duration = timeUtils.getValidMoment(event.target.value);
+        let duration = timeUtils.getValidMoment(event.target.value, this.props.allowNegativeValues);
         if (duration != null) {
             if (this.props.round) {
                 duration = timeUtils.roundTime(duration, this.props.round);

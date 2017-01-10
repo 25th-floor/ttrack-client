@@ -40,7 +40,6 @@ export function getDurationDescription(name) {
  * @returns {*}
  */
 export function calculateDuration(period, fullDay) {
-    console.log('calculateDuration', period);
     let halfDay = moment.duration(Math.round(fullDay.asSeconds() / 2), 's');
     let name = period.get('duration');
 
