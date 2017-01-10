@@ -55,6 +55,7 @@ export default class extends React.Component {
         const weekDayFull = date.format('dddd');
         const workDuration = timeUtils.formatDurationHoursToLocale(day.get('workDuration'));
         const breakDuration = timeUtils.formatDurationHoursToLocale(day.get('breakDuration'));
+        const balanceDuration = timeUtils.formatDurationHoursToLocale(day.get('balanceDuration'));
 
         const diff = moment.duration(day.get('workDuration')).subtract(day.get('remaining'));
         let diffDuration = timeUtils.formatDurationHoursToLocale(diff);
@@ -88,6 +89,7 @@ export default class extends React.Component {
             <dt>Arbeitszeit</dt>
             <dd className="col-sm-1 hidden-xs col-lg-1">
                 {day.get('workDuration').asSeconds() !== 0 ? workDuration : null}
+                {day.get('balanceDuration').asSeconds() !== 0 ? <div>{balanceDuration}</div> : null}
             </dd>
             <dt>Pause</dt>
             <dd className="col-sm-1 hidden-xs tt-col-lg-1">

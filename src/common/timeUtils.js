@@ -199,7 +199,7 @@ export function isWeekend(moment) {
 export function durationOfWork(period) {
 
     var ret = moment.duration();
-    if (period.per_pty_id == 'Work') {
+    if (period.per_pty_id === 'Work') {
         var duration = moment.duration(period.per_duration);
         var breakDuration = durationOfBreak(period);
 
@@ -215,6 +215,11 @@ export function durationOfWork(period) {
 export function durationOfBreak(period) {
     if (!period) return;
     return moment.duration(period.per_break || 0);
+}
+
+export function durationOfBalance(period) {
+    if (!period || period.per_pty_id !== 'Balance') return;
+    return moment.duration(period.per_duration || 0);
 }
 
 export function weekNr(date) {

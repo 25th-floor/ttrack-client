@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import moment from 'moment';
-import { durationOfWork, durationOfBreak, weekNr, sumDuration } from '../common/timeUtils';
+import { durationOfWork, durationOfBreak, weekNr, sumDuration, durationOfBalance } from '../common/timeUtils';
 
 function processDay(day) {
     const date = moment(day.get('day_date'));
@@ -14,6 +14,7 @@ function processDay(day) {
         remainingUntilToday: date <= today ? remaining : moment.duration(),
         workDuration: sumDuration(day.get('periods').map(per => durationOfWork(per.toJS()))),
         breakDuration: sumDuration(day.get('periods').map(per => durationOfBreak(per.toJS()))),
+        balanceDuration: sumDuration(day.get('periods').map(per => durationOfBalance(per.toJS()))),
         isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(
             period => (!!period.get('per_start') === !!period.get('per_stop'))
         ),
@@ -27,6 +28,7 @@ export function createWeeks(days, carryTime) {
         .groupBy(day => day.get('weekNr'))
         .map((weekDays, weekNumber) => {
             const workDuration = sumDuration(weekDays.map(day => day.get('workDuration')));
+            const balanceDuration = sumDuration(weekDays.map(day => day.get('balanceDuration')));
             const targetDuration = sumDuration(weekDays.map(day => day.get('remaining')));
             const targetDurationUntilToday = sumDuration(weekDays.map(day => day.get('remainingUntilToday')));
             const diff = moment.duration(workDuration).subtract(targetDuration);
@@ -37,6 +39,7 @@ export function createWeeks(days, carryTime) {
                 days: weekDays,
                 weekNr: weekNumber,
                 workDuration,
+                balanceDuration,
                 targetDuration,
                 diff,
                 diffUntilToday,
