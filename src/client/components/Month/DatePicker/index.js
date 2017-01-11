@@ -18,12 +18,14 @@ export default class extends React.Component {
         return (
             <div className={styles.dateSelection}>
                 <div className={`row ${styles.touchVersion}`}>
-                    <YearSelection activeMonth={this.props.activeMonth}
+                    <YearSelection
+                        activeMonth={this.props.activeMonth}
                         years={this.props.years}
                         onChangeDate={this.props.onChangeDate}
                     />
 
-                    <MonthSelection activeMonth={this.props.activeMonth}
+                    <MonthSelection
+                        activeMonth={this.props.activeMonth}
                         months={this.props.months}
                         onChangeDate={this.props.onChangeDate}
                     />

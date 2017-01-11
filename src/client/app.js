@@ -1,3 +1,4 @@
+/* eslint-disable import/imports-first*/
 // add styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootflat/bootflat/css/bootflat.min.css';
@@ -80,7 +81,8 @@ function renderMainComponent() {
     }
 
     return (
-        <App user={users.getActiveUser()}
+        <App
+            user={users.getActiveUser()}
             motto={motto}
             onLogout={logout}
             build={buildInfo}
@@ -100,13 +102,14 @@ function renderMainComponent() {
 }
 
 function renderApp() {
+    // eslint-disable-next-line no-undef
     ReactDOM.render(renderMainComponent(), window.app);
 }
 
 function initApp() {
     return Promise
         .all([nav.init(), users.init(), timesheet.init()])
-        .then(() => users.getActiveUser() ? loadTimesheet() : Promise.resolve())
+        .then(() => (users.getActiveUser() ? loadTimesheet() : Promise.resolve()))
         .catch(err => console.error(err));
 }
 

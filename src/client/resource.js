@@ -39,7 +39,7 @@ function cancelRequest(req) {
 
 function save(method, uri, obj) {
     return client({ method, path: uri, entity: obj, headers: { 'Content-Type': 'application/json' } })
-        .then(response => {
+        .then((response) => {
             console.info('response', response);
             return response.entity;
         });
@@ -47,14 +47,14 @@ function save(method, uri, obj) {
 
 function collection(uri) {
     const route = myro({ [uri]: 'uri' });
-    let _data = new Immutable.List();
+    let data = new Immutable.List();
     let req = null;
     return {
         load() {
             if (req) cancelRequest(req);
             req = { path: uri };
-            return fetch(req).then(entity => {
-                _data = entity;
+            return fetch(req).then((entity) => {
+                data = entity;
                 req = null;
             });
         },
@@ -68,20 +68,20 @@ function collection(uri) {
             return save('post', route.uri(obj.toJS()), obj);
         },
 
-        list: () => _data,
+        list: () => data,
     };
 }
 
 function single(uri) {
     const route = myro({ [uri]: 'uri' });
-    let _data = new Immutable.Map();
+    let data = new Immutable.Map();
     let req = null;
     return {
         load(params) {
             if (req) cancelRequest(req);
             req = { path: route.uri(params) };
-            return fetch(req).then(entity => {
-                _data = entity;
+            return fetch(req).then((entity) => {
+                data = entity;
                 req = null;
             });
         },
@@ -91,7 +91,7 @@ function single(uri) {
             req = null;
         },
 
-        get: () => _data,
+        get: () => data,
 
         save(obj) {
             return save('put', route.uri(obj.toJS()), obj);
@@ -103,7 +103,7 @@ function single(uri) {
                 path: route.uri(params),
                 headers: { 'Content-Type': 'application/json' },
             })
-                .then(response => {
+                .then((response) => {
                     console.info('delete response', response);
                     return response;
                 });

@@ -9,7 +9,7 @@ import * as timeUtils from '../../common/timeUtils';
 function getDurationType(period, targetTime, type) {
     const cfg = type.get('pty_config').get('types').toJS();
 
-    if (period.get('per_id') != null) {
+    if (period.get('per_id') !== null) {
         const start = period.get('per_start');
         const duration = moment.duration(period.get('per_duration').toJS());
         const target = moment.duration(targetTime.toJS());
@@ -49,13 +49,13 @@ function fixDurations(period) {
     }
 
     const durations = ['per_start', 'per_stop', 'per_duration', 'per_break'];
-    return p.map((val, key) => _.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val);
+    return p.map((val, key) => (_.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val));
 }
 
 export default function (onChange) {
     const periodTypes = resource.collection('/api/period-types');
     let timesheet = new Immutable.Map();
-    const notify = () => onChange ? onChange() : null;
+    const notify = () => (onChange ? onChange() : null);
     let initialized = false;
     let tsResource = null;
     let loadParams = null;
@@ -120,11 +120,11 @@ export default function (onChange) {
             loadParams = null;
 
             // delete all removed ones
-            removed.forEach(id => {
+            removed.forEach((id) => {
                 promises.push(periodSingleResource.remove({ per_id: id, userId }));
             });
             // update/create
-            periods.forEach(period => {
+            periods.forEach((period) => {
                 let p = period.merge({
                     date: date.format('YYYY-MM-DD'),
                     userId,

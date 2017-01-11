@@ -54,7 +54,8 @@ export default class extends React.Component {
         return (
             <div className={css}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
-                <input type="text" placeholder={this.props.placeholder} className="form-control"
+                <input
+                    type="text" placeholder={this.props.placeholder} className="form-control"
                     required={this.props.required}
                     name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange}
                 />

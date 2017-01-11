@@ -24,7 +24,8 @@ export default class extends React.Component {
 
     renderDayItem(day) {
         return (
-            <Day day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
+            <Day
+                day={day} key={day.get('day_date')} activeMonth={this.props.activeMonth} types={this.props.types}
                 user={this.props.user} onSaveDay={this.props.onSaveDay}
             />
         );

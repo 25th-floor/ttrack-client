@@ -1,7 +1,6 @@
 module.exports = {
     "extends": [
         "airbnb",
-        "plugin:flowtype/recommended"
     ],
     'parser': 'babel-eslint',
     'env': {
@@ -32,6 +31,7 @@ module.exports = {
                 "ignoreStrings": true,
                 "ignoreTemplateLiterals": true
             }
-        ]
+        ],
+        "jsx-a11y/no-static-element-interactions": "off"
     }
 };

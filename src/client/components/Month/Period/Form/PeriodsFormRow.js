@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for*/
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import moment from 'moment';
 import _ from 'lodash';
@@ -35,6 +35,7 @@ export default class extends React.Component {
         // handle default duration to be the first duration found in the config
         if (!period.get('duration')) {
             period = period.merge({
+                // eslint-disable-next-line newline-per-chained-call
                 duration: period.get('type').get('pty_config').get('types').keySeq().first(),
             });
             // add duration per_duration object if needed
@@ -53,7 +54,7 @@ export default class extends React.Component {
 
     componentDidMount() {
         // focus on select on first creation
-        ReactDOM.findDOMNode(this.refs.selectType).focus();
+        this.selectType.focus();
     }
 
     handleTypeChange(event) {
@@ -125,7 +126,8 @@ export default class extends React.Component {
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
                 <label htmlFor={id} className="radio-inline">
-                    <input type="radio" name={ `${elementName}[duration]` } id={id} value={duration.name}
+                    <input
+                        type="radio" name={`${elementName}[duration]`} id={id} value={duration.name}
                         checked={duration.name === value}
                         onChange={this.handleDurationChange}
                     />
@@ -204,22 +206,27 @@ export default class extends React.Component {
             }];
         }
 
+        const ref = (selectType) => {
+            this.selectType = selectType;
+        };
+
         return (
             <div className={styles.row} key={period.get('per_id')}>
                 {!isValid ? this.renderErrorMessages() : ''}
 
                 <div className="pull-right">
-                    <a onClick={this.props.onRemove}>
+                    <a onClick={this.props.onRemove} href="">
                         <i className="fa fa-trash text-danger" />
                     </a>
                 </div>
                 <div className="row">
                     <label className="col-xs-12 col-sm-3 col-lg-2">
-                        <select className="col-xs-12 form-control"
+                        <select
+                            className="col-xs-12 form-control"
                             name={`${elementName}[pty_id]`}
                             value={period.getIn(['type', 'pty_id'])}
                             onChange={this.handleTypeChange}
-                            ref="selectType"
+                            ref={ref}
                         >
                             {this.props.types.toList().map(this.renderSelectOption)}
                         </select>
@@ -247,7 +254,8 @@ export default class extends React.Component {
 
                     <div className={comment.className}>
                         <label htmlFor={comment.name}>Kommentar</label>
-                        <input type="text" placeholder="Kommentar" className="form-control"
+                        <input
+                            type="text" placeholder="Kommentar" className="form-control"
                             name={comment.name} id={comment.name} value={period.get('per_comment')}
                             onChange={this.handleComment}
                         />

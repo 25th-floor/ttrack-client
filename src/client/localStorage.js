@@ -1,3 +1,4 @@
+/* eslint-disable no-undef*/
 // local storage wrapper working with JSON
 export default {
     getItem(key, defaultValue) {

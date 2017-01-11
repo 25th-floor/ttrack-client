@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export*/
 import Immutable from 'immutable';
 import moment from 'moment';
 import { durationOfWork, durationOfBreak, weekNr, sumDuration, durationOfBalance } from '../common/timeUtils';
