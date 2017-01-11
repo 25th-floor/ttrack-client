@@ -76,6 +76,12 @@ describe('timeUtils.isValidTimeString', function() {
             }
         });
 
+        describe('special cases', function() {
+            it('if the value is -33 it returns true', function() {
+                expect(timeUtils.isValidTimeString('-33', true, true)).toBeTruthy();
+            });
+        });
+
         describe('it returns false', function() {
             it('if there are only chars', function() {
                 expect(timeUtils.isValidTimeString('abc')).toBeFalsy();

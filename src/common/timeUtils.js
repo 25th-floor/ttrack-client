@@ -48,7 +48,7 @@ export function getValidMoment(time, allowNegativeValue = false) {
     if (time.indexOf(':') > -1) {
         validTime = moment.duration({hours: time.split(':')[0], minutes: time.split(':')[1]});
     }
-    if (time.match(/^(\d*)$/)) {
+    if (time.match(/^-?(\d*)$/)) {
         validTime = moment.duration({hours: time});
     }
 
