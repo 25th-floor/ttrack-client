@@ -39,7 +39,7 @@ TBC
 ### Development
 There is a `docker-compose.yml` which provides the basic means to start the node server in development mode. It also starts a postgres database docker image and links it. 
 
-The node server will expose port `8080` and postgres will expose `5042` for development purposes.
+The node server will expose port `8080` and postgres will expose `5432` for development purposes.
 
 You still need to start the frontend code using npm:
 ```
