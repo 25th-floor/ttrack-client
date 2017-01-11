@@ -85,7 +85,7 @@ api.put('/users/:user/periods/:id', (req, res) => {
     console.info('API PUT Request for Period', req.params.id, 'for user', req.params.user);
 
     const data = req.body;
-    if (req.params.id !== data.per_id) {
+    if (parseInt(req.params.id, 10) !== data.per_id) {
         res.status(400).send('Invalid Id!').end();
     }
 
