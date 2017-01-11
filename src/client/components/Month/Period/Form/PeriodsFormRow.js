@@ -256,7 +256,7 @@ export default class extends React.Component {
                         <label htmlFor={comment.name}>Kommentar</label>
                         <input
                             type="text" placeholder="Kommentar" className="form-control"
-                            name={comment.name} id={comment.name} value={period.get('per_comment')}
+                            name={comment.name} id={comment.name} value={period.get('per_comment') || ''}
                             onChange={this.handleComment}
                         />
                     </div>
