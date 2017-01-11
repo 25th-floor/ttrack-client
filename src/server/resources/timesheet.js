@@ -37,37 +37,38 @@ function getTargetTime(date, user) {
  * @param client
  * @param userId
  * @param dateRange
+ * @param periodTypes
  * @returns {*}
  */
 function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
-    var periodQuery = 'SELECT * FROM user_get_day_periods($1, $2::timestamp, $3::timestamp)';
+    const periodQuery = 'SELECT * FROM user_get_day_periods($1, $2::timestamp, $3::timestamp)';
 
-    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(),  dateRange.end.toISOString()]).then(function (result) {
-        var grouped = _.groupBy(result.rows, fmtDayDate);
-        var data = _.mapValues(grouped, function (periods) {
+    return db.query(client, periodQuery, [userId, dateRange.start.toISOString(), dateRange.end.toISOString()]).then(function (result) {
+        const grouped = _.groupBy(result.rows, fmtDayDate);
+        const data = _.mapValues(grouped, function (periods) {
             // pick day fields from first period in list to get all props for the day
-            var day = _.pick(_.first(periods), hasKeyPrefix('day_'));
+            const day = _.pickBy(_.head(periods), hasKeyPrefix('day_'));
 
             function transformPeriod(data) {
                 // only pick props that *do not* have a "day_" prefix
-                let periodData = _.omit(data, hasKeyPrefix('day_'));
+                let periodData = _.omitBy(data, hasKeyPrefix('day_'));
                 return period.preparePeriodForApiResponse(periodData);
             }
 
-            return _.assign(day,
+            // filter empty periods
+            const p = periods.map(transformPeriod).filter(p => p.per_id !== null);
+
+            return Object.assign({}, day,
                 {
-                    periods: _.filter(periods.map(transformPeriod), function(p) {
-                        // filter empty periods
-                        return p.per_id !== null;
-                    }),
+                    periods: p,
                     // calculate remaining target time after reducing holidays and all other non Work durations
                     // todo: maybe this should be done in the database
                     remaining: function() {
                         let duration = _.reduce(periods, function (result, period) {
                             // map period type to period
-                            let type = _.find(periodTypes, function(t) { return t.pty_id == period.per_pty_id});
+                            let type = _.find(periodTypes, function(t) { return t.pty_id === period.per_pty_id});
 
-                            if (!type || type.pty_id == 'Work') {
+                            if (!type || type.pty_id === 'Work') {
                                 return result;
                             }
 
@@ -76,9 +77,12 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
                             return result.subtract(diff);
                         }, moment.duration(day.day_target_time));
 
+                        const minutes = duration.as('minutes');
+                        const hours = Math.floor(minutes/60);
+
                         return {
-                            hours: duration.get('hours'),
-                            minutes: duration.get('minutes')
+                            hours,
+                            minutes: minutes % 60
                         };
                     }()
                 }
@@ -163,7 +167,7 @@ function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPer
     var expectedHolidays = util.getHolidaysForDateRange(dateRange);
 
     // omit all holidays that are in the database already
-    var newHolidays = _.omit(expectedHolidays, function (comment, strDate) {
+    var newHolidays = _.omitBy(expectedHolidays, function (comment, strDate) {
         return existingHolidays.some(function (holiday) {
             return moment(holiday.day_date).format('YYYY-MM-DD') == strDate;
         });
