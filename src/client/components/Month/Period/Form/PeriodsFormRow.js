@@ -262,7 +262,7 @@ export default class extends React.Component {
                             placeholder={p.placeholder}
                             time={p.value}
                             required={p.required}
-                            key={index}
+                            key={p.id}
                             round={p.round}
                             allowNegativeValues={p.negative || false}
                             onChange={this.handleTimeChange}
