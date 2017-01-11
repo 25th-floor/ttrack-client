@@ -47,7 +47,7 @@ export default class extends React.Component {
         const css = classSet(
             this.props.css || '',
             {
-                'has-error': !timeUtils.isValidTimeString(time, this.props.required),
+                'has-error': !timeUtils.isValidTimeString(time, this.props.required, this.props.allowNegativeValues),
             }
         );
 
