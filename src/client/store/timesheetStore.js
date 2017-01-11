@@ -17,7 +17,7 @@ function getDurationType(period, targetTime, type) {
         if (cfg.period && start && moment.duration(start.toJS()).as('minutes') >= 0) return 'period';
         if (cfg.halfday && duration.as('hours') === (target.as('hours') / 2)) return 'halfday';
         if (cfg.fullday && duration.as('hours') === target.as('hours')) return 'fullday';
-        if (cfg.duration && duration.as('minutes') >= 0) return 'duration';
+        if (cfg.duration && duration.as('minutes') !== 0) return 'duration';
     } else {
         if (cfg.period) return 'period';
         if (cfg.fullday) return 'fullday';
