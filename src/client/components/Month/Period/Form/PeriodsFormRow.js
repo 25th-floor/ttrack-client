@@ -58,15 +58,32 @@ export default class extends React.Component {
     }
 
     handleTypeChange(event) {
-        const type = findType(this.props.types, event.target.value);
+        const { period } = this.state;
+        const { types } = this.props;
+
+        const type = findType(types, event.target.value);
         const cfg = type.get('pty_config').get('types').toJS();
         const defaultDuration = _.findKey(cfg, value => value) || periodUtils.NONE;
+        const durationValue = period.get('duration');
 
-        const period = this.state.period.merge({
+        // cleanup
+        let breakDuration = period.get('per_break');
+        let start = period.get('per_start');
+        let stop = period.get('per_stop');
+        if (!cfg.period) {
+            breakDuration = null;
+            start = null;
+            stop = null;
+        }
+
+        const p = period.merge({
             type,
-            duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration,
+            per_start: start,
+            per_stop: stop,
+            per_break: breakDuration,
+            duration: cfg[durationValue] ? durationValue : defaultDuration,
         });
-        this.updateState(period);
+        this.updateState(p);
     }
 
     handleDurationChange(event) {
@@ -102,9 +119,9 @@ export default class extends React.Component {
     }
 
     addDurationTime(period) {
-        return period.merge({
+        return {
             per_duration: periodUtils.calculateDuration(period, this.props.dayTargetTime),
-        });
+        };
     }
 
     updateState(period) {
