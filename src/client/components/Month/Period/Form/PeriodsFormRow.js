@@ -215,7 +215,7 @@ export default class extends React.Component {
                 {!isValid ? this.renderErrorMessages() : ''}
 
                 <div className="pull-right">
-                    <a onClick={this.props.onRemove} href="">
+                    <a onClick={this.props.onRemove}>
                         <i className="fa fa-trash text-danger" />
                     </a>
                 </div>
