@@ -30,7 +30,7 @@ export default class extends React.Component {
 
     handleChange(event) {
         let duration = timeUtils.getValidMoment(event.target.value, this.props.allowNegativeValues);
-        if (duration != null) {
+        if (duration !== null) {
             if (this.props.round) {
                 duration = timeUtils.roundTime(duration, this.props.round);
             }
