@@ -1,65 +1,66 @@
-var resources = require('./resources.js');
-var express = require('express');
-var cons = require('consolidate');
-var pg = require('pg');
-var fs = require('fs');
-var raven = require('raven');
+/* eslint-disable import/no-dynamic-require*/
+const resources = require('./resources.js');
+const express = require('express');
+const cons = require('consolidate');
+const pg = require('pg');
+const raven = require('raven');
 
-var app = express();
+const app = express();
 
-var config = require(__dirname + '/../../config.json');
-var dbconfigfile = require(__dirname + '/../../database.json');
-var dbconfig = dbconfigfile.dev;
+const config = require(`${__dirname}/../../config.json`);
+const dbconfigfile = require(`${__dirname}/../../database.json`);
+const dbconfig = dbconfigfile.dev;
 
 // use NODE_ENV for defining which asset urls to use
-var assetsJS = 'http://localhost:3000/app.js';
-var assetsCSS = 'http://localhost:3000/app.css';
-if (process.env.NODE_ENV == 'production') {
+let assetsJS = 'http://localhost:3000/app.js';
+let assetsCSS = 'http://localhost:3000/app.css';
+if (process.env.NODE_ENV === 'production') {
     assetsJS = '/app.js';
     assetsCSS = '/app.css';
 }
-console.log('nodeENV', process.env.NODE_ENV);
+console.info('nodeENV', process.env.NODE_ENV);
 
-var buildInfo = {};
+let buildInfo = {};
 try {
-    var fileName = __dirname + '/../../buildinfo.json';
+    const fileName = `${__dirname}/../../buildinfo.json`;
     if (require.resolve(fileName)) {
+        // eslint-disable-next-line global-require
         buildInfo = require(fileName);
     }
-}
-catch (e) {
-}
+// eslint-disable-next-line no-empty
+} catch (e) {}
 
 // raven configuration
-var sentry_client = undefined;
+let sentryClient;
 if (process.env.NODE_ENV === 'production' && config.sentry_client) {
-    sentry_client = new raven.Client(config.sentry_client, {
-        release: buildInfo.git || ''
+    sentryClient = new raven.Client(config.sentry_client, {
+        release: buildInfo.git || '',
     });
-    sentry_client.patchGlobal();
+    sentryClient.patchGlobal();
 }
 
 app.engine('html', cons.mustache);
 app.set('view engine', 'html');
-app.set('views', __dirname + '/../../views');
-app.set('sentry_client', sentry_client);
+app.set('views', `${__dirname}/../../views`);
+app.set('sentry_client', sentryClient);
 
-app.set('pg', function (fn) {
-    pg.connect(dbconfig, function (err, client, done) {
+app.set('pg', (fn) => {
+    pg.connect(dbconfig, (err, client, done) => {
         if (err) {
             return console.error('failed to retrieve client from pool');
         }
         fn(client);
         done();
-    })
+        return true;
+    });
 });
 
 app.use('/api', resources.api);
 
-app.use(express.static(__dirname + '/../../public'));
+app.use(express.static(`${__dirname}/../../public`));
 
-app.all(/.*/, function (req, res) {
-    res.render('index', {css: assetsCSS, js: assetsJS, build: JSON.stringify(buildInfo)}, function (err, html) {
+app.all(/.*/, (req, res) => {
+    res.render('index', { css: assetsCSS, js: assetsJS, build: JSON.stringify(buildInfo) }, (err, html) => {
         if (err) {
             res.status(500).send('Internal Server Error').end();
         }
@@ -67,11 +68,11 @@ app.all(/.*/, function (req, res) {
     });
 });
 
-var port = (config.webserver || {}).port || process.env.PORT || 8080;
+const port = (config.webserver || {}).port || process.env.PORT || 8080;
 app.listen(port);
 
-console.log('listening on port ' + port + '...');
+console.info(`listening on port ${port}...`);
 
-process.on('SIGINT', function () {
+process.on('SIGINT', () => {
     process.exit();
 });

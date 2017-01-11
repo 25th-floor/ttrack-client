@@ -1,8 +1,6 @@
-'use strict';
-
-import * as timeUtils from './timeUtils';
 import moment from 'moment';
 import Immutable from 'immutable';
+import * as timeUtils from './timeUtils';
 
 /**
  * Duration Type Config Names
@@ -17,10 +15,10 @@ export const DURATION = 'duration';
  * Duration Config
  */
 export const durationConfig = [
-    {name: PERIOD, description: 'Zeitraum'},
-    {name: FULLDAY, description: 'Ganzer Tag'},
-    {name: HALFDAY, description: 'Halber Tag'},
-    {name: DURATION, description: 'Zeitdauer'}
+    { name: PERIOD, description: 'Zeitraum' },
+    { name: FULLDAY, description: 'Ganzer Tag' },
+    { name: HALFDAY, description: 'Halber Tag' },
+    { name: DURATION, description: 'Zeitdauer' },
 ];
 
 /**
@@ -29,7 +27,7 @@ export const durationConfig = [
  * @returns {*}
  */
 export function getDurationDescription(name) {
-    return (durationConfig.find((cfg) => cfg.name == name) || {}).description;
+    return (durationConfig.find(cfg => cfg.name === name) || {}).description;
 }
 
 /**
@@ -40,20 +38,18 @@ export function getDurationDescription(name) {
  * @returns {*}
  */
 export function calculateDuration(period, fullDay) {
-    let halfDay = moment.duration(Math.round(fullDay.asSeconds() / 2), 's');
-    let name = period.get('duration');
+    const halfDay = moment.duration(Math.round(fullDay.asSeconds() / 2), 's');
+    const name = period.get('duration');
 
-    if (name == FULLDAY) return timeUtils.getDateObjectFromMomentDuration(fullDay);
-    if (name == HALFDAY) return timeUtils.getDateObjectFromMomentDuration(halfDay);
-    if (name == DURATION) return period.get('per_duration');
-    if (name == NONE) return {hours: 0};
-
-    let duration = {};
+    if (name === FULLDAY) return timeUtils.getDateObjectFromMomentDuration(fullDay);
+    if (name === HALFDAY) return timeUtils.getDateObjectFromMomentDuration(halfDay);
+    if (name === DURATION) return period.get('per_duration');
+    if (name === NONE) return { hours: 0 };
 
     if (!period.get('per_start') || !period.get('per_stop')) return {};
 
-    let startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
-    let stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
+    const startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
+    const stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
 
     return timeUtils.getDateObjectFromMomentDuration(stopTime.subtract(startTime));
 }
@@ -66,7 +62,6 @@ export function calculateDuration(period, fullDay) {
 export function isBreakLengthValid(period) {
     if (!getBreakTime(period)) return true;
     return getWorkedTime(period) >= getBreakTime(period);
-
 }
 
 export function getWorkedTime(period) {
@@ -91,24 +86,24 @@ export function isOverlapping(periods) {
     if (periods.size <= 1) {
         return false;
     }
-    periods = periods.toList();
+    const periodList = periods.toList();
 
-    return !periods.every((period, index) => {
-        var startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
-        var stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
+    return !periodList.every((period, index) => {
+        const startTime = timeUtils.getMomentFromImmutable(period, 'per_start');
+        const stopTime = timeUtils.getMomentFromImmutable(period, 'per_stop');
 
         // if no startTime then there is nothing to do
-        if (startTime == null) return true;
+        if (startTime === null) return true;
 
-        return periods.every(function (p, i) {
+        return periods.every((p, i) => {
             // don't check myself
-            if (i == index) return true;
+            if (i === index) return true;
 
-            var pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
-            var pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
+            const pStartTime = timeUtils.getMomentFromImmutable(p, 'per_start');
+            const pStopTime = timeUtils.getMomentFromImmutable(p, 'per_stop');
 
             // if no startTime then there is nothing to do
-            if (pStartTime == null) return true;
+            if (pStartTime === null) return true;
 
             // check good case
             if (stopTime && pStartTime >= stopTime) return true;
@@ -135,11 +130,11 @@ export function getAllErrors(period) {
     if (period.get('duration') === HALFDAY) return [];
     if (period.get('duration') === DURATION) return [];
 
-    var startTime = period.get('per_start');
-    var endTime = period.get('per_stop');
-    var breakTime = period.get('per_break') || false;
+    let startTime = period.get('per_start');
+    let endTime = period.get('per_stop');
+    const breakTime = period.get('per_break') || false;
 
-    var errors = [];
+    const errors = [];
 
     if (!startTime) {
         errors.push('Die Startzeit muss angegeben werden!');
@@ -168,12 +163,12 @@ export function validatePeriod(period) {
     if (period.get('duration') === DURATION) return true;
 
     // if there is no duration needed, don't ask for one (comment type for example)
-    var typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
-    if (period.get('duration') === NONE && !typeConfig.every((t) => t)) return true;
+    const typeConfig = period.getIn(['type', 'pty_config', 'types'], new Immutable.Map([])).toArray();
+    if (period.get('duration') === NONE && !typeConfig.every(t => t)) return true;
 
-    var startTime = period.get('per_start');
-    var endTime = period.get('per_stop');
-    var breakTime = period.get('per_break') || false;
+    let startTime = period.get('per_start');
+    let endTime = period.get('per_stop');
+    const breakTime = period.get('per_break') || false;
 
     if (!startTime) return false;
 
@@ -198,7 +193,7 @@ export function validatePeriod(period) {
  */
 export function validatePeriods(periods) {
     // validate every period
-    let valid = periods.every(validatePeriod);
+    const valid = periods.every(validatePeriod);
     if (!valid) return valid;
 
     // if everything is valid, also check for overlapping

@@ -1,4 +1,4 @@
-'use strict';
+
 
 import moment from 'moment';
 import Immutable from 'immutable';
@@ -37,7 +37,7 @@ export function isValidTimeString(time, strict = true, allowNegativeValue = fals
 export function getValidMoment(time, allowNegativeValue = false) {
     if (!isValidTimeString(time, true, allowNegativeValue)) return null;
 
-    var validTime = null;
+    let validTime = null;
 
     if (time.indexOf('.') > -1) {
         validTime = moment.duration(time * 60, 'minutes');
@@ -46,10 +46,10 @@ export function getValidMoment(time, allowNegativeValue = false) {
         validTime = moment.duration(parseFloat(time.replace(',', '.')) * 60, 'minutes');
     }
     if (time.indexOf(':') > -1) {
-        validTime = moment.duration({hours: time.split(':')[0], minutes: time.split(':')[1]});
+        validTime = moment.duration({ hours: time.split(':')[0], minutes: time.split(':')[1] });
     }
     if (time.match(/^-?(\d*)$/)) {
-        validTime = moment.duration({hours: time});
+        validTime = moment.duration({ hours: time });
     }
 
     return validTime;
@@ -63,7 +63,7 @@ export function getValidMoment(time, allowNegativeValue = false) {
 export function getDateObjectFromMomentDuration(duration) {
     return {
         hours: duration.get('hours') + duration.get('days') * 24,
-        minutes: duration.get('minutes')
+        minutes: duration.get('minutes'),
     };
 }
 
@@ -77,12 +77,12 @@ export function reduceMomentArray(moments, user) {
 
     if (startDate) {
         startDate = moment(startDate).subtract(1, 'month');
-        dates = dates.filter((m) => m.isAfter(startDate) || m.isSame(startDate));
+        dates = dates.filter(m => m.isAfter(startDate) || m.isSame(startDate));
     }
 
     if (endDate) {
         endDate = moment(endDate).add(1, 'month');
-        dates = dates.filter((m) => m.isBefore(endDate) || m.isSame(endDate));
+        dates = dates.filter(m => m.isBefore(endDate) || m.isSame(endDate));
     }
 
     return dates;
@@ -96,7 +96,7 @@ export function reduceMomentArray(moments, user) {
  * @returns {boolean}
  */
 export function isDateInEmploymentInterval(date, user) {
-    return getNearestDateWithinEmployment(date, user) == false;
+    return getNearestDateWithinEmployment(date, user) === false;
 }
 
 /**
@@ -106,8 +106,8 @@ export function isDateInEmploymentInterval(date, user) {
  * @returns {boolean}
  */
 export function getNearestDateWithinEmployment(date, user) {
-    var startDate = user.get('usr_employment_start');
-    var endDate = user.get('usr_employment_stop');
+    let startDate = user.get('usr_employment_start');
+    let endDate = user.get('usr_employment_stop');
 
     // give one month more time before and after
 
@@ -121,8 +121,8 @@ export function getNearestDateWithinEmployment(date, user) {
         if (date.isAfter(endDate)) return endDate;
     } else {
         // check if we want more than a year into the future and stop it
-        var today = getMomentToday();
-        var future = today.clone().endOf("year").add(1, 'year');
+        const today = getMomentToday();
+        const future = today.clone().endOf('year').add(1, 'year');
         if (date.isAfter(future)) return today;
     }
 
@@ -142,69 +142,35 @@ export function getMomentToday() {
  * @returns moment.duration
  */
 export function roundTime(duration, round) {
-    var absRound = Math.abs(round);
+    const absRound = Math.abs(round);
 
     // no need to round
-    if (duration.asMinutes() % absRound == 0) return duration;
+    if (duration.asMinutes() % absRound === 0) return duration;
 
-    let factor = Math.trunc(duration.asMinutes() / absRound);
+    const factor = Math.trunc(duration.asMinutes() / absRound);
 
-    let minRounded = factor * absRound;
+    const minRounded = factor * absRound;
 
-    let minutes = round > 0 ? minRounded + absRound : minRounded;
+    const minutes = round > 0 ? minRounded + absRound : minRounded;
 
     return moment.duration(minutes, 'minutes');
 }
 
-export function formatDurationHoursToLocale(time, fractions) {
-    fractions = fractions || 2;
-    return time.asHours().toLocaleString('de-DE', {minimumFractionDigits: fractions}) + 'h';
+export function formatDurationHoursToLocale(time, fractions = 2) {
+    return `${time.asHours().toLocaleString('de-DE', { minimumFractionDigits: fractions })}h`;
 }
 
-/**
- * parse a time duration string
- *
- * If the string contains a colon ":" it is expected to be in a format understood
- * by the moment.js duration constructor.
- *
- * Otherwise we match strings like '1h 15m' or '7 minutes, 1.5 hours' etc.
- *
- * @param str the string to parse
- * @returns {*} a moment.duration object
- */
-function parseHumanDurationString(str) {
-    if (_.contains(str, ':')) {
-        return moment.duration(str);
-    } else {
-        var matches = str.match(/(\d*\.)?\d+\s*(h(ours?)?|m(ins?)?)|minutes/gi);
-        var units = {
-            h: 'hours',
-            hour: 'hours',
-            hours: 'hours',
-            m: 'minutes',
-            min: 'minutes',
-            mins: 'minutes',
-            minutes: 'minutes'
-        };
-        return matches.reduce(function (total, s) {
-            var duration = _.zipObject(['amount', 'unit'], _.rest(s.match(/^(.*\d)\s*(.*)$/)));
-            return total.add(+duration.amount, units[duration.unit.toLowerCase().trim()]);
-        }, moment.duration());
-    }
-}
-
-export function isWeekend(moment) {
+export function isWeekend(m) {
     // iso weekday -> 1=monday, 6=saturday, 7=sunday
-    return moment.isoWeekday() > 5;
+    return m.isoWeekday() > 5;
 }
 
 
 export function durationOfWork(period) {
-
-    var ret = moment.duration();
+    let ret = moment.duration();
     if (period.per_pty_id === 'Work') {
-        var duration = moment.duration(period.per_duration);
-        var breakDuration = durationOfBreak(period);
+        const duration = moment.duration(period.per_duration);
+        const breakDuration = durationOfBreak(period);
 
         if (duration.as('ms') > breakDuration.as('ms')) {
             ret = duration.subtract(breakDuration);
@@ -216,32 +182,30 @@ export function durationOfWork(period) {
 }
 
 export function durationOfBreak(period) {
-    if (!period) return;
+    if (!period) return 0;
     return moment.duration(period.per_break || 0);
 }
 
 export function durationOfBalance(period) {
-    if (!period || period.per_pty_id !== 'Balance') return;
+    if (!period || period.per_pty_id !== 'Balance') return 0;
     return moment.duration(period.per_duration || 0);
 }
 
 export function weekNr(date) {
-    let weekNr = date.isoWeek();
-    let weekYear = date.isoWeekYear();
-    if (weekNr < 10) {
-        weekNr = '0' + weekNr;
+    let nr = date.isoWeek();
+    const weekYear = date.isoWeekYear();
+    if (nr < 10) {
+        nr = `0${nr}`;
     }
-    return weekYear + '-' + weekNr;
+    return `${weekYear}-${nr}`;
 }
 
 export function sumDuration(xs) {
-    return xs.reduce(function (total, x) {
-        return total.add(x);
-    }, moment.duration());
+    return xs.reduce((total, x) => total.add(x), moment.duration());
 }
 
 export function getFirstAndLastDayOfMonth(month) {
-    let ret = {};
+    const ret = {};
     ret.firstDay = month.clone();
 
     // get first day of that month
@@ -277,14 +241,14 @@ export function getMomentFromImmutable(obj, attr) {
  * @param today moment
  * @param limit optional, defaults to 6
  */
-export function getYearsForUser(user, today, limit) {
-    limit = limit || 6;
+export function getYearsForUser(user, today, limit = 6) {
+    let today2 = today;
 
     if (!Immutable.Map.isMap(user)) {
         throw new Error('getYearsForUser expects an Immutable Map Object!');
     }
 
-    if (!moment.isMoment(today)) {
+    if (!moment.isMoment(today2)) {
         throw new Error('getYearsForUser expects a Today Object!');
     }
 
@@ -292,13 +256,12 @@ export function getYearsForUser(user, today, limit) {
     let startDate = user.get('usr_employment_start');
     if (startDate) {
         startDate = moment(startDate);
-        today = today.clone().month(startDate.month()).day(startDate.day()).add(1, 'day');
+        today2 = today2.clone().month(startDate.month()).day(startDate.day()).add(1, 'day');
     }
 
-    let years = _.times(limit, function (i) {
-        return today.clone().add(1, 'year').subtract(i, 'years');
-    });
+    const years = _.times(limit, i => today2.clone().add(1, 'year').subtract(i, 'years'));
 
+    // eslint-disable-next-line new-cap
     return Immutable.List(reduceMomentArray(years, user));
 }
 
@@ -310,10 +273,9 @@ export function getYearsForUser(user, today, limit) {
  * @returns {List|Immutable.List|any}
  */
 export function getMonthsForUser(user, activeMonth) {
-    let months = _.times(12, function (n) {
-        return activeMonth.clone().month(n);
-    });
+    const months = _.times(12, n => activeMonth.clone().month(n));
 
+    // eslint-disable-next-line new-cap
     return Immutable.List(reduceMomentArray(months, user));
 }
 

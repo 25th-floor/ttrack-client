@@ -1,31 +1,32 @@
-var express = require('express');
-var api = express();
-var bodyParser = require('body-parser');
+const express = require('express');
 
-var User = require('./resources/user');
-var Period = require('./resources/period');
-var PeriodType = require('./resources/period_type');
-var Timesheet = require('./resources/timesheet');
+const api = express();
+const bodyParser = require('body-parser');
+
+const User = require('./resources/user');
+const Period = require('./resources/period');
+const PeriodType = require('./resources/period_type');
+const Timesheet = require('./resources/timesheet');
 
 api.use(bodyParser.json()); // for parsing application/json
-api.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+api.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 /**
  * add extra debug information to sentry
  */
-api.use(function (req, res, next) {
-    var sentry_client = api.get('sentry_client');
-    if (!sentry_client) {
+api.use((req, res, next) => {
+    const sentryClient = api.get('sentry_client');
+    if (!sentryClient) {
         next();
         return;
     }
 
     // add request information
-    sentry_client.setExtraContext({
+    sentryClient.setExtraContext({
         url: req.originalUrl,
         method: req.method,
         params: req.params,
-        request: req
+        request: req,
     });
 
     next();
@@ -34,13 +35,13 @@ api.use(function (req, res, next) {
 /**
  * add user information to the sentry client so we have this data to debug in case of errors
  */
-api.param('user', function (req, res, next, id) {
+api.param('user', (req, res, next, id) => {
     // try to get the user details from the User model and attach it to the request object
-    User.get(api.get('pg'), id, function (user) {
+    User.get(api.get('pg'), id, (user) => {
         if (user) {
-            var sentry_client = api.get('sentry_client');
-            if (sentry_client) {
-                sentry_client.setUserContext(user);
+            const sentryClient = api.get('sentry_client');
+            if (sentryClient) {
+                sentryClient.setUserContext(user);
             }
             next();
         } else {
@@ -49,55 +50,55 @@ api.param('user', function (req, res, next, id) {
     });
 });
 
-api.get('/users', function (req, res) {
-    console.log('API GET Request for Users');
-    User.list(api.get('pg'), function (users) {
+api.get('/users', (req, res) => {
+    console.info('API GET Request for Users');
+    User.list(api.get('pg'), (users) => {
         res.json(users);
-    })
+    });
 });
 
-api.get('/period-types', function (req, res) {
-    console.log('API GET Request for Period Types');
-    PeriodType.list(api.get('pg'), function (types) {
+api.get('/period-types', (req, res) => {
+    console.info('API GET Request for Period Types');
+    PeriodType.list(api.get('pg'), (types) => {
         res.json(types);
     });
 });
 
-api.get('/users/:user/timesheet/:from/:to', function (req, res) {
-    console.log('API GET Request for Timesheet', req.params.from, 'to', req.params.to, 'for user', req.params.user);
-    Timesheet.get(api.get('pg'), req.params.user, req.params.from, req.params.to, function (timesheet) {
+api.get('/users/:user/timesheet/:from/:to', (req, res) => {
+    console.info('API GET Request for Timesheet', req.params.from, 'to', req.params.to, 'for user', req.params.user);
+    Timesheet.get(api.get('pg'), req.params.user, req.params.from, req.params.to, (timesheet) => {
         res.json(timesheet);
     });
 });
 
-api.post('/users/:user/periods', function (req, res) {
-    console.log('API POST Request for Period for user', req.params.user);
-    var data = req.body;
+api.post('/users/:user/periods', (req, res) => {
+    console.info('API POST Request for Period for user', req.params.user);
+    const data = req.body;
     validateData(data, res);
 
-    Period.post(api.get('pg'), req.params.user, data, function (period) {
+    Period.post(api.get('pg'), req.params.user, data, (period) => {
         res.json(period);
     });
 });
 
-api.put('/users/:user/periods/:id', function (req, res) {
-    console.log('API PUT Request for Period', req.params.id, 'for user', req.params.user);
+api.put('/users/:user/periods/:id', (req, res) => {
+    console.info('API PUT Request for Period', req.params.id, 'for user', req.params.user);
 
-    var data = req.body;
-    if (req.params.id != data.per_id) {
+    const data = req.body;
+    if (req.params.id !== data.per_id) {
         res.status(400).send('Invalid Id!').end();
     }
 
     validateData(data, res);
 
-    Period.put(api.get('pg'), req.params.user, data, function (period) {
+    Period.put(api.get('pg'), req.params.user, data, (period) => {
         res.json(period);
     });
 });
 
-api.delete('/users/:user/periods/:id', function (req, res) {
-    console.log('API DELETE Request for Period');
-    Period.delete(api.get('pg'), req.params.id, req.params.user, function (periods) {
+api.delete('/users/:user/periods/:id', (req, res) => {
+    console.info('API DELETE Request for Period');
+    Period.delete(api.get('pg'), req.params.id, req.params.user, () => {
         res.status(204).end();
     });
 });

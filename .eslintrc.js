@@ -9,7 +9,6 @@ module.exports = {
     'rules': {
         'no-use-before-define': 0,
         'no-console': [1, { allow: ["error", "info"] }],
-        "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
         "indent": [2, 4, { "SwitchCase": 1 }],
         "class-methods-use-this": 0,
         'react/jsx-no-bind': [2, {
@@ -32,6 +31,8 @@ module.exports = {
                 "ignoreTemplateLiterals": true
             }
         ],
-        "jsx-a11y/no-static-element-interactions": "off"
+        "jsx-a11y/no-static-element-interactions": "off",
+        "no-mixed-operators": "off",
+        "no-plusplus": "off"
     }
 };
