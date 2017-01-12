@@ -126,15 +126,18 @@ export default class extends React.Component {
                     }
 
                     <div className={styles.row}>
-                        <button className={`${styles.btn} btn btn-primary pull-right`}
+                        <button
+                            className={`${styles.btn} btn btn-primary pull-right`}
                             disabled={disableSaveButton}
                             onClick={this.handleSave}
                         >Speichern</button>
-                        <button className={`${styles.btn} btn btn-default pull-right`}
+                        <button
+                            className={`${styles.btn} btn btn-default pull-right`}
                             onClick={this.handleCancel}
                         >Abbrechen</button>
 
-                        <button className={`${styles.btn} btn btn-success`}
+                        <button
+                            className={`${styles.btn} btn btn-success`}
                             onClick={this.handleAddPeriod}
                         ><i className="fa fa-fw fa-plus" /> Eintrag hinzufügen</button>
                     </div>

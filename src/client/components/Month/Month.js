@@ -23,13 +23,14 @@ export default class extends React.Component {
                 <div className={styles.pageHeader}>
                     <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
 
-                    <DatePicker activeMonth={this.props.activeMonth}
+                    <DatePicker
+                        activeMonth={this.props.activeMonth}
                         months={this.props.months}
                         years={this.props.years}
                         onChangeDate={this.props.onChangeDate}
                     />
 
-                    <div className="clearfix"></div>
+                    <div className="clearfix" />
                 </div>
 
                 <fieldset className={styles.monthHeader}>
@@ -43,7 +44,8 @@ export default class extends React.Component {
                     </dl>
                 </fieldset>
 
-                <Weeks weeks={this.props.weeks} activeMonth={this.props.activeMonth} types={this.props.types}
+                <Weeks
+                    weeks={this.props.weeks} activeMonth={this.props.activeMonth} types={this.props.types}
                     user={this.props.user} onSaveDay={this.props.onSaveDay}
                 />
             </div>

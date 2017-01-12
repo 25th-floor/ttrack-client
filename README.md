@@ -33,7 +33,23 @@ npm start
 ```
 
 ### Docker Variant
-TODO: need documentation how to start the docker version.
+### Production
+TBC
+
+### Development
+There is a `docker-compose.yml` which provides the basic means to start the node server in development mode. It also starts a postgres database docker image and links it. 
+
+The node server will expose port `8080` and postgres will expose `5432` for development purposes.
+
+You still need to start the frontend code using npm:
+```
+$ npm run dev
+```
+And you are good to go to develop in the frontend.
+ 
+Please understand that this setup is good for working on the client (frontend) code. If you need to work on the node server this will not work as the docker image does not update code changes.
+
+To work on the server it's not recommended to use docker but the direct approach @see Development > Getting Started.  
 
 ## Administration
 

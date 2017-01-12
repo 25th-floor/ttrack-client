@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-for*/
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import moment from 'moment';
 import _ from 'lodash';
@@ -25,12 +25,7 @@ export default class extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        this.handleComment = this.handleComment.bind(this);
-        this.handleDurationChange = this.handleDurationChange.bind(this);
-        this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        this.renderDurationRadio = this.renderDurationRadio.bind(this);
-        this.renderSelectOption = this.renderSelectOption.bind(this);
+
         let period = props.period;
         if (!period.get('type')) {
             period = period.merge({
@@ -40,6 +35,7 @@ export default class extends React.Component {
         // handle default duration to be the first duration found in the config
         if (!period.get('duration')) {
             period = period.merge({
+                // eslint-disable-next-line newline-per-chained-call
                 duration: period.get('type').get('pty_config').get('types').keySeq().first(),
             });
             // add duration per_duration object if needed
@@ -47,23 +43,47 @@ export default class extends React.Component {
         }
 
         this.state = { period };
+
+        this.handleComment = this.handleComment.bind(this);
+        this.handleDurationChange = this.handleDurationChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.renderDurationRadio = this.renderDurationRadio.bind(this);
+        this.renderSelectOption = this.renderSelectOption.bind(this);
     }
 
     componentDidMount() {
         // focus on select on first creation
-        ReactDOM.findDOMNode(this.refs.selectType).focus();
+        this.selectType.focus();
     }
 
     handleTypeChange(event) {
-        const type = findType(this.props.types, event.target.value);
+        const { period } = this.state;
+        const { types } = this.props;
+
+        const type = findType(types, event.target.value);
         const cfg = type.get('pty_config').get('types').toJS();
         const defaultDuration = _.findKey(cfg, value => value) || periodUtils.NONE;
+        const durationValue = period.get('duration');
 
-        const period = this.state.period.merge({
+        // cleanup
+        let breakDuration = period.get('per_break');
+        let start = period.get('per_start');
+        let stop = period.get('per_stop');
+        if (!cfg.period) {
+            breakDuration = null;
+            start = null;
+            stop = null;
+        }
+
+        const p = period.merge({
             type,
-            duration: cfg[this.state.period.get('duration')] ? this.state.period.get('duration') : defaultDuration,
+            per_start: start,
+            per_stop: stop,
+            per_break: breakDuration,
+            duration: cfg[durationValue] ? durationValue : defaultDuration,
         });
-        this.updateState(period);
+        this.updateState(p);
     }
 
     handleDurationChange(event) {
@@ -99,9 +119,9 @@ export default class extends React.Component {
     }
 
     addDurationTime(period) {
-        return period.merge({
+        return {
             per_duration: periodUtils.calculateDuration(period, this.props.dayTargetTime),
-        });
+        };
     }
 
     updateState(period) {
@@ -123,7 +143,8 @@ export default class extends React.Component {
         return (
             <div className="col-xs-4 col-sm-2" key={index}>
                 <label htmlFor={id} className="radio-inline">
-                    <input type="radio" name={ `${elementName}[duration]` } id={id} value={duration.name}
+                    <input
+                        type="radio" name={`${elementName}[duration]`} id={id} value={duration.name}
                         checked={duration.name === value}
                         onChange={this.handleDurationChange}
                     />
@@ -188,7 +209,23 @@ export default class extends React.Component {
             }];
 
             comment.className += ' col-sm-6';
+        } else if (period.get('duration') === periodUtils.DURATION) {
+            periodElements = [{
+                id: 'per_duration',
+                label: 'Zeit',
+                name: `${elementName}[per_duration]`,
+                className: elementCss,
+                placeholder: 'hh:mm',
+                value: period.get('per_duration'),
+                required: true,
+                round: null,
+                negative: true,
+            }];
         }
+
+        const ref = (selectType) => {
+            this.selectType = selectType;
+        };
 
         return (
             <div className={styles.row} key={period.get('per_id')}>
@@ -201,11 +238,12 @@ export default class extends React.Component {
                 </div>
                 <div className="row">
                     <label className="col-xs-12 col-sm-3 col-lg-2">
-                        <select className="col-xs-12 form-control"
+                        <select
+                            className="col-xs-12 form-control"
                             name={`${elementName}[pty_id]`}
                             value={period.getIn(['type', 'pty_id'])}
                             onChange={this.handleTypeChange}
-                            ref="selectType"
+                            ref={ref}
                         >
                             {this.props.types.toList().map(this.renderSelectOption)}
                         </select>
@@ -215,17 +253,27 @@ export default class extends React.Component {
                 </div>
 
                 <div className="row">
-                    {periodElements.map((p, index) => <TimeInput id={p.id} label={p.label} name={p.name}
-                        css={p.className} placeholder={p.placeholder}
-                        time={p.value} required={p.required} key={index}
-                        round={p.round}
-                        onChange={this.handleTimeChange}
-                    />)}
+                    {periodElements.map((p, index) => (
+                        <TimeInput
+                            id={p.id}
+                            label={p.label}
+                            name={p.name}
+                            css={p.className}
+                            placeholder={p.placeholder}
+                            time={p.value}
+                            required={p.required}
+                            key={p.id}
+                            round={p.round}
+                            allowNegativeValues={p.negative || false}
+                            onChange={this.handleTimeChange}
+                        />
+                    ))}
 
                     <div className={comment.className}>
                         <label htmlFor={comment.name}>Kommentar</label>
-                        <input type="text" placeholder="Kommentar" className="form-control"
-                            name={comment.name} id={comment.name} value={period.get('per_comment')}
+                        <input
+                            type="text" placeholder="Kommentar" className="form-control"
+                            name={comment.name} id={comment.name} value={period.get('per_comment') || ''}
                             onChange={this.handleComment}
                         />
                     </div>

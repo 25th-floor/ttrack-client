@@ -29,8 +29,9 @@ export default class extends React.Component {
                 <div className={`container-fluid ${styles.container}`}>
                     <div className={`navbar-header ${styles.header}`}>
                         <a className={`navbar-brand ${styles.brand}`} href="/">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" space="preserve">
-                                <path d="M 100.00,0.00
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                <path
+                                    d="M 100.00,0.00
                                        C 100.00,0.00 100.00,20.00 100.00,20.00
                                          100.00,20.00 80.00,20.00 80.00,20.00
                                          80.00,20.00 80.00,100.00 80.00,100.00
@@ -61,13 +62,13 @@ export default class extends React.Component {
                         <ul className={`nav navbar-nav ${styles['navbar-nav']}`}>
                             <li className={`active ${styles.active}`}>
                                 <a>
-                                    <i className="fa fa-calendar"></i>
+                                    <i className="fa fa-calendar" />
                                     <span>Monatsansicht</span>
                                 </a>
                             </li>
                             <li className={`logout ${styles.logout}`}>
-                                <a onClick={this.handleLogout}>
-                                    <i className="fa fa-power-off"></i>
+                                <a onClick={this.handleLogout} href="">
+                                    <i className="fa fa-power-off" />
                                     <span>Logout</span>
                                 </a>
                             </li>

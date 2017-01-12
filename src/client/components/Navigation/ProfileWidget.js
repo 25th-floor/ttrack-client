@@ -16,7 +16,7 @@ export default class extends React.Component {
         return (
             <div id={styles.profileWidget}>
                 <div className={styles.image}>
-                    <img src={imgSrc} />
+                    <img src={imgSrc} alt="" />
                 </div>
                 <div className={styles.name}>
                     <span className="firstname">{activeUser.get('usr_firstname')} </span>

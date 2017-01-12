@@ -26,6 +26,11 @@ export default class extends React.Component {
         this.state = { edit: false };
     }
 
+    onSave(date, periods, removed) {
+        this.props.onSaveDay(date, periods, removed);
+        this.setState({ edit: false });
+    }
+
     handleEditClick() {
         // don't var user get out with this click
         if (this.state.edit) return;
@@ -33,11 +38,6 @@ export default class extends React.Component {
     }
 
     handleCancel() {
-        this.setState({ edit: false });
-    }
-
-    onSave(date, periods, removed) {
-        this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
     }
 
@@ -55,6 +55,7 @@ export default class extends React.Component {
         const weekDayFull = date.format('dddd');
         const workDuration = timeUtils.formatDurationHoursToLocale(day.get('workDuration'));
         const breakDuration = timeUtils.formatDurationHoursToLocale(day.get('breakDuration'));
+        const balanceDuration = timeUtils.formatDurationHoursToLocale(day.get('balanceDuration'));
 
         const diff = moment.duration(day.get('workDuration')).subtract(day.get('remaining'));
         let diffDuration = timeUtils.formatDurationHoursToLocale(diff);
@@ -84,10 +85,11 @@ export default class extends React.Component {
             diff.as('ms') < 0 ? styles['text-danger'] : null
         );
 
-        let durationBlock = <dl>
+        let durationBlock = (<dl>
             <dt>Arbeitszeit</dt>
             <dd className="col-sm-1 hidden-xs col-lg-1">
                 {day.get('workDuration').asSeconds() !== 0 ? workDuration : null}
+                {day.get('balanceDuration').asSeconds() !== 0 ? <div>{balanceDuration}</div> : null}
             </dd>
             <dt>Pause</dt>
             <dd className="col-sm-1 hidden-xs tt-col-lg-1">
@@ -95,16 +97,17 @@ export default class extends React.Component {
             </dd>
             <dt>Differenz</dt>
             <dd className={durationClass}>{diffDuration}</dd>
-        </dl>;
+        </dl>);
 
         if (!showDurations) {
-            durationBlock = <div className="col-xs-2 col-sm-3 col-lg-3 tt-col-lg-3"></div>;
+            durationBlock = <div className="col-xs-2 col-sm-3 col-lg-3 tt-col-lg-3" />;
         }
 
         const onSaveDate = this.onSave.bind(this, date);
 
         return (
-            <fieldset className={className} key={fullDate}
+            <fieldset
+                className={className} key={fullDate}
                 onClick={dateOutOfEmploymentScope ? null : this.handleEditClick}
             >
                 <legend>
@@ -124,7 +127,8 @@ export default class extends React.Component {
 
                 {durationBlock}
 
-                {edit ? <PeriodsForm periods={day.get('periods')} types={this.props.types} date={date}
+                {edit ? <PeriodsForm
+                    periods={day.get('periods')} types={this.props.types} date={date}
                     dayTargetTime={day.get('day_target_time')}
                     onCancel={this.handleCancel} onSave={onSaveDate}
                 />

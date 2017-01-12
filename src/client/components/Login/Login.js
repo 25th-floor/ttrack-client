@@ -19,8 +19,9 @@ export default class extends React.Component {
         return (
             <div id="login" className={styles.login}>
                 <div className={styles.loginBrand}>
-                    <svg viewBox="0 0 100 100" space="preserve">
-                        <path d="M 100.00,0.00
+                    <svg viewBox="0 0 100 100">
+                        <path
+                            d="M 100.00,0.00
                                C 100.00,0.00 100.00,20.00 100.00,20.00
                                  100.00,20.00 80.00,20.00 80.00,20.00
                                  80.00,20.00 80.00,100.00 80.00,100.00

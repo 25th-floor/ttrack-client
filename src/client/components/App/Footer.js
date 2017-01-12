@@ -29,11 +29,13 @@ export default class extends React.Component {
                 <div className="container-fluid">
                     <div className={`${styles['footer-copyright']} footer-copyright`}>
                         {this.props.motto
-                            ? <small className={styles['tt-motto']}>
-                                <Motto house={this.props.motto.house} motto={this.props.motto.motto} />
-                              </small>
+                            ? (
+                                <small className={styles['tt-motto']}>
+                                    <Motto house={this.props.motto.house} motto={this.props.motto.motto} />
+                                </small>
+                            )
                             : ''}
-                        <i className="fa fa-copyright"></i>
+                        <i className="fa fa-copyright" />
                         <a href="http://25th-floor.com">25th-floor GmbH</a>
                         <span>{buildInfo}</span>
                     </div>

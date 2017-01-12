@@ -32,11 +32,12 @@ export default class extends React.Component {
 
         return (
             <span className={styles.periodComment}>
-                <span key={period.get('per_id')} className="badge badge-primary"
+                <span
+                    key={period.get('per_id')} className="badge badge-primary"
                     style={style}
                     title={name}
                 >
-                    <i className={iconClassName}></i>
+                    <i className={iconClassName} />
                 </span>
                 <span className={`${styles.comment} hidden-xs`}>{comment}</span>
             </span>

@@ -7,7 +7,7 @@ export default function (onChange) {
     const users = resource.collection('/api/users');
     const activeUserId = localStorage.getItem(LS_USER, {}).activeUserId;
     let activeUser = null;
-    const notify = () => onChange ? onChange() : null;
+    const notify = () => (onChange ? onChange() : null);
     return {
         init() {
             return users.load().then(() => {

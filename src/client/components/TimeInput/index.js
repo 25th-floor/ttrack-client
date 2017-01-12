@@ -16,6 +16,7 @@ export default class extends React.Component {
         required: React.PropTypes.bool,
         round: React.PropTypes.number,
         onChange: React.PropTypes.func.isRequired,
+        allowNegativeValues: React.PropTypes.bool,
     };
 
     constructor(props, context) {
@@ -28,8 +29,8 @@ export default class extends React.Component {
     }
 
     handleChange(event) {
-        let duration = timeUtils.getValidMoment(event.target.value);
-        if (duration != null) {
+        let duration = timeUtils.getValidMoment(event.target.value, this.props.allowNegativeValues);
+        if (duration !== null) {
             if (this.props.round) {
                 duration = timeUtils.roundTime(duration, this.props.round);
             }
@@ -46,14 +47,15 @@ export default class extends React.Component {
         const css = classSet(
             this.props.css || '',
             {
-                'has-error': !timeUtils.isValidTimeString(time, this.props.required),
+                'has-error': !timeUtils.isValidTimeString(time, this.props.required, this.props.allowNegativeValues),
             }
         );
 
         return (
             <div className={css}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
-                <input type="text" placeholder={this.props.placeholder} className="form-control"
+                <input
+                    type="text" placeholder={this.props.placeholder} className="form-control"
                     required={this.props.required}
                     name={this.props.name} id={this.props.name} value={time} onChange={this.handleChange}
                 />

@@ -1,16 +1,13 @@
-var db = require('../db');
+const db = require('../db');
 
 module.exports = {
-    list: function (pg, cb)
-    {
-        pg(function (client)
-        {
-            var query = db.periodTypes.select(db.periodTypes.star())
+    list(pg, cb) {
+        pg((client) => {
+            const query = db.periodTypes.select(db.periodTypes.star())
                 .from(db.periodTypes).toQuery();
-            db.query(client, query).then(function (result)
-            {
+            db.query(client, query).then((result) => {
                 cb(result.rows);
             }).done();
         });
-    }
+    },
 };

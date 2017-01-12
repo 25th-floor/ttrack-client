@@ -31,8 +31,13 @@ describe('timeUtils.getYearsForUser', function() {
             it('returns all 6 years', function() {
                 var yearsForUser = timeUtils.getYearsForUser(user, moment());
                 expect(Immutable.List.isList(yearsForUser)).toBeTruthy();
+
+                var expectedYears = [];
+                for (var i = 0; i < 6; i++) {
+                    expectedYears.push(moment().add(1, 'year').subtract(i, 'years').format('YYYY'));
+                }
                 expect(yearsForUser.toJSON().map(date => date.substr(0,4)))
-                    .toEqual(["2017", "2016", "2015", "2014", "2013", "2012"]);
+                    .toEqual(expectedYears);
             });
 
         });

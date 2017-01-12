@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styles from './less/UserSelection.less';
 
 export default class extends React.Component {
@@ -25,7 +24,7 @@ export default class extends React.Component {
         return (
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={onChangeUser}>
-                    <img src={imgSrc} />
+                    <img src={imgSrc} alt="" />
                     <span>
                         {user.get('usr_firstname')}
                         <span className={styles.lastname}>
@@ -44,7 +43,7 @@ export default class extends React.Component {
                 <ul className={`${styles.userlist} row`}>
                     {users.map(this.renderUserItem)}
                 </ul>
-                <div className="clear"></div>
+                <div className="clear" />
             </div>
         );
     }

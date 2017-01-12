@@ -54,6 +54,12 @@ describe('timeUtils.getValidMoment', function() {
                 expect(timeUtils.getValidMoment("" + number).toJSON()).toEqual(moment.duration(number, "hours").toJSON());
             });
         });
+
+        describe('special cases', function() {
+            it('if the value is -33 it returns true', function() {
+                expect(timeUtils.getValidMoment('-33', true).toJSON()).toEqual(moment.duration(-33, 'hours').toJSON());
+            });
+        });
     });
 
 });

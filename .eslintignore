@@ -5,9 +5,5 @@
 # Ignore test files
 **/__*/**
 
-# Ignore server
-src/server/**/*
 # Ignore import
 src/import/**/*
-# Ignore common
-src/common/**/*

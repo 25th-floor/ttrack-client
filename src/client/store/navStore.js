@@ -8,6 +8,7 @@ const router = myro({
 });
 
 function dispatchRouter() {
+    // eslint-disable-next-line no-undef
     return router(document.location.pathname);
 }
 
@@ -15,13 +16,13 @@ function activeMonthFromRoute(route) {
     if (route && route.$name === 'month' && route.$params.month) {
         // todo : check if month is valid!
         return moment(route.$params.month, 'YYYY-MM', true);
-    } else {
-        return timeUtils.getMomentToday();
     }
+
+    return timeUtils.getMomentToday();
 }
 
 export default function (onChange) {
-    const notify = () => onChange ? onChange() : null;
+    const notify = () => (onChange ? onChange() : null);
     let activeMonth = timeUtils.getMomentToday();
 
     const dispatch = () => {
@@ -31,6 +32,7 @@ export default function (onChange) {
 
     return {
         init() {
+            // eslint-disable-next-line no-undef
             window.onpopstate = () => {
                 dispatch();
                 notify();
@@ -46,6 +48,7 @@ export default function (onChange) {
         gotoMonth(month) {
             const path = router.month({ month: month.format('YYYY-MM') });
             activeMonth = month;
+            // eslint-disable-next-line no-undef
             window.history.pushState(null, '', path);
             notify();
         },
