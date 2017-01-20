@@ -13,7 +13,7 @@ const days = sql.define({
 
 const users = sql.define({
     name: 'users',
-    columns: ['usr_id', 'usr_firstname', 'usr_lastname', 'usr_email', 'usr_target_time', 'usr_employment_start', 'usr_employment_end'],
+    columns: ['usr_id', 'usr_firstname', 'usr_lastname', 'usr_email', 'usr_target_time', 'usr_employment_start', 'usr_employment_end', 'usr_start_timetracking'],
 });
 
 const periodTypes = sql.define({
