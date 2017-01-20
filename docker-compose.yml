@@ -23,3 +23,5 @@ services:
       - db:pg
     ports:
       - 8080:8080
+    volumes:
+      - ./src:/app/src
