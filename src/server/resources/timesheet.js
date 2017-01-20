@@ -152,21 +152,31 @@ function fetchPeriodTypes(client) {
 }
 
 function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPeriodTypeId) {
-    const expectedHolidays = util.getHolidaysForDateRange(dateRange);
+    const start = user.usr_start_timetracking === null
+        ? moment(user.usr_employment_start)
+        : moment(user.usr_start_timetracking);
+    const employmentEnd = moment(user.usr_employment_end);
 
-    // omit all holidays that are in the database already
-    const newHolidays = _.omitBy(expectedHolidays, (comment, strDate) => existingHolidays.some(holiday => moment(holiday.day_date).format('YYYY-MM-DD') === strDate));
+    const expectedHolidays = util.getHolidaysForDateRange(dateRange);
+    const newHolidays = expectedHolidays
+        // omit all holidays that are in the database already
+        .filter(({ date }) => !existingHolidays.some(holiday => moment(holiday.day_date).format('YYYY-MM-DD') === date))
+        // omit all holidays that are not within employment
+        .filter(({ date }) => {
+            const day = moment(date);
+            return !(day.isBefore(start) || day.isAfter(employmentEnd));
+        });
+
     // eslint-disable-next-line new-cap
-    const newPeriodPromises = _.map(newHolidays, (comment, strDate) => Q.Promise((resolve) => {
-        const date = moment(strDate, 'YYYY-MM-DD').toDate();
-            // get user target time for that specific date (handles weekends correct)
-        User.getTargetTime(pg, user.usr_id, date, (val) => {
-            const day = moment.duration(val);
-            console.info('adding new Holiday', strDate, comment, val);
+    const newPeriodPromises = _.map(newHolidays, ({ comment, date }) => Q.Promise((resolve) => {
+        const mDate = moment(date, 'YYYY-MM-DD').toDate();
+        // get user target time for that specific date (handles weekends correct)
+        User.getTargetTime(pg, user.usr_id, mDate, (val) => {
+            const duration = moment.duration(val);
             const newPeriod = {
-                date,
+                date: mDate,
                 userId: user.usr_id,
-                per_duration: day.format('hh:mm'),
+                per_duration: duration.format('hh:mm'),
                 per_comment: comment,
                 per_pty_id: holidayPeriodTypeId,
             };

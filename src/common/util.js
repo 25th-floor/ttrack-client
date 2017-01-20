@@ -21,7 +21,7 @@ function calculateFirstLastDayOfMonth(d) {
 }
 
 function getHolidaysForDateRange(dateRange) {
-    const holidays = {};
+    const holidays = [];
     const start = moment(dateRange.start);
     const end = moment(dateRange.end);
     do {
@@ -33,7 +33,7 @@ function getHolidaysForDateRange(dateRange) {
             const holiday = yearHolidays[date];
             if (holidayDate.isBefore(start)) continue;
             if (holidayDate.isAfter(end)) continue;
-            holidays[date] = holiday;
+            holidays.push({ date, comment: holiday });
         }
 
         start.add(1, 'year');
