@@ -17,10 +17,8 @@ services:
       - DB_USER=postgres
       - DB_PASS=postgres
       - DB_DATABASE=ttrack
-      - DB_HOST=pg
+      - DB_HOST=db
       - NODE_ENV=development
-    links:
-      - db:pg
     ports:
       - 8080:8080
     volumes:
