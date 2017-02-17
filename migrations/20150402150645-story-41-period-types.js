@@ -1,4 +1,4 @@
-dbm = dbm || require('db-migrate');
+var dbm = global.dbm || require('db-migrate');
 var type = dbm.dataType;
 var fs = require('fs');
 var path = require('path');
