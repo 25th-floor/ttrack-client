@@ -3,7 +3,7 @@
 
 .userSelection {
 
-    @border-color: transparent;
+    @border-color : transparent;
 
     .userlist {
         padding       : 0;
@@ -49,6 +49,19 @@
                     border-radius : 5px;
                     max-height    : none;
                     padding       : 2px;
+                }
+
+                .imageContainer {
+                    @media (min-width : @screen-sm-min) {
+                        height   : 100px;
+                        overflow : auto;
+                    }
+                    @media (min-width : @screen-md-min) {
+                        height   : 132px;
+                    }
+                    @media (min-width : @screen-lg-min) {
+                        height   : 164px;
+                    }
                 }
 
                 img {

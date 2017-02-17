@@ -24,7 +24,9 @@ export default class extends React.Component {
         return (
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={onChangeUser}>
-                    <img src={imgSrc} alt="" />
+                    <div className={styles.imageContainer}>
+                        <img src={imgSrc} alt="" />
+                    </div>
                     <span>
                         {user.get('usr_firstname')}
                         <span className={styles.lastname}>
