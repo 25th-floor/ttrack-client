@@ -39,7 +39,7 @@ export default class extends React.Component {
     }
 
     render() {
-        const users = this.props.users.sortBy(user => user.get('usr_lastname'));
+        const users = this.props.users.sortBy(user => user.get('usr_lastname').toLowerCase());
         return (
             <div className={`container ${styles.userSelection}`}>
                 <ul className={`${styles.userlist} row`}>
