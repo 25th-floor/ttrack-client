@@ -30,7 +30,7 @@ export default class extends React.Component {
                     <span>
                         {user.get('usr_firstname')}
                         <span className={styles.lastname}>
-                            {user.get('usr_lastname')}
+                            {` ${user.get('usr_lastname')}`}
                         </span>
                     </span>
                 </a>
