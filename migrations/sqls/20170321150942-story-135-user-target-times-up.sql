@@ -52,6 +52,7 @@ BEGIN
   RETURN target;
 END
 $$;
+COMMENT ON FUNCTION user_get_start_date (INTEGER) IS 'get first date for a user relevant for ttrack.';
 
 
 
@@ -83,6 +84,7 @@ BEGIN
   RETURN COALESCE(target, '00:00:00'::INTERVAL);
 END
 $$;
+COMMENT ON FUNCTION user_get_target_time (INTEGER, DATE) IS 'get the calculated target time for a user on a given date.';
 
 
 /* adjust function to new feature */
@@ -128,3 +130,4 @@ BEGIN
   ORDER BY s;
 END;
 $$;
+COMMENT ON FUNCTION user_worktime (INTEGER, DATE) IS 'calculate the overall working hours for a user until a given date.';
