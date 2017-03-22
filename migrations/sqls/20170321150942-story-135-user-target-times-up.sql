@@ -192,9 +192,9 @@ BEGIN
 
     -- update days
     -- update full days
-    UPDATE days SET day_target_time = target/5 WHERE day_usr_id = id AND day_date > startdate AND day_target_time = old_target/5;
+    UPDATE days SET day_target_time = target/5 WHERE day_usr_id = id AND day_date >= startdate AND day_target_time = old_target/5;
     -- update half days
-    UPDATE days SET day_target_time = target/10 WHERE day_usr_id = id AND day_date > startdate AND day_target_time = old_target/10;
+    UPDATE days SET day_target_time = target/10 WHERE day_usr_id = id AND day_date >= startdate AND day_target_time = old_target/10;
 
     -- update periods?
     -- update full periods
@@ -202,7 +202,7 @@ BEGIN
       FROM days
     WHERE day_id = per_day_id
     AND day_usr_id = id
-    AND day_date > startdate
+    AND day_date >= startdate
     AND per_pty_id IN ('Vacation', 'Sick', 'Nursing', 'Holiday')
     AND per_duration = old_target/5;
 
@@ -211,7 +211,7 @@ BEGIN
       FROM days
     WHERE day_id = per_day_id
     AND day_usr_id = id
-    AND day_date > startdate
+    AND day_date >= startdate
     AND per_pty_id IN ('Vacation', 'Sick', 'Nursing', 'Holiday')
     AND per_duration = old_target/10;
 
