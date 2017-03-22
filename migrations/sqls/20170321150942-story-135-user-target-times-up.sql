@@ -95,7 +95,6 @@ CREATE OR REPLACE FUNCTION user_worktime(id INTEGER, due_date DATE)
     uw_week          INTEGER,
     uw_dow           INTEGER,
     uw_diff_per_day  INTERVAL,
-    uw_new           INTERVAL,
     uw_sum_per_day   INTERVAL,
     uw_diff_per_week INTERVAL,
     uw_sum_per_week  INTERVAL,
@@ -114,8 +113,7 @@ BEGIN
         EXTRACT(YEAR FROM s::DATE)::INTEGER yy,
         EXTRACT(WEEK FROM s::DATE)::INTEGER ww,
         EXTRACT(ISODOW FROM s::DATE)::INTEGER dow,
-        (SUM(COALESCE(per_duration, '00:00:00') - COALESCE(per_break, '00:00:00')) - SUM(DISTINCT user_get_target_time(id, s::DATE))) sum_total_day,
-        SUM(DISTINCT user_get_target_time(id, s::DATE))
+        (SUM(COALESCE(per_duration, '00:00:00') - COALESCE(per_break, '00:00:00')) - SUM(DISTINCT user_get_target_time(id, s::DATE))) sum_total_day
       FROM      generate_series(from_date, due_date, '1 day'::interval) s
         LEFT join days ON (day_date = s AND day_usr_id = id)
         LEFT JOIN periods ON (day_id = per_day_id)
