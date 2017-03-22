@@ -176,7 +176,7 @@ BEGIN
     AND per_pty_id IN ('Vacation', 'Sick', 'Nursing', 'Holiday')
     AND per_duration = old_target/5;
 
-    -- update half periods
+    -- update half day periods
     UPDATE periods SET per_duration = target/10
       FROM days
     WHERE day_id = per_day_id
@@ -192,3 +192,28 @@ BEGIN
 END
 $$;
 COMMENT ON FUNCTION user_add_new_target_time (INTEGER, DATE, INTERVAL) IS 'change target time for a user and also update days and periods.';
+
+/* update sequece for users table */
+CREATE SEQUENCE ttrack_user_seq;
+ALTER SEQUENCE ttrack_user_seq OWNED BY users.usr_id;
+SELECT SETVAL('ttrack_user_seq'::regclass, coalesce(max(usr_id), 1)) from users;
+ALTER TABLE users ALTER usr_id SET DEFAULT NEXTVAL('ttrack_user_seq'::regclass);
+
+/* introduce new function to get start date for user since it's used multiple times */
+CREATE OR REPLACE FUNCTION create_user (firstname TEXT, lastname TEXT, email TEXT, employment_start DATE, target INTERVAL)
+  RETURNS SETOF users
+  LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY WITH inserted_user AS (
+  INSERT INTO users (usr_firstname, usr_lastname, usr_email, usr_employment_start)
+  VALUES (firstname, lastname, email, employment_start)
+  RETURNING *), inserted_target_time AS(
+  INSERT INTO user_target_times
+    SELECT usr_id, employment_start, 'infinity', target
+    FROM inserted_user
+    RETURNING *)
+  SELECT * FROM inserted_user;
+END
+$$;
+COMMENT ON FUNCTION create_user (TEXT, TEXT, TEXT, DATE, INTERVAL) IS 'create a new user and it corresponding target time';
