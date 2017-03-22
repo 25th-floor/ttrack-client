@@ -151,10 +151,16 @@ function fetchPeriodTypes(client) {
     return db.query(client, periodTypeQuery).then(_.property('rows'));
 }
 
-function createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPeriodTypeId) {
-    const start = user.usr_start_timetracking === null
-        ? moment(user.usr_employment_start)
-        : moment(user.usr_start_timetracking);
+function fetchUserStart(client, userId) {
+    const query = 'SELECT * FROM user_get_start_date($1)';
+
+    return db.query(client, query, [userId]).then((result) => {
+        const rows = result.rows;
+        return moment(rows[0].user_get_start_date);
+    });
+}
+
+function createMissingHolidays(pg, dateRange, user, start, existingHolidays, holidayPeriodTypeId) {
     const employmentEnd = moment(user.usr_employment_end);
 
     const expectedHolidays = util.getHolidaysForDateRange(dateRange);
@@ -206,10 +212,13 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
     // fetch period types
     const periodTypesPromise = fetchPeriodTypes(client);
 
-    Q.all([holidayPromise, periodTypePromise, periodTypesPromise])
+    // get start for user
+    const userStartPromise = fetchUserStart(client, userId);
+
+    Q.all([holidayPromise, periodTypePromise, periodTypesPromise, userStartPromise])
         .spread(
-            (existingHolidays, holidayPeriodTypeId, periodTypes) => [
-                createMissingHolidays(pg, dateRange, user, existingHolidays, holidayPeriodTypeId),
+            (existingHolidays, holidayPeriodTypeId, periodTypes, userStart) => [
+                createMissingHolidays(pg, dateRange, user, userStart, existingHolidays, holidayPeriodTypeId),
                 periodTypes,
             ])
         .spread(
