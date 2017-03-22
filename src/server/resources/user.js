@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 module.exports = {
     list(pg, cb) {
         pg((db) => {
@@ -32,6 +34,21 @@ module.exports = {
                     return console.error('error running select query', err);
                 }
                 cb(result.rows[0].user_get_target_time);
+                return true;
+            });
+        });
+    },
+    // get Users TargetTime for a specific date from the database
+    getStartDate(pg, userId, cb) {
+        pg((db) => {
+            const query = 'SELECT * FROM user_get_start_date($1)';
+
+            return db.query(query, [userId], (err, result) => {
+                if (err) {
+                    return console.error('error running select query', err);
+                }
+                const rows = result.rows;
+                cb(moment(rows[0].user_get_start_date));
                 return true;
             });
         });

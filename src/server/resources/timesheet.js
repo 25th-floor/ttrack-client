@@ -151,15 +151,6 @@ function fetchPeriodTypes(client) {
     return db.query(client, periodTypeQuery).then(_.property('rows'));
 }
 
-function fetchUserStart(client, userId) {
-    const query = 'SELECT * FROM user_get_start_date($1)';
-
-    return db.query(client, query, [userId]).then((result) => {
-        const rows = result.rows;
-        return moment(rows[0].user_get_start_date);
-    });
-}
-
 function createMissingHolidays(pg, dateRange, user, start, existingHolidays, holidayPeriodTypeId) {
     const employmentEnd = moment(user.usr_employment_end);
 
@@ -213,7 +204,9 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
     const periodTypesPromise = fetchPeriodTypes(client);
 
     // get start for user
-    const userStartPromise = fetchUserStart(client, userId);
+    const userStartPromise = Q.promise((resolve) => {
+        User.getStartDate(pg, userId, resolve);
+    });
 
     Q.all([holidayPromise, periodTypePromise, periodTypesPromise, userStartPromise])
         .spread(
