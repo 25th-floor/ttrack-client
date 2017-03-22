@@ -131,3 +131,64 @@ BEGIN
 END;
 $$;
 COMMENT ON FUNCTION user_worktime (INTEGER, DATE) IS 'calculate the overall working hours for a user until a given date.';
+
+
+
+/* introduce new function to get start date for user since it's used multiple times */
+CREATE OR REPLACE FUNCTION user_add_new_target_time (id INTEGER, startdate DATE, target INTERVAL) RETURNS VOID
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  old_target  INTERVAL;
+BEGIN
+  BEGIN
+    -- get old target time
+    SELECT utt_target_time
+    INTO STRICT old_target
+    FROM user_target_times
+    WHERE utt_usr_id = id
+    AND utt_end = 'infinity'
+    AND TSRANGE(utt_start, utt_end, '[)') @> startdate::TIMESTAMP;
+
+    -- first end the active one
+    UPDATE user_target_times
+    SET utt_end = startdate
+    WHERE utt_usr_id = id
+      AND utt_end = 'infinity'
+      AND TSRANGE(utt_start, utt_end, '[)') @> startdate::TIMESTAMP;
+
+    -- now create a new one
+    INSERT INTO user_target_times VALUES (id, startdate, 'infinity', target);
+
+    -- update days
+    -- update full days
+    UPDATE days SET day_target_time = target/5 WHERE day_usr_id = id AND day_date > startdate AND day_target_time = old_target/5;
+    -- update half days
+    UPDATE days SET day_target_time = target/10 WHERE day_usr_id = id AND day_date > startdate AND day_target_time = old_target/10;
+
+    -- update periods?
+    -- update full periods
+    UPDATE periods SET per_duration = target/5
+      FROM days
+    WHERE day_id = per_day_id
+    AND day_usr_id = id
+    AND day_date > startdate
+    AND per_pty_id IN ('Vacation', 'Sick', 'Nursing', 'Holiday')
+    AND per_duration = old_target/5;
+
+    -- update half periods
+    UPDATE periods SET per_duration = target/10
+      FROM days
+    WHERE day_id = per_day_id
+    AND day_usr_id = id
+    AND day_date > startdate
+    AND per_pty_id IN ('Vacation', 'Sick', 'Nursing', 'Holiday')
+    AND per_duration = old_target/10;
+
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      RAISE EXCEPTION 'user % not found', id;
+  END;
+END
+$$;
+COMMENT ON FUNCTION user_add_new_target_time (INTEGER, DATE, INTERVAL) IS 'change target time for a user and also update days and periods.';
