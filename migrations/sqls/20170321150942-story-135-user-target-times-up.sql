@@ -56,6 +56,27 @@ COMMENT ON FUNCTION user_get_start_date (INTEGER) IS 'get first date for a user 
 
 
 
+/* get target time of the week of that date */
+CREATE OR REPLACE FUNCTION user_get_average_day_time (id INTEGER, day_date DATE) RETURNS INTERVAL
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  target        INTERVAL;
+BEGIN
+
+  SELECT utt_target_time/5
+  INTO   target
+  FROM   user_target_times
+  WHERE  utt_usr_id = id
+  AND    COALESCE(TSRANGE(utt_start, utt_end, '[)') @> day_date::TIMESTAMP, TRUE);
+
+
+  RETURN COALESCE(target, '00:00:00'::INTERVAL);
+END
+$$;
+COMMENT ON FUNCTION user_get_average_day_time (INTEGER, DATE) IS 'get the average day time of a user, does not check for workdays';
+
+
 /* adjust function to new target times feature */
 CREATE OR REPLACE FUNCTION user_get_target_time (id INTEGER, day_date DATE) RETURNS interval
 LANGUAGE plpgsql
@@ -72,16 +93,12 @@ BEGIN
 
   SELECT CASE
          WHEN day_date >= start_date  AND EXTRACT(ISODOW FROM day_date) < 6
-           THEN utt_target_time/5
+           THEN user_get_average_day_time(id, day_date)
          ELSE '00:00:00'::INTERVAL
          END
-  INTO   target
-  FROM   user_target_times
-  WHERE  utt_usr_id = id
-  AND    COALESCE(TSRANGE(utt_start, utt_end, '[)') @> day_date::TIMESTAMP, TRUE);
+  INTO   target;
 
-
-  RETURN COALESCE(target, '00:00:00'::INTERVAL);
+  RETURN target;
 END
 $$;
 COMMENT ON FUNCTION user_get_target_time (INTEGER, DATE) IS 'get the calculated target time for a user on a given date.';
