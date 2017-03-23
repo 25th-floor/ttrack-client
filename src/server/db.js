@@ -13,7 +13,12 @@ const days = sql.define({
 
 const users = sql.define({
     name: 'users',
-    columns: ['usr_id', 'usr_firstname', 'usr_lastname', 'usr_email', 'usr_target_time', 'usr_employment_start', 'usr_employment_end', 'usr_start_timetracking'],
+    columns: ['usr_id', 'usr_firstname', 'usr_lastname', 'usr_email', 'usr_employment_start', 'usr_employment_end'],
+});
+
+const userTargetTimes = sql.define({
+    name: 'user_target_times',
+    columns: ['utt_usr_id', 'utt_start', 'utt_end', 'utt_target_time'],
 });
 
 const periodTypes = sql.define({
@@ -49,6 +54,7 @@ module.exports = {
     periods,
     days,
     users,
+    userTargetTimes,
     periodTypes,
     query,
 };
