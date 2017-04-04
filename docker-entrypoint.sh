@@ -3,14 +3,6 @@ set -e
 
 if [ "$1" = 'ttrack-server' ]; then
 
-	if [[ "$2" = "prod" || "$2" = "beta" ]]; then
-		__conf="config/env_${2}.list"
-		if [[ -f ${__conf} ]]; then
-			echo "Loading config from ${__conf}"
-			source ${__conf}
-		fi
-	fi
-
 	# Required parameters
 	: "${DB_USER:?Must be set}"
 	: "${DB_PASS:?Must be set}"

@@ -7,7 +7,6 @@ const raven = require('raven');
 
 const app = express();
 
-const config = require(`${__dirname}/../../config.json`);
 const dbconfigfile = require(`${__dirname}/../../database.json`);
 const dbconfig = dbconfigfile.dev;
 
@@ -32,8 +31,8 @@ try {
 
 // raven configuration
 let sentryClient;
-if (process.env.NODE_ENV === 'production' && config.sentry_client) {
-    sentryClient = new raven.Client(config.sentry_client, {
+if (process.env.SENTRY_TOKEN) {
+    sentryClient = new raven.Client(process.env.SENTRY_TOKEN, {
         release: buildInfo.git || '',
     });
     sentryClient.patchGlobal();
@@ -68,7 +67,7 @@ app.all(/.*/, (req, res) => {
     });
 });
 
-const port = (config.webserver || {}).port || process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 app.listen(port);
 
 console.info(`listening on port ${port}...`);
