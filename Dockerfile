@@ -11,8 +11,7 @@ RUN cd /tmp && \
 
 COPY . /app
 WORKDIR /app
-RUN cp -R /tmp/node_modules/ /app/node_modules/ && \
-	cp config/config.json.example config.json
+RUN cp -R /tmp/node_modules/ /app/node_modules/
 
 COPY ./docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

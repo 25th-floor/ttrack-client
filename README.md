@@ -15,9 +15,8 @@ $ npm install -g db-migrate
 ```
 
 ### Manual Install
-Then you need the two config files from config:
+Then you need the database config file from config:
 ```
-cp config.json.example config.json 
 cp database.json.example database.json
 ```
 
