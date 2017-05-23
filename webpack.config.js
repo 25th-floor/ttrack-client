@@ -8,29 +8,46 @@ const PORT = 3000;
 const SERVER_URL = 'http://localhost:' + PORT;
 
 module.exports = {
-    debug: true,
     devtool: '#eval-source-map',
 
+    entry: [
+        'react-hot-loader/patch',
+        // activate HMR for React
+
+        'webpack-dev-server/client?' + SERVER_URL,
+        // bundle the client for webpack-dev-server
+        // and connect to the provided endpoint
+
+        'webpack/hot/only-dev-server',
+        // bundle the client for hot reloading
+        // only- means to only hot reload for successful updates
+
+        './src/client/app.js',
+        // the entry point of our app
+
+        //'./public/less/timetracking.less'
+    ],
+
     module: {
-        // preLoaders: [
-        //     { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ },
-        // ],
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel']
+                loaders: ['babel-loader']
             },
             // Extract css files
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
             },
             // Optionally extract less files
             // or any other compile-to-css language
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!autoprefixer-loader!less-loader?sourceMap")
+                loader: ExtractTextPlugin.extract(
+                    { fallback: 'style-loader', use: ['css-loader', 'less-loader'] }
+                    // "style-loader", "css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!autoprefixer-loader!less-loader?sourceMap")
+                )
             },
             // bootflat
             { test: /\.(png)$/, loader: 'url-loader?limit=100000' },
@@ -41,12 +58,7 @@ module.exports = {
             }
         ]
     },
-    entry: [
-        './src/client/app.js',
-        'webpack-dev-server/client?' + SERVER_URL,
-        'webpack/hot/only-dev-server'
-        //'./public/less/timetracking.less'
-    ],
+
     output: {
         path: path.join(__dirname, 'public'),
         publicPath: '/',
@@ -54,10 +66,24 @@ module.exports = {
         // filename: "main-[hash].js",
         filename: 'app.js'
     },
+
     plugins: [
-        new webpack.NoErrorsPlugin(),
+        new webpack.LoaderOptionsPlugin({
+            debug: true,
+        }),
+
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin("app.css", { allChunks: true }),
+
+        // enable HMR globally
+
+        new webpack.NamedModulesPlugin(),
+        // prints more readable module names in the browser console on HMR updates
+
+        new webpack.NoEmitOnErrorsPlugin(),
+        // do not emit compiled assets that include errors
+
+        new ExtractTextPlugin({ filename: "app.css", allChunks: true }),
+
         // fix bootflat's broken url request
         new webpack.NormalModuleReplacementPlugin(
             /bootflat\/img\/check_flat\/default\.png$/,
@@ -72,13 +98,13 @@ module.exports = {
         quiet: false,
         noInfo: true,
         inline: true,
-        colors: true,
-        historyApiFallback: true
+        historyApiFallback: true,
+        stats: { colors: true },
     },
 
-    eslint: { emitWarning: true },
+    // eslint: { emitWarning: true },
 
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     }
 };

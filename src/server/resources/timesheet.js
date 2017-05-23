@@ -58,7 +58,7 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
 
                             return res.subtract(diff);
                         },
-                        moment.duration(day.day_target_time),
+                        moment.duration(day.day_target_time)
                     );
 
                     const minutes = duration.as('minutes');
@@ -76,7 +76,7 @@ function fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes) {
                         // calculate remaining target time after reducing holidays and all other non Work durations
                         // todo: maybe this should be done in the database
                         remaining: calculateRemaining(),
-                    },
+                    }
                 );
             });
             return {
@@ -218,7 +218,7 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
             (createdHolidays, periodTypes) => Q.all([
                 fetchPeriodsGroupedByDay(client, userId, dateRange, periodTypes),
                 carryDataPromise,
-            ]),
+            ])
         )
         .spread((timesheet, carryData) => Object.assign(
             {},
@@ -228,7 +228,7 @@ function getTimesheetForTimeRange(pg, client, user, dateRange, cb) {
                 // debug information, so we know in which timeframe the carryTime was calculated
                 carryFrom: carryData.carryFrom,
                 carryTo: carryData.carryTo,
-            },
+            }
         ))
         .then(cb)
         .done();

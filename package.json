@@ -13,32 +13,13 @@
     "lint": "eslint ./src",
     "fix-lint": "eslint --fix ./src",
     "flow": "flow check",
-    "test": "NODE_ENV=test node `npm bin`/jest --no-cache"
+    "test": "jest --no-cache"
   },
   "author": "25th floor",
   "license": "ISC",
   "engines": {
     "node": ">= 6.0.0",
     "yarn": ">= 0.18.0"
-  },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "flow"
-    ],
-    "plugins": [
-      "transform-class-properties",
-      "transform-function-bind",
-      "transform-object-rest-spread"
-    ],
-    "env": {
-      "development": {
-        "presets": [
-          "react-hmre"
-        ]
-      }
-    }
   },
   "jest": {
     "collectCoverage": true,
@@ -78,7 +59,7 @@
     "babel-preset-es2015": "~6.24",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "~6.24",
-    "babel-preset-react-hmre": "~1.1",
+    "babel-preset-stage-2": "^6.24.1",
     "copy-webpack-plugin": "~4.0",
     "css-loader": "^0.28.2",
     "eslint": "~3.19",
@@ -105,7 +86,7 @@
     "path": "^0.12.7",
     "react-addons-pure-render-mixin": "~15.5",
     "react-addons-test-utils": "~15.5",
-    "react-hot-loader": "^1.3.1",
+    "react-hot-loader": "next",
     "style-loader": "^0.18.0",
     "url-loader": "^0.5.7",
     "webpack": "~2.6",
