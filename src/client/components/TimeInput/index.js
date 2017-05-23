@@ -48,7 +48,7 @@ export default class extends React.Component {
             this.props.css || '',
             {
                 'has-error': !timeUtils.isValidTimeString(time, this.props.required, this.props.allowNegativeValues),
-            }
+            },
         );
 
         return (

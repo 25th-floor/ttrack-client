@@ -27,11 +27,11 @@ export default class extends React.Component {
         const start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim: false });
         const end = moment.duration(getDurationObject(period.get('per_stop'))).format('hh:mm', { trim: false });
         const pause = timeUtils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.get('per_break')))
+            moment.duration(getDurationObject(period.get('per_break'))),
         );
 
         const duration = timeUtils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.get('per_duration')))
+            moment.duration(getDurationObject(period.get('per_duration'))),
         );
 
         if (period.get('per_start') == null && period.get('per_stop') == null) {

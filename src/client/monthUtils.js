@@ -17,7 +17,7 @@ function processDay(day) {
         breakDuration: sumDuration(day.get('periods').map(per => durationOfBreak(per.toJS()))),
         balanceDuration: sumDuration(day.get('periods').map(per => durationOfBalance(per.toJS()))),
         isUnfinished: date.isBefore(moment(), 'day') && !day.get('periods').every(
-            period => (!!period.get('per_start') === !!period.get('per_stop'))
+            period => (!!period.get('per_start') === !!period.get('per_stop')),
         ),
     });
 }

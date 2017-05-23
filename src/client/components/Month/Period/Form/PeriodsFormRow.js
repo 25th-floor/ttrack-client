@@ -253,7 +253,7 @@ export default class extends React.Component {
                 </div>
 
                 <div className="row">
-                    {periodElements.map((p) => (
+                    {periodElements.map(p => (
                         <TimeInput
                             id={p.id}
                             label={p.label}

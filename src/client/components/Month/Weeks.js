@@ -38,7 +38,7 @@ export default class extends React.Component {
             {
                 'text-success': delta.as('ms') >= 0,
                 'text-danger': delta.as('ms') < 0,
-            }
+            },
         );
         return <dd className={className}>{str}</dd>;
     }
@@ -54,7 +54,7 @@ export default class extends React.Component {
 
         const className = classSet(styles.weekSumRow,
             !timeUtils.isDateInEmploymentInterval(firstDate, this.props.user) &&
-            !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null
+            !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null,
         );
 
         let carryTime = '';
@@ -62,7 +62,7 @@ export default class extends React.Component {
 
         if (!timeUtils.isWeekInFuture(week)) {
             carryTime = this.renderDeltaItem(
-                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry
+                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry,
             );
             diffTime = this.renderDeltaItem('col-xs-2 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1', diff);
         }

@@ -73,7 +73,7 @@ export default class extends React.Component {
             isFuture ? styles.dayFuture : null,
             !date.isSame(this.props.activeMonth, 'month') || dateOutOfEmploymentScope ? styles.dayOutOfScope : null,
             day.get('isUnfinished') ? styles.dayUnfinished : null,
-            isToday ? styles.dayCurrent : null
+            isToday ? styles.dayCurrent : null,
         );
 
         const showDurations = day.get('workDuration').asSeconds() !== 0 ||
@@ -82,7 +82,7 @@ export default class extends React.Component {
 
         const durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
             diff.as('ms') >= 0 ? styles['text-success'] : null,
-            diff.as('ms') < 0 ? styles['text-danger'] : null
+            diff.as('ms') < 0 ? styles['text-danger'] : null,
         );
 
         let durationBlock = (<dl>

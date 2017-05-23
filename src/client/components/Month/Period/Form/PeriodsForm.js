@@ -65,7 +65,7 @@ export default class extends React.Component {
         this.setState({
             periods: this.state.periods.set(
                 index,
-                period
+                period,
             ),
 
             removed: this.state.removed,
@@ -109,7 +109,7 @@ export default class extends React.Component {
         return (
             <div className={styles.form}>
                 <form onSubmit={this.handleSave} onKeyDown={this.handleKeyDown}>
-                    {periods.map((period, index) => <Period
+                    {periods.map((period, index) => (<Period
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
@@ -117,7 +117,7 @@ export default class extends React.Component {
                         index={index}
                         onRemove={this.handleRemovePeriod.bind(this, index)}
                         onUpdate={this.handleUpdatePeriod.bind(this, index)}
-                    />)}
+                    />))}
 
                     { isOverlapping ? <div className="alert alert-warning">
                         Der Zeitraum überschneidet sich mit anderen Einträgen an diesem Tag!

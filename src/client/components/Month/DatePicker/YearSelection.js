@@ -42,7 +42,7 @@ export default class extends React.Component {
         const className = classSet('col-xs-1',
             year.isSame(this.props.activeMonth, 'year') ? styles.active : null,
             year.isSame(this.state.today, 'year') ? styles.today : null,
-            year.isAfter(this.state.today, 'year') ? styles.future : null
+            year.isAfter(this.state.today, 'year') ? styles.future : null,
         );
 
         const yearNumber = year.format('YY');

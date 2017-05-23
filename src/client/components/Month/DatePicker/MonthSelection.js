@@ -27,7 +27,7 @@ export default class extends React.Component {
         const className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,
             month.isSame(this.today, 'month') ? styles.today : null,
-            month.isAfter(this.today, 'month') ? styles.future : null
+            month.isAfter(this.today, 'month') ? styles.future : null,
         );
 
         const monthNumber = month.format('M');
