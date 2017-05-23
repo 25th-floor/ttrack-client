@@ -34,6 +34,7 @@ let sentryClient;
 if (process.env.SENTRY_TOKEN) {
     sentryClient = new raven.Client(process.env.SENTRY_TOKEN, {
         release: buildInfo.git || '',
+        environment: process.env.NODE_ENV,
     });
     sentryClient.patchGlobal();
 }
