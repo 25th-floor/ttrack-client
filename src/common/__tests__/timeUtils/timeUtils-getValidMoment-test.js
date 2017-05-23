@@ -56,8 +56,20 @@ describe('timeUtils.getValidMoment', function() {
         });
 
         describe('special cases', function() {
-            it('if the value is -33 it returns true', function() {
+            it('if the value is -33 it returns valid moment', function() {
                 expect(timeUtils.getValidMoment('-33', true).toJSON()).toEqual(moment.duration(-33, 'hours').toJSON());
+            });
+            it('if the value is -6:30 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-6:30', true, true).toJSON()).toEqual(moment.duration(-390, 'minutes').toJSON());
+            });
+            it('if the value is -7:30 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
+            });
+            it('if the value is -7,5 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
+            });
+            it('if the value is -7.5 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
             });
         });
     });
