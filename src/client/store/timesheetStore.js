@@ -42,14 +42,8 @@ function assocPeriodsWithTypes(types, days) {
 }
 
 function fixDurations(period) {
-    // remove empty per_duration obj
-    let p = period;
-    if (p.get('per_duration') && p.get('per_duration').size === 0) {
-        p = p.delete('per_duration');
-    }
-
     const durations = ['per_start', 'per_stop', 'per_duration', 'per_break'];
-    return p.map((val, key) => (_.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val));
+    return period.map((val, key) => (_.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val));
 }
 
 export default function (onChange) {
