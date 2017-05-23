@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -11,11 +12,11 @@ import styles from './less/Day.less';
 
 export default class extends React.Component {
     static propTypes = {
-        day: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        user: React.PropTypes.object.isRequired,
-        activeMonth: React.PropTypes.object.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired,
+        day: PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        user: PropTypes.object.isRequired,
+        activeMonth: PropTypes.object.isRequired,
+        onSaveDay: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -9,11 +10,11 @@ import styles from './less/PeriodsForm.less';
 
 export default class extends React.Component {
     static propTypes = {
-        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        onCancel: React.PropTypes.func.isRequired,
-        onSave: React.PropTypes.func.isRequired,
+        periods: PropTypes.instanceOf(Immutable.Collection).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: PropTypes.objectOf(moment.duration).isRequired,
+        onCancel: PropTypes.func.isRequired,
+        onSave: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {

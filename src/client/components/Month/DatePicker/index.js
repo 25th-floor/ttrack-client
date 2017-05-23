@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 
@@ -8,10 +9,10 @@ import styles from './less/DatePicker.less';
 
 export default class extends React.Component {
     static propTypes = {
-        activeMonth: React.PropTypes.object.isRequired,
-        months: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        years: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        onChangeDate: React.PropTypes.func.isRequired,
+        activeMonth: PropTypes.object.isRequired,
+        months: PropTypes.instanceOf(Immutable.List).isRequired,
+        years: PropTypes.instanceOf(Immutable.List).isRequired,
+        onChangeDate: PropTypes.func.isRequired,
     };
 
     render() {

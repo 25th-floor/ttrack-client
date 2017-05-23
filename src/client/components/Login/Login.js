@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Motto from '../Motto';
@@ -8,10 +9,10 @@ import styles from './less/Login.less';
 
 export default class extends React.Component {
     static propTypes = {
-        users: React.PropTypes.any.isRequired,
-        motto: React.PropTypes.object.isRequired,
-        onUserSelect: React.PropTypes.func.isRequired,
-        build: React.PropTypes.object,
+        users: PropTypes.any.isRequired,
+        motto: PropTypes.object.isRequired,
+        onUserSelect: PropTypes.func.isRequired,
+        build: PropTypes.object,
     };
 
     render() {

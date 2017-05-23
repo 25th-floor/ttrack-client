@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -7,16 +8,16 @@ import * as timeUtils from '../../../common/timeUtils';
 
 export default class extends React.Component {
     static propTypes = {
-        time: React.PropTypes.instanceOf(Immutable.Map),
-        id: React.PropTypes.string,
-        label: React.PropTypes.string,
-        name: React.PropTypes.string.isRequired,
-        css: React.PropTypes.string,
-        placeholder: React.PropTypes.string,
-        required: React.PropTypes.bool,
-        round: React.PropTypes.number,
-        onChange: React.PropTypes.func.isRequired,
-        allowNegativeValues: React.PropTypes.bool,
+        time: PropTypes.instanceOf(Immutable.Map),
+        id: PropTypes.string,
+        label: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        css: PropTypes.string,
+        placeholder: PropTypes.string,
+        required: PropTypes.bool,
+        round: PropTypes.number,
+        onChange: PropTypes.func.isRequired,
+        allowNegativeValues: PropTypes.bool,
     };
 
     constructor(props, context) {

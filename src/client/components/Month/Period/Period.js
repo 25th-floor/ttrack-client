@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -15,7 +16,7 @@ function getDurationObject(immutable) {
 
 export default class extends React.Component {
     static propTypes = {
-        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
+        periods: PropTypes.instanceOf(Immutable.Collection).isRequired,
     };
 
     constructor(props, context) {
