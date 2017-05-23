@@ -45,8 +45,14 @@ module.exports = {
             {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract(
-                    { fallback: 'style-loader', use: ['css-loader', 'less-loader'] }
-                    // "style-loader", "css-loader?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!autoprefixer-loader!less-loader?sourceMap")
+                    {
+                        fallback: 'style-loader',
+                        use: [
+                            { loader: 'css-loader', options: { sourceMap: true, modules: true, importLoader: 1 }},
+                            'autoprefixer-loader',
+                            { loader: 'less-loader', options: { sourceMap: true }}
+                        ]
+                    }
                 )
             },
             // bootflat
@@ -82,7 +88,7 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         // do not emit compiled assets that include errors
 
-        new ExtractTextPlugin({ filename: "app.css", allChunks: true }),
+        new ExtractTextPlugin({ filename: "app.css", allChunks: true, disable: false }),
 
         // fix bootflat's broken url request
         new webpack.NormalModuleReplacementPlugin(
