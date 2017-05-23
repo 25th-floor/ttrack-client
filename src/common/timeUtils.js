@@ -1,5 +1,3 @@
-
-
 import moment from 'moment';
 import Immutable from 'immutable';
 import _ from 'lodash';
@@ -15,9 +13,9 @@ import _ from 'lodash';
  * ,5
  * 8
  *
- * @param time
- * @param strict
- * @param allowNegativeValue
+ * @param time string
+ * @param strict boolean
+ * @param allowNegativeValue boolean
  * @returns boolean
  */
 export function isValidTimeString(time, strict = true, allowNegativeValue = false) {
@@ -30,29 +28,33 @@ export function isValidTimeString(time, strict = true, allowNegativeValue = fals
 
 /**
  * get a valid moment object or null if string is not valid
- * @param time
- * @param allowNegativeValue
+ * @param time string
+ * @param allowNegativeValue boolean
  * @returns {*}
  */
 export function getValidMoment(time, allowNegativeValue = false) {
     if (!isValidTimeString(time, true, allowNegativeValue)) return null;
 
     let validTime = null;
+    const negative = time.indexOf('-') === 0;
+    const absTime = time.substr(negative ? 1 : 0);
 
-    if (time.indexOf('.') > -1) {
-        validTime = moment.duration(time * 60, 'minutes');
+    if (absTime.indexOf('.') > -1) {
+        validTime = moment.duration(absTime * 60, 'minutes');
     }
-    if (time.indexOf(',') > -1) {
-        validTime = moment.duration(parseFloat(time.replace(',', '.')) * 60, 'minutes');
+    if (absTime.indexOf(',') > -1) {
+        validTime = moment.duration(parseFloat(absTime.replace(',', '.')) * 60, 'minutes');
     }
-    if (time.indexOf(':') > -1) {
-        validTime = moment.duration({ hours: time.split(':')[0], minutes: time.split(':')[1] });
+    if (absTime.indexOf(':') > -1) {
+        validTime = moment.duration({ hours: absTime.split(':')[0], minutes: absTime.split(':')[1] });
     }
-    if (time.match(/^-?(\d*)$/)) {
-        validTime = moment.duration({ hours: time });
+    if (absTime.match(/^-?(\d*)$/)) {
+        validTime = moment.duration({ hours: absTime });
     }
 
-    return validTime;
+    if (validTime === null || !validTime || !negative) return validTime;
+
+    return moment.duration().subtract(validTime);
 }
 
 /**
