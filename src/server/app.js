@@ -39,7 +39,7 @@ if (process.env.SENTRY_TOKEN) {
     sentryClient.patchGlobal();
 }
 
-console.info('Sentry', !sentryClient ? 'disabled' : 'enabled');
+console.info('Sentry', sentryClient ? 'enabled' : 'disabled');
 
 app.engine('html', cons.mustache);
 app.set('view engine', 'html');
