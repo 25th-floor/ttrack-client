@@ -55,9 +55,35 @@ describe('timeUtils.getValidMoment', function() {
             });
         });
 
-        describe('special cases', function() {
-            it('if the value is -33 it returns true', function() {
+        describe('with negative values', function() {
+            it('if the value is -33 it returns valid moment', function() {
                 expect(timeUtils.getValidMoment('-33', true).toJSON()).toEqual(moment.duration(-33, 'hours').toJSON());
+            });
+            it('if the value is -6:30 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-6:30', true).toJSON()).toEqual(moment.duration(-390, 'minutes').toJSON());
+            });
+            it('if the value is -7:30 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
+            });
+            it('if the value is -7,5 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
+            });
+            it('if the value is -7.5 it returns valid moment', function() {
+                expect(timeUtils.getValidMoment('-7:30', true).toJSON()).toEqual(moment.duration(-450, 'minutes').toJSON());
+            });
+
+            it('returns null if timestring is invalid', function() {
+                expect(timeUtils.getValidMoment(21)).toBeNull();
+                expect(timeUtils.getValidMoment('-$%^&*')).toBeNull();
+                expect(timeUtils.getValidMoment('-asdfghjkl')).toBeNull();
+                expect(timeUtils.getValidMoment('-1.500,00')).toBeNull();
+                expect(timeUtils.getValidMoment('-1.2.3')).toBeNull();
+                expect(timeUtils.getValidMoment('-1,2,3')).toBeNull();
+                expect(timeUtils.getValidMoment('-1.2,3')).toBeNull();
+                expect(timeUtils.getValidMoment('-1:2,3')).toBeNull();
+                expect(timeUtils.getValidMoment('-1.2:3')).toBeNull();
+                expect(timeUtils.getValidMoment('-0.,:25')).toBeNull();
+                expect(timeUtils.getValidMoment("-" + -21)).toBeNull();
             });
         });
     });
