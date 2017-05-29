@@ -22,11 +22,13 @@ api.use((req, res, next) => {
     }
 
     // add request information
-    sentryClient.setExtraContext({
-        url: req.originalUrl,
-        method: req.method,
-        params: req.params,
-        request: req,
+    sentryClient.mergeContext({
+        extra: {
+            url: req.originalUrl,
+            method: req.method,
+            params: req.params,
+            request: req,
+        },
     });
 
     next();
@@ -41,7 +43,7 @@ api.param('user', (req, res, next, id) => {
         if (user) {
             const sentryClient = api.get('sentry_client');
             if (sentryClient) {
-                sentryClient.setUserContext(user);
+                sentryClient.mergeContext({ user });
             }
             next();
         } else {
