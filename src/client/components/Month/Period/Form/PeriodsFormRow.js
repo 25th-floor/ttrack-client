@@ -14,7 +14,7 @@ function findType(types, value) {
     return types.find(type => type.get('pty_id') === value);
 }
 
-export default class extends React.Component {
+export default class PeriodsFormRow extends React.Component {
     static propTypes = {
         period: PropTypes.instanceOf(Immutable.Map).isRequired,
         types: PropTypes.instanceOf(Immutable.List).isRequired,
