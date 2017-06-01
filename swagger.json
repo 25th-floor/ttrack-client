@@ -18,6 +18,7 @@
       "description": "Public user calls"
     }
   ],
+  "basePath": "/api",
   "paths": {
     "/period-types": {
       "get": {
