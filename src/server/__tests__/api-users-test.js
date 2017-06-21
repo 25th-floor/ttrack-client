@@ -1,26 +1,26 @@
 jest.dontMock('chakram');
-jest.dontMock('pg');
 
 import chakram from 'chakram';
-import pg from 'pg';
+import { getDatabasePool, createUser } from '../../common/testUtils';
 
 const expect = chakram.expect;
 
 const API_URI_USERS = "http://localhost:8090/api/users";
 
-const dbconfigfile = require(`${__dirname}/../../../database.json`);
-const pool = new pg.Pool(dbconfigfile.dev);
+const pool = getDatabasePool();
+const userFixture = {
+    usr_firstname: 'Mister',
+    usr_lastname: 'Smith',
+    usr_email: 'mister@smith.com',
+};
 
 describe("ttrack API users", function () {
     let client;
 
     beforeAll(async (done) => {
-        pool.connect().then((cl) => {
-            client = cl;
-
-            client.query("INSERT INTO users (usr_firstname, usr_lastname, usr_email) VALUES ('Mister', 'Smith', 'mister@smith.com');");
-            done();
-        });
+        client = await pool.connect();
+        await createUser(client, userFixture);
+        done();
     });
 
     afterAll(async (done) => {
