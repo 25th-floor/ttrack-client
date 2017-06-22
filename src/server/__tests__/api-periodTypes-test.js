@@ -63,11 +63,25 @@ describe("ttrack API period-types", function () {
         });
     });
 
-    it("should only support GET calls", () => {
-        expect(chakram.post(API_URI_PERIOD_TYPES, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.put(API_URI_PERIOD_TYPES, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.delete(API_URI_PERIOD_TYPES, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.patch(API_URI_PERIOD_TYPES, "", {})).to.have.status(400); // todo should be 405
-        return chakram.wait();
+    describe("should only support GET calls", () => {
+        it("should NOT support POST calls", () => {
+            expect(chakram.post(API_URI_PERIOD_TYPES, {}, {})).to.have.status(405);
+            return chakram.wait();
+        });
+
+        it("should NOT support PUT calls", () => {
+            expect(chakram.put(API_URI_PERIOD_TYPES, {}, {})).to.have.status(405);
+            return chakram.wait();
+        });
+
+        it("should NOT support DELETE calls", () => {
+            expect(chakram.delete(API_URI_PERIOD_TYPES, {}, {})).to.have.status(405);
+            return chakram.wait();
+        });
+
+        it("should NOT support PATCH calls", () => {
+            expect(chakram.patch(API_URI_PERIOD_TYPES, {}, {})).to.have.status(405);
+            return chakram.wait();
+        });
     });
 });

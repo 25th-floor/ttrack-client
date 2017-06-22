@@ -210,21 +210,21 @@ describe("ttrack API /api/users/{id}/periods", function () {
 
     describe("should only support POST calls", () => {
         it("should NOT support GET calls", () => {
-            return expect(chakram.get(uri)).to.have.status(400); // todo should be 405
+            return expect(chakram.get(uri)).to.have.status(405);
         });
 
         it("should NOT support PUT calls", () => {
-            expect(chakram.put(uri, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.put(uri, {}, {})).to.have.status(405);
             return chakram.wait();
         });
 
         it("should NOT support DELETE calls", () => {
-            expect(chakram.delete(uri, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.delete(uri, {}, {})).to.have.status(405);
             return chakram.wait();
         });
 
         it("should NOT support PATCH calls", () => {
-            expect(chakram.patch(uri, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.patch(uri, {}, {})).to.have.status(405);
             return chakram.wait();
         });
     });

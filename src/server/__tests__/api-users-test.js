@@ -48,19 +48,19 @@ describe("ttrack API /api/users", function () {
 
     describe("should only support GET calls", () => {
         it("should NOT support POST calls", () => {
-            expect(chakram.post(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.post(API_URI_USERS, {}, {})).to.have.status(405);
             return chakram.wait();
         });
         it("should NOT support PUT calls", () => {
-            expect(chakram.put(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.put(API_URI_USERS, {}, {})).to.have.status(405);
             return chakram.wait();
         });
         it("should NOT support DELETE calls", () => {
-            expect(chakram.delete(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.delete(API_URI_USERS, {}, {})).to.have.status(405);
             return chakram.wait();
         });
         it("should NOT support PATCH calls", () => {
-            expect(chakram.patch(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            expect(chakram.patch(API_URI_USERS, {}, {})).to.have.status(405);
             return chakram.wait();
         });
     });

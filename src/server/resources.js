@@ -125,7 +125,7 @@ api.delete('/users/:user/periods/:id', (req, res) => {
 });
 
 api.all(/.*/, (req, res) => {
-    res.status(400).send('Bad Request').end();
+    res.status(405).send('Bad Request').end();
 });
 
 function validateData(data, res) {
