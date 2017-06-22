@@ -105,6 +105,10 @@ api.delete('/users/:user/periods/:id', (req, res) => {
     });
 });
 
+api.all(/.*/, (req, res) => {
+    res.status(400).send('Bad Request').end();
+});
+
 function validateData(data, res) {
     if (!data.userId || !data.per_pty_id) {
         res.status(400).send('Missing Data!').end();
