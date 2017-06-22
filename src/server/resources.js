@@ -76,11 +76,20 @@ api.get('/users/:user/timesheet/:from/:to', (req, res) => {
 api.post('/users/:user/periods', (req, res) => {
     console.info('API POST Request for Period for user', req.params.user);
     const data = req.body;
+    data.userId = req.params.user;
+
+    // Validation
     if (!validateData(data, res)) {
+        return;
+    }
+    // POST specific Validation
+    if (!data.date) {
+        res.status(400).send('Missing Date!').end();
         return;
     }
 
     Period.post(api.get('pg'), req.params.user, data, (period) => {
+        res.status(201);
         res.json(period);
     });
 });
@@ -93,7 +102,13 @@ api.put('/users/:user/periods/:id', (req, res) => {
         res.status(400).send('Invalid Id!').end();
     }
 
+    // Validation
     if (!validateData(data, res)) {
+        return;
+    }
+    // PUT specific Validation
+    if (!data.per_day_id) {
+        res.status(400).send('Missing Day Id!').end();
         return;
     }
 
@@ -114,8 +129,8 @@ api.all(/.*/, (req, res) => {
 });
 
 function validateData(data, res) {
-    if (!data.userId || !data.per_pty_id) {
-        res.status(400).send('Missing Data!').end();
+    if (!data.per_pty_id) {
+        res.status(400).send('Missing Period Type!').end();
         return false;
     }
 
