@@ -76,7 +76,9 @@ api.get('/users/:user/timesheet/:from/:to', (req, res) => {
 api.post('/users/:user/periods', (req, res) => {
     console.info('API POST Request for Period for user', req.params.user);
     const data = req.body;
-    validateData(data, res);
+    if (!validateData(data, res)) {
+        return;
+    }
 
     Period.post(api.get('pg'), req.params.user, data, (period) => {
         res.json(period);
@@ -91,7 +93,9 @@ api.put('/users/:user/periods/:id', (req, res) => {
         res.status(400).send('Invalid Id!').end();
     }
 
-    validateData(data, res);
+    if (!validateData(data, res)) {
+        return;
+    }
 
     Period.put(api.get('pg'), req.params.user, data, (period) => {
         res.json(period);
