@@ -24,3 +24,5 @@ async function createEntity(client, table, entity) {
 export async function createUser(client, user) {
     return await createEntity(client, 'users', user);
 }
+
+export const PERIOD_TYPE_IDS = ['Balance', 'Comment', 'Holiday', 'Nursing', 'Sick', 'Vacation', 'Work'];

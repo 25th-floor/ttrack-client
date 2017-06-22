@@ -14,24 +14,24 @@ const userFixture = {
     usr_email: 'mister@smith.com',
 };
 
-describe("ttrack API users", function () {
+describe("ttrack API /api/users", function () {
     let client;
-
-    beforeAll(async (done) => {
-        client = await pool.connect();
-        await createUser(client, userFixture);
-        done();
-    });
-
-    afterAll(async (done) => {
-        const query = 'TRUNCATE users CASCADE;';
-        await client.query(query);
-        client.release();
-        await pool.end();
-        done();
-    });
+    let user;
 
     describe("testing GET request", () => {
+        beforeAll(async (done) => {
+            client = await pool.connect();
+            user = await createUser(client, userFixture);
+            done();
+        });
+
+        afterAll(async (done) => {
+            await client.query(`DELETE FROM users WHERE usr_id = ${user.usr_id}`);
+            client.release();
+            await pool.end();
+            done();
+        });
+
         it("should return 200 on success", function () {
             const response = chakram.get(API_URI_USERS);
             return expect(response).to.have.status(200);
@@ -40,17 +40,28 @@ describe("ttrack API users", function () {
         it("should have one result", function () {
             const response = chakram.get(API_URI_USERS);
             return expect(response).to.have.json(function (typesArray) {
-                expect(typesArray).to.have.length(1);
+                expect(typesArray).to.not.have.length(0);
             })
         });
 
     });
 
-    it("should only support GET calls", () => {
-        expect(chakram.post(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.put(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.delete(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
-        expect(chakram.patch(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
-        return chakram.wait();
+    describe("should only support GET calls", () => {
+        it("should NOT support POST calls", () => {
+            expect(chakram.post(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            return chakram.wait();
+        });
+        it("should NOT support PUT calls", () => {
+            expect(chakram.put(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            return chakram.wait();
+        });
+        it("should NOT support DELETE calls", () => {
+            expect(chakram.delete(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            return chakram.wait();
+        });
+        it("should NOT support PATCH calls", () => {
+            expect(chakram.patch(API_URI_USERS, "", {})).to.have.status(400); // todo should be 405
+            return chakram.wait();
+        });
     });
 });

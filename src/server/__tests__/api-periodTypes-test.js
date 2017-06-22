@@ -1,6 +1,7 @@
 jest.dontMock('chakram');
 
 import chakram from 'chakram';
+import { PERIOD_TYPE_IDS } from '../../common/testUtils';
 
 const expect = chakram.expect;
 
@@ -24,7 +25,7 @@ describe("ttrack API period-types", function () {
         });
 
         describe("success should return all ids", function () {
-            const expectedIds = ['Balance', 'Comment', 'Holiday', 'Nursing', 'Sick', 'Vacation', 'Work'];
+            const expectedIds = PERIOD_TYPE_IDS;
 
             for (let i in expectedIds) {
                 let id = expectedIds[i];
