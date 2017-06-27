@@ -1,4 +1,4 @@
-FROM node:5
+FROM node:6
 
 MAINTAINER 25th-floor GmbH "team@25th-floor.com"
 EXPOSE "8080"
