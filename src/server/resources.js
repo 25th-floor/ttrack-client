@@ -111,7 +111,7 @@ api.put('/users/:user/periods/:id', (req, res) => {
 });
 
 api.delete('/users/:user/periods/:id', (req, res) => {
-    console.info('API DELETE Request for Period');
+    console.info('API DELETE Request for Period', req.params.id, 'for user', req.params.user);
     Period.delete(api.get('pg'), req.params.id, req.params.user, () => {
         res.status(204).end();
     });
