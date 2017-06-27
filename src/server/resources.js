@@ -98,17 +98,10 @@ api.put('/users/:user/periods/:id', (req, res) => {
     console.info('API PUT Request for Period', req.params.id, 'for user', req.params.user);
 
     const data = req.body;
-    if (parseInt(req.params.id, 10) !== data.per_id) {
-        res.status(400).send('Invalid Id!').end();
-    }
+    data.per_id = parseInt(req.params.id, 10);
 
     // Validation
     if (!validateData(data, res)) {
-        return;
-    }
-    // PUT specific Validation
-    if (!data.per_day_id) {
-        res.status(400).send('Missing Day Id!').end();
         return;
     }
 
