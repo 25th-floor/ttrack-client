@@ -282,6 +282,22 @@ describe("ttrack API /api/users/{id}/periods", function () {
                     })
                 });
         });
+
+        it("day id should not be changed", function () {
+            const data = {
+                per_id: period.per_id,
+                per_pty_id: 'Work',
+                per_start: "PT8H",
+                per_day_id: period.per_day_id + 1,
+            };
+            return chakram.put(updateUri, data, {})
+                .then((response) => {
+                    expect(response).to.have.status(200);
+                    expect(response).to.comprise.of.json({
+                        per_day_id: period.per_day_id,
+                    })
+                });
+        });
     });
 
     describe("should only support POST calls", () => {
