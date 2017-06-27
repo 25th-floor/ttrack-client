@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import styles from './less/ProfileWidget.less';
 
 export default class extends React.Component {
     static propTypes = {
-        activeUser: React.PropTypes.object.isRequired,
+        activeUser: PropTypes.object.isRequired,
     };
 
     render() {

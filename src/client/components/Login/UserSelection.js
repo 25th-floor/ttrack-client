@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './less/UserSelection.less';
 
 export default class extends React.Component {
     static propTypes = {
-        users: React.PropTypes.any.isRequired,
-        onSelect: React.PropTypes.func.isRequired,
+        users: PropTypes.any.isRequired,
+        onSelect: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {

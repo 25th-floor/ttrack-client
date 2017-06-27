@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -11,11 +12,11 @@ import styles from './less/Day.less';
 
 export default class extends React.Component {
     static propTypes = {
-        day: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        user: React.PropTypes.object.isRequired,
-        activeMonth: React.PropTypes.object.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired,
+        day: PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        user: PropTypes.object.isRequired,
+        activeMonth: PropTypes.object.isRequired,
+        onSaveDay: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {
@@ -73,7 +74,7 @@ export default class extends React.Component {
             isFuture ? styles.dayFuture : null,
             !date.isSame(this.props.activeMonth, 'month') || dateOutOfEmploymentScope ? styles.dayOutOfScope : null,
             day.get('isUnfinished') ? styles.dayUnfinished : null,
-            isToday ? styles.dayCurrent : null
+            isToday ? styles.dayCurrent : null,
         );
 
         const showDurations = day.get('workDuration').asSeconds() !== 0 ||
@@ -82,7 +83,7 @@ export default class extends React.Component {
 
         const durationClass = classSet('col-xs-3 col-sm-2 col-lg-1',
             diff.as('ms') >= 0 ? styles['text-success'] : null,
-            diff.as('ms') < 0 ? styles['text-danger'] : null
+            diff.as('ms') < 0 ? styles['text-danger'] : null,
         );
 
         let durationBlock = (<dl>

@@ -4,7 +4,9 @@ module.exports = {
     ],
     'parser': 'babel-eslint',
     'env': {
-        'jest': true
+        'jest': true,
+        "es6": true,
+        "node": true,
     },
     'rules': {
         'no-use-before-define': 0,

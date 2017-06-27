@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 
@@ -7,7 +8,7 @@ import styles from './less/PeriodComment.less';
 
 export default class extends React.Component {
     static propTypes = {
-        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+        period: PropTypes.instanceOf(Immutable.Map).isRequired,
     };
 
     render() {

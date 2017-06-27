@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -9,11 +10,11 @@ import styles from './less/PeriodsForm.less';
 
 export default class extends React.Component {
     static propTypes = {
-        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        onCancel: React.PropTypes.func.isRequired,
-        onSave: React.PropTypes.func.isRequired,
+        periods: PropTypes.instanceOf(Immutable.Collection).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: PropTypes.objectOf(moment.duration).isRequired,
+        onCancel: PropTypes.func.isRequired,
+        onSave: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {
@@ -65,7 +66,7 @@ export default class extends React.Component {
         this.setState({
             periods: this.state.periods.set(
                 index,
-                period
+                period,
             ),
 
             removed: this.state.removed,
@@ -109,7 +110,7 @@ export default class extends React.Component {
         return (
             <div className={styles.form}>
                 <form onSubmit={this.handleSave} onKeyDown={this.handleKeyDown}>
-                    {periods.map((period, index) => <Period
+                    {periods.map((period, index) => (<Period
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
@@ -117,7 +118,7 @@ export default class extends React.Component {
                         index={index}
                         onRemove={this.handleRemovePeriod.bind(this, index)}
                         onUpdate={this.handleUpdatePeriod.bind(this, index)}
-                    />)}
+                    />))}
 
                     { isOverlapping ? <div className="alert alert-warning">
                         Der Zeitraum überschneidet sich mit anderen Einträgen an diesem Tag!

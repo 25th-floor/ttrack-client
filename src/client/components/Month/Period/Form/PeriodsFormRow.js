@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 /* eslint-disable jsx-a11y/label-has-for*/
 import React from 'react';
 import Immutable from 'immutable';
@@ -13,14 +14,14 @@ function findType(types, value) {
     return types.find(type => type.get('pty_id') === value);
 }
 
-export default class extends React.Component {
+export default class PeriodsFormRow extends React.Component {
     static propTypes = {
-        period: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        dayTargetTime: React.PropTypes.objectOf(moment.duration).isRequired,
-        index: React.PropTypes.number.isRequired,
-        onRemove: React.PropTypes.func.isRequired,
-        onUpdate: React.PropTypes.func.isRequired,
+        period: PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        dayTargetTime: PropTypes.objectOf(moment.duration).isRequired,
+        index: PropTypes.number.isRequired,
+        onRemove: PropTypes.func.isRequired,
+        onUpdate: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {
@@ -253,7 +254,7 @@ export default class extends React.Component {
                 </div>
 
                 <div className="row">
-                    {periodElements.map((p) => (
+                    {periodElements.map(p => (
                         <TimeInput
                             id={p.id}
                             label={p.label}
