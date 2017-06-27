@@ -1,7 +1,7 @@
 jest.dontMock('chakram');
 
 import chakram from 'chakram';
-import { getDatabasePool, createUser, PERIOD_TYPE_IDS } from '../../common/testUtils';
+import { getDatabasePool, createUser, PERIOD_TYPE_IDS, createPeriodStubWithDayForUserAndDate } from '../../common/testUtils';
 
 const expect = chakram.expect;
 
@@ -21,27 +21,27 @@ describe("ttrack API /api/users/{id}/periods", function () {
     let user;
     let uri;
 
-    describe("testing POST request", () => {
-        beforeAll(async (done) => {
-            client = await pool.connect();
-            user = await createUser(client, userFixture);
-            uri = getApiUri(user.usr_id);
+    beforeAll(async (done) => {
+        client = await pool.connect();
+        user = await createUser(client, userFixture);
+        uri = getApiUri(user.usr_id);
 
-            chakram.addMethod("body", function (respObj, text) {
-                const body = respObj.response.body;
-                this.assert(body.indexOf(text) > -1, `Expected '${text}' to be found within responses body ${body}`);
-            });
-            done();
+        chakram.addMethod("body", function (respObj, text) {
+            const body = respObj.response.body;
+            this.assert(body.indexOf(text) > -1, `Expected '${text}' to be found within responses body ${body}`);
         });
+        done();
+    });
 
-        afterAll(async (done) => {
-            await client.query(`DELETE FROM days WHERE day_usr_id = ${user.usr_id}`);
-            await client.query(`DELETE FROM users WHERE usr_id = ${user.usr_id}`);
-            client.release();
-            await pool.end();
-            done();
-        });
+    afterAll(async (done) => {
+        await client.query(`DELETE FROM days WHERE day_usr_id = ${user.usr_id}`);
+        await client.query(`DELETE FROM users WHERE usr_id = ${user.usr_id}`);
+        client.release();
+        await pool.end();
+        done();
+    });
 
+    describe("testing create(POST)", () => {
         it("should fail if body is empty", function () {
             return chakram.post(uri, {}, {})
                 .then((response) => {
@@ -205,6 +205,82 @@ describe("ttrack API /api/users/{id}/periods", function () {
                 });
 
             });
+        });
+    });
+
+    describe("testing udpate(PUT)", () => {
+        let period;
+        const date = '2001-03-01';
+        let updateUri;
+
+        beforeAll(async (done) => {
+            period = await createPeriodStubWithDayForUserAndDate(client, user.usr_id, date);
+
+            updateUri = `${uri}/${period.per_id}`;
+            done();
+        });
+
+        afterAll(async (done) => {
+            await client.query(`DELETE FROM days WHERE day_id = ${period.per_day_id}`);
+            done();
+        });
+
+        it("should fail if body is empty", function () {
+            return chakram.put(updateUri, {}, {})
+                .then((response) => {
+                    expect(response).to.have.status(400);
+                    expect(response).to.have.body("Missing Period Type!");
+                });
+        });
+
+        it("should fail if missing the period type", function () {
+            const data = {
+                per_id: period.per_id,
+            };
+            return chakram.put(updateUri, data, {})
+                .then((response) => {
+                    expect(response).to.have.status(400);
+                    expect(response).to.have.body("Missing Period Type!");
+                });
+        });
+
+        it("should fail if missing start or duration", function () {
+            const data = {
+                per_id: period.per_id,
+                per_pty_id: 'Work',
+            };
+            return chakram.put(updateUri, data, {})
+                .then((response) => {
+                    expect(response).to.have.status(400);
+                    expect(response).to.have.body("Missing Data 'Start' or 'Duration'!");
+                });
+        });
+
+        it("should work on success", function () {
+            const data = {
+                per_id: period.per_id,
+                per_pty_id: 'Work',
+                per_start: "PT8H",
+                per_stop: "PT10H",
+            };
+            return chakram.put(updateUri, data, {})
+                .then((response) => {
+                    expect(response).to.have.status(200);
+                    expect(response).to.comprise.of.json({
+                        ...period,
+                        per_start: {
+                            hours: 8,
+                            minutes: 0,
+                        },
+                        per_stop: {
+                            hours: 10,
+                            minutes: 0,
+                        },
+                        per_duration: {
+                            hours: 2,
+                        },
+                    })
+                });
         });
     });
 
