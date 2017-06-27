@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
@@ -15,7 +16,7 @@ function getDurationObject(immutable) {
 
 export default class extends React.Component {
     static propTypes = {
-        periods: React.PropTypes.instanceOf(Immutable.Collection).isRequired,
+        periods: PropTypes.instanceOf(Immutable.Collection).isRequired,
     };
 
     constructor(props, context) {
@@ -27,11 +28,11 @@ export default class extends React.Component {
         const start = moment.duration(getDurationObject(period.get('per_start'))).format('hh:mm', { trim: false });
         const end = moment.duration(getDurationObject(period.get('per_stop'))).format('hh:mm', { trim: false });
         const pause = timeUtils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.get('per_break')))
+            moment.duration(getDurationObject(period.get('per_break'))),
         );
 
         const duration = timeUtils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.get('per_duration')))
+            moment.duration(getDurationObject(period.get('per_duration'))),
         );
 
         if (period.get('per_start') == null && period.get('per_stop') == null) {

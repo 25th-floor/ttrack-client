@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ProfileWidget from './ProfileWidget';
@@ -7,9 +8,9 @@ import styles from './less/Navigation.less';
 
 export default class extends React.Component {
     static propTypes = {
-        activeUser: React.PropTypes.object.isRequired,
-        motto: React.PropTypes.object.isRequired,
-        onLogout: React.PropTypes.func.isRequired,
+        activeUser: PropTypes.object.isRequired,
+        motto: PropTypes.object.isRequired,
+        onLogout: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {

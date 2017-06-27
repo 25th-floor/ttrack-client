@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Motto from '../Motto';
@@ -6,8 +7,8 @@ import styles from './less/Footer.less';
 
 export default class extends React.Component {
     static propTypes = {
-        motto: React.PropTypes.object,
-        build: React.PropTypes.object,
+        motto: PropTypes.object,
+        build: PropTypes.object,
     };
 
     render() {

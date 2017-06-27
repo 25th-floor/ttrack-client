@@ -17,6 +17,8 @@
 
 .*/node_modules/jest-runtime/build/__tests__/.*
 
+.*/node_modules/moment-duration-format/test/vendor/qunit.js
+
 [include]
 
 [libs]
@@ -46,4 +48,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 unsafe.enable_getters_and_setters=true
 
 [version]
-^0.33.0
+^0.46.0

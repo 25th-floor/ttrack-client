@@ -4,6 +4,3 @@
 
 # Ignore test files
 **/__*/**
-
-# Ignore import
-src/import/**/*

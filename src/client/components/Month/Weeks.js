@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Immutable from 'immutable';
 import classSet from 'class-set';
@@ -9,11 +10,11 @@ import styles from './less/Weeks.less';
 
 export default class extends React.Component {
     static propTypes = {
-        weeks: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-        types: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        user: React.PropTypes.object.isRequired,
-        activeMonth: React.PropTypes.object.isRequired,
-        onSaveDay: React.PropTypes.func.isRequired,
+        weeks: PropTypes.instanceOf(Immutable.Map).isRequired,
+        types: PropTypes.instanceOf(Immutable.List).isRequired,
+        user: PropTypes.object.isRequired,
+        activeMonth: PropTypes.object.isRequired,
+        onSaveDay: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {
@@ -38,7 +39,7 @@ export default class extends React.Component {
             {
                 'text-success': delta.as('ms') >= 0,
                 'text-danger': delta.as('ms') < 0,
-            }
+            },
         );
         return <dd className={className}>{str}</dd>;
     }
@@ -54,7 +55,7 @@ export default class extends React.Component {
 
         const className = classSet(styles.weekSumRow,
             !timeUtils.isDateInEmploymentInterval(firstDate, this.props.user) &&
-            !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null
+            !timeUtils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null,
         );
 
         let carryTime = '';
@@ -62,7 +63,7 @@ export default class extends React.Component {
 
         if (!timeUtils.isWeekInFuture(week)) {
             carryTime = this.renderDeltaItem(
-                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry
+                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry,
             );
             diffTime = this.renderDeltaItem('col-xs-2 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1', diff);
         }

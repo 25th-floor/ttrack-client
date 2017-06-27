@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import classSet from 'class-set';
@@ -7,9 +8,9 @@ import styles from './less/DatePicker.less';
 
 export default class extends React.Component {
     static propTypes = {
-        activeMonth: React.PropTypes.object.isRequired,
-        months: React.PropTypes.instanceOf(Immutable.List).isRequired,
-        onChangeDate: React.PropTypes.func.isRequired,
+        activeMonth: PropTypes.object.isRequired,
+        months: PropTypes.instanceOf(Immutable.List).isRequired,
+        onChangeDate: PropTypes.func.isRequired,
     };
 
     constructor(props, context) {
@@ -27,7 +28,7 @@ export default class extends React.Component {
         const className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,
             month.isSame(this.today, 'month') ? styles.today : null,
-            month.isAfter(this.today, 'month') ? styles.future : null
+            month.isAfter(this.today, 'month') ? styles.future : null,
         );
 
         const monthNumber = month.format('M');
