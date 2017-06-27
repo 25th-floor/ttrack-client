@@ -37,6 +37,21 @@ export async function createUser(client, user) {
     return await createEntity(client, 'users', user);
 }
 
+export async function createUserWithTargetTime(client, userData, targetTime, targetStart) {
+    const user = await createUser(client, userData);
+    const target = await createEntity(
+        client,
+        'user_target_times',
+        {
+            utt_usr_id: user.usr_id,
+            utt_start: targetStart,
+            utt_end: 'infinity',
+            utt_target_time: targetTime,
+        },
+    );
+    return { user, target };
+}
+
 export async function createDay(client, day) {
     return await createEntity(client, 'days', day);
 }
