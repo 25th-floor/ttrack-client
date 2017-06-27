@@ -13,8 +13,8 @@
     "lint": "eslint src || true",
     "fix": "eslint --fix src || true",
     "flow": "flow check",
-    "test": "jest --no-cache",
-    "test-server": "mocha"
+    "test": "jest --no-cache src/common/**/*",
+    "test-server": "jest --no-cache src/server/**/*"
   },
   "author": "25th floor",
   "license": "ISC",
