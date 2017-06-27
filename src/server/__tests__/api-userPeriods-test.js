@@ -246,7 +246,6 @@ describe("ttrack API /api/users/{id}/periods", function () {
 
         it("should fail if missing start or duration", function () {
             const data = {
-                per_id: period.per_id,
                 per_pty_id: 'Work',
             };
             return chakram.put(updateUri, data, {})
@@ -258,7 +257,6 @@ describe("ttrack API /api/users/{id}/periods", function () {
 
         it("should work on success", function () {
             const data = {
-                per_id: period.per_id,
                 per_pty_id: 'Work',
                 per_start: "PT8H",
                 per_stop: "PT10H",
@@ -285,7 +283,6 @@ describe("ttrack API /api/users/{id}/periods", function () {
 
         it("day id should not be changed", function () {
             const data = {
-                per_id: period.per_id,
                 per_pty_id: 'Work',
                 per_start: "PT8H",
                 per_day_id: period.per_day_id + 1,
@@ -296,6 +293,20 @@ describe("ttrack API /api/users/{id}/periods", function () {
                     expect(response).to.comprise.of.json({
                         per_day_id: period.per_day_id,
                     })
+                });
+        });
+
+        it("should fail if period id is wrong", function () {
+            const data = {
+                per_pty_id: 'Work',
+                per_start: "PT8H",
+            };
+            const wrongId = period.per_id + 10;
+            const myUri = `${uri}/${wrongId}`;
+            return chakram.put(myUri, data, {})
+                .then((response) => {
+                    expect(response).to.have.status(400);
+                    expect(response).to.have.body(`Could not find period with id '${wrongId}'`);
                 });
         });
     });
