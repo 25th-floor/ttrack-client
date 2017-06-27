@@ -311,6 +311,41 @@ describe("ttrack API /api/users/{id}/periods", function () {
         });
     });
 
+    describe("testing delete (DELETE)", () => {
+        let period;
+        const date = '2001-04-01';
+        let deleteUri;
+
+        beforeAll(async (done) => {
+            period = await createPeriodStubWithDayForUserAndDate(client, user.usr_id, date);
+
+            deleteUri = `${uri}/${period.per_id}`;
+            done();
+        });
+
+        afterAll(async (done) => {
+            await client.query(`DELETE FROM days WHERE day_id = ${period.per_day_id}`);
+            done();
+        });
+
+        it("should delete the period", function () {
+            return chakram.delete(deleteUri, {})
+                .then(async (response) => {
+                    expect(response).to.have.status(204);
+                    const result = await client.query(`SELECT * from periods WHERE per_id = ${period.per_id}`);
+                    expect(result.rows.length).to.equal(0);
+                });
+        });
+
+        it("should not throw any errors if period is unknown", function () {
+            deleteUri = `${uri}/${(period.per_id + 10)}`;
+            return chakram.delete(deleteUri, {})
+                .then((response) => {
+                    expect(response).to.have.status(204);
+                });
+        });
+    });
+
     describe("should only support POST calls", () => {
         it("should NOT support GET calls", () => {
             return expect(chakram.get(uri)).to.have.status(405);
