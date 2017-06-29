@@ -36,7 +36,6 @@ if (process.env.SENTRY_TOKEN) {
         release: buildInfo.git || '',
         environment: process.env.NODE_ENV,
     });
-    sentryClient.patchGlobal();
 }
 
 console.info('Sentry', sentryClient ? 'enabled' : 'disabled');
