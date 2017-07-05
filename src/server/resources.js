@@ -76,9 +76,20 @@ api.get('/users/:user/timesheet/:from/:to', (req, res) => {
 api.post('/users/:user/periods', (req, res) => {
     console.info('API POST Request for Period for user', req.params.user);
     const data = req.body;
-    validateData(data, res);
+    data.userId = req.params.user;
+
+    // Validation
+    if (!validateData(data, res)) {
+        return;
+    }
+    // POST specific Validation
+    if (!data.date) {
+        res.status(400).send('Missing Date!').end();
+        return;
+    }
 
     Period.post(api.get('pg'), req.params.user, data, (period) => {
+        res.status(201);
         res.json(period);
     });
 });
@@ -87,11 +98,12 @@ api.put('/users/:user/periods/:id', (req, res) => {
     console.info('API PUT Request for Period', req.params.id, 'for user', req.params.user);
 
     const data = req.body;
-    if (parseInt(req.params.id, 10) !== data.per_id) {
-        res.status(400).send('Invalid Id!').end();
-    }
+    data.per_id = parseInt(req.params.id, 10);
 
-    validateData(data, res);
+    // Validation
+    if (!validateData(data, res)) {
+        return;
+    }
 
     Period.put(api.get('pg'), req.params.user, data, (period) => {
         res.json(period);
@@ -99,15 +111,19 @@ api.put('/users/:user/periods/:id', (req, res) => {
 });
 
 api.delete('/users/:user/periods/:id', (req, res) => {
-    console.info('API DELETE Request for Period');
+    console.info('API DELETE Request for Period', req.params.id, 'for user', req.params.user);
     Period.delete(api.get('pg'), req.params.id, req.params.user, () => {
         res.status(204).end();
     });
 });
 
+api.all(/.*/, (req, res) => {
+    res.status(405).send('Bad Request').end();
+});
+
 function validateData(data, res) {
-    if (!data.userId || !data.per_pty_id) {
-        res.status(400).send('Missing Data!').end();
+    if (!data.per_pty_id) {
+        res.status(400).send('Missing Period Type!').end();
         return false;
     }
 

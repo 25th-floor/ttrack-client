@@ -32,10 +32,10 @@ npm start
 ```
 
 ### Docker Variant
-### Production
-TBC
+#### Production
+TBC3
 
-### Development
+#### Development
 There is a `docker-compose.yml` which provides the basic means to start the node server in development mode. It also starts a postgres database docker image and links it. 
 
 The node server will expose port `8080` and postgres will expose `5432` for development purposes.
@@ -49,6 +49,21 @@ And you are good to go to develop in the frontend.
 Please understand that this setup is good for working on the client (frontend) code. If you need to work on the node server this will not work as the docker image does not update code changes.
 
 To work on the server it's not recommended to use docker but the direct approach @see Development > Getting Started.  
+
+#### Testing
+
+To test the common code just call `npm run test`. For the api tests you need to start the docker test setup:
+```
+$ docker-compose -f docker-compose.test.yml up
+``` 
+
+Be sure everything is running. Unfortunately at the first run the database needs more time therefore the node server will stop working.
+You need to start everything a second time to get the setup running.
+
+Then you can start the tests calling locally:
+```
+$ npm run test-server
+```
 
 ## Administration
 
