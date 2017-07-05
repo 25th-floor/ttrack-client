@@ -19,6 +19,9 @@ if [ "$1" = 'ttrack-server' ]; then
 		"$DB_USER" "$DB_PASS" "$DB_DATABASE" "$DB_PORT" "$DB_HOST" "$DB_DRIVER" "$DB_SCHEMA" \
 		> ./database.json
 
+	# Wait for database server to show up
+	while ! nc -z $DB_HOST $DB_PORT; do echo "Waiting for PgSQL"; sleep 1; done
+
 	# Migrate database to latest version
 	node_modules/.bin/db-migrate up
 
