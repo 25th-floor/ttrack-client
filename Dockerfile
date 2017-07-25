@@ -1,23 +1,13 @@
-FROM node:6
+FROM nginx:mainline
 
-MAINTAINER 25th-floor GmbH "team@25th-floor.com"
-EXPOSE "8080"
+RUN mkdir -p /var/www
 
-RUN apt-get update \
-	&& apt-get install -y netcat \
-	&& rm -rf /var/lib/apt/lists/*
+COPY public/ /var/www
+COPY docker/nginx/conf.d /etc/nginx/conf.d
 
-# Installing production dependencies
-ENV NODE_ENV production
-ADD ./package.json /tmp/
-RUN cd /tmp && \
-	npm install
+# Entrypoint related
+COPY docker/nginx/entrypoint.sh /entrypoint.sh
+COPY docker/nginx/entrypoint.d /entrypoint.d
 
-COPY . /app
-WORKDIR /app
-RUN cp -R /tmp/node_modules/ /app/node_modules/
-
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["ttrack-server"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

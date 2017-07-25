@@ -1,19 +1,12 @@
 version: '2'
 
 services:
-  ttrack:
+  ttrack-client:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ttrack-app
+    container_name: ttrack-client
     environment:
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DB_DATABASE=ttrack
-      - DB_HOST=db
-      - NODE_ENV=development
+      - API_URL=http://localhost:3000
     ports:
-      - 8080:8080
-    volumes:
-      - ./src:/app/src
-      - ./public/images/users:/app/public/images/users
+      - 8080:80
