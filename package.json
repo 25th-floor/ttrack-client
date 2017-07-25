@@ -15,7 +15,7 @@
     "test": "jest --no-cache src/common/**/*"
   },
   "author": "25th floor",
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "yarn": ">= 0.18.0"
   },
