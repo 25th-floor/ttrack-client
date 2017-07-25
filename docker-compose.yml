@@ -1,15 +1,6 @@
 version: '2'
 
 services:
-  db:
-    image: postgres:9.5
-    container_name: ttrack-db
-    environment:
-      - POSTGRES_DB=ttrack
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5432:5432
-
   ttrack:
     build:
       context: .
