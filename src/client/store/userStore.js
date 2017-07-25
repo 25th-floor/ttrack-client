@@ -3,8 +3,8 @@ import resource from '../resource';
 
 const LS_USER = 'ls.user';
 
-export default function (onChange) {
-    const users = resource.collection('/api/users');
+export default function (API_URI, onChange) {
+    const users = resource.collection(API_URI + '/api/users');
     const activeUserId = localStorage.getItem(LS_USER, {}).activeUserId;
     let activeUser = null;
     const notify = () => (onChange ? onChange() : null);

@@ -46,8 +46,8 @@ function fixDurations(period) {
     return period.map((val, key) => (_.includes(durations, key) && val !== null ? moment.duration(val.toJS()) : val));
 }
 
-export default function (onChange) {
-    const periodTypes = resource.collection('/api/period-types');
+export default function (API_URI, onChange) {
+    const periodTypes = resource.collection(API_URI + '/api/period-types');
     let timesheet = new Immutable.Map();
     const notify = () => (onChange ? onChange() : null);
     let initialized = false;
@@ -90,7 +90,7 @@ export default function (onChange) {
 
             const boundries = timeUtils.getFirstAndLastDayOfMonth(month);
 
-            tsResource = resource.single('/api/users/:user/timesheet/:from/:to');
+            tsResource = resource.single(API_URI + '/api/users/:user/timesheet/:from/:to');
 
             tsResource.load({
                 from: boundries.firstDay.format('YYYY-MM-DD'),
@@ -105,8 +105,8 @@ export default function (onChange) {
         },
 
         saveDay(userId, date, periods, removed) {
-            const periodCollectionResource = resource.collection('/api/users/:userId/periods');
-            const periodSingleResource = resource.single('/api/users/:userId/periods/:per_id');
+            const periodCollectionResource = resource.collection(API_URI + '/api/users/:userId/periods');
+            const periodSingleResource = resource.single(API_URI + '/api/users/:userId/periods/:per_id');
 
             const promises = [];
 

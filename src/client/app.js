@@ -24,10 +24,11 @@ import Month from './components/Month';
 
 // EXTERNAL DEPENDENCY, maybe there is another way?
 const buildInfo = global.BUILD_INFO || {};
+const API_URI = global.API_URL || 'http://localhost:3000/';
 
 const motto = _.sample(mottos);
-const users = userStore(renderApp);
-const timesheet = timesheetStore(renderApp);
+const users = userStore(API_URI, renderApp);
+const timesheet = timesheetStore(API_URI, renderApp);
 const nav = navStore(() => {
     loadTimesheet();
     renderApp();
