@@ -1,7 +1,3 @@
 // @flow
 
-import Login from './Login';
-
-export {
-    Login,
-};
+export { Login } from './Login';

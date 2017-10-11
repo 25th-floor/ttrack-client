@@ -5,13 +5,12 @@ import { Footer, Motto } from '@components';
 import { UserSelection } from '../UserSelection';
 import { Brand } from '../Brand';
 
-import styles from './Login.css';
+// https://github.com/facebookincubator/create-react-app/pull/2285
+import styles from './Login.module.css';
 
 export type LoginProps = {
     users: any,
-    motto: any,
     onUserSelect: ()=>{},
-    build: any,
 };
 
 /**
@@ -19,16 +18,13 @@ export type LoginProps = {
  */
 export class Login extends Component {
     props: LoginProps;
-
     render() {
-        const { motto, users, onUserSelect, build } = this.props;
+        const { users, onUserSelect } = this.props;
         return (<div id="login" className={styles.login}>
-            <Brand motto={motto} />
+            <Brand />
             <UserSelection users={users} onSelect={onUserSelect} />
-            <Footer build={build} />
+            <Footer />
         </div>
         );
     }
 }
-//            <UserSelection users={users} onSelect={onUserSelect} />
-export default Login;

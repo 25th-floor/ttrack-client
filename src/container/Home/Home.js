@@ -5,7 +5,7 @@ export class HomeContainer extends Component {
     render() {
         const { foo, bar } = this.props;
         return (
-            <div className="well"> { foo} { bar}</div>);
+            <div className=""> { foo} { bar}</div>);
     }
 }
 

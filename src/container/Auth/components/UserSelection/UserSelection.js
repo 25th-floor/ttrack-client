@@ -1,8 +1,9 @@
 // @flow
 import R from 'ramda';
+import faker from 'faker';
 import React, { Component } from 'react';
 
-import styles from './UserSelection.css';
+import styles from './UserSelection.module.css';
 
 export type UserSelectionProps = {
     users: any,
@@ -29,19 +30,22 @@ export class UserSelection extends Component {
         this.props.onSelect(user);
     }
 
+    handleBla = user => this.props.onSelect(user)
+
     renderUserItem(user, index) {
-        const userId = user.get('usr_id');
-        const imgSrc = `/images/users/${userId}.jpg`;
+        const { usr_Id, usr_firstname, usr_lastname } = user;
+        const imgSrc = faker.image.imageUrl(250, 250);
+        // `/images/users/${userId}.jpg`;
         return (
             <li key={index} className="col-xs-6 col-sm-3">
-                <a onClick={R.curry(this.changeUser)(user)} role="button" tabIndex="0">
+                <a onClick={() => this.handleBla(user)} role="button" tabIndex="0">
                     <div className={styles.imageContainer}>
                         <img src={imgSrc} alt="" />
                     </div>
                     <span>
-                        {user.get('usr_firstname')}
+                        {usr_firstname}
                         <span className={styles.lastname}>
-                            {` ${user.get('usr_lastname')}`}
+                            {` ${usr_lastname}`}
                         </span>
                     </span>
                 </a>
@@ -50,9 +54,7 @@ export class UserSelection extends Component {
     }
 
     render() {
-        console.log(this.props.users);
         const users = SortByLastName(this.props.users);
-        // .sortBy(user => user.get('usr_lastname').toLowerCase());
         return (
             <div className={`container ${styles.userSelection}`}>
                 <ul className={`${styles.userlist} row`}>

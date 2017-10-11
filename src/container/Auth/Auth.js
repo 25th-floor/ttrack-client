@@ -9,20 +9,25 @@ import {
 } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { Actions } from '@data';
+import { Actions, Resources, Constants, Utils } from '@data';
 
 import { Login } from './components/Login';
 
 export type AuthProps = {
-    isAuthenticated: boolean,
+/*     isAuthenticated: boolean,
     login: () => {},
-    logout: () => {},
+    logout: () => {}, */
 };
 
-const mapStateToProps = ({ isAuthenticated, motto, users, buildInfo }) => ({
+const { Users } = Resources;
+const { mottos } = Constants;
+
+const motto = R.indexOf(
+    Utils.getRandomInt(0, R.length(mottos)),
+)(mottos);
+
+const mapStateToProps = ({ isAuthenticated, buildInfo }) => ({
     isAuthenticated,
-    motto,
-    users,
     buildInfo,
 });
 
@@ -38,23 +43,25 @@ export class AuthContainer extends Component {
     props: AuthProps;
     constructor(props) {
         super(props);
+        this.state = {
+            users: [],
+        };
         this.handleLogout = this.handleLogout.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
-
         this.renderLogout = this.renderLogout.bind(this);
     }
-    componentDidMount() {
-        console.log('foo');
+    async componentDidMount() {
+        this.setState({
+            users: await Users.collection(),
+        });
     }
 
-    handleLogout = (userId, history) => {
-        this.props.logout(userId);
-        // history.push('/out');
+    handleLogout = (user) => {
+        this.props.logout(user);
     }
 
-    handleLogin = (userId, history) => {
-        this.props.login(userId);
-        // history.push('/login');
+    handleLogin = (user) => {
+        this.props.login(user);
     }
 
     renderLogout(userId, history) {
@@ -62,25 +69,11 @@ export class AuthContainer extends Component {
     }
 
     render() {
-        const { motto, users, buildInfo } = this.props;
-        const Foo = withRouter(
-            ({ history }) => {
-                if (this.props.isAuthenticated) {
-                    return this.renderLogout(1, history);
-                }
-                return (<Login
-                    motto={motto}
-                    users={users}
-                    build={buildInfo}
-                    onUserSelect={this.handleLogin}
-                />);
-            },
-        );
-        return (
-            <div>
-                <Foo />
-            </div>
-        );
+        const { buildInfo, isAuthenticated } = this.props;
+        const { users } = this.state;
+
+        if (isAuthenticated) return null;
+        return (<Login users={users} onUserSelect={this.handleLogin} />);
     }
 }
 

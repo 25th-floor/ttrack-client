@@ -15,6 +15,7 @@ import { Home, Auth as Authentication } from './container';
 
 const Index = () => (<Redirect to="/home" />);
 
+
 export const App = () => (
     <AppContainer>
         <Provider store={store}>

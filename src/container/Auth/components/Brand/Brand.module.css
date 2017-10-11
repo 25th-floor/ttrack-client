@@ -1,0 +1,80 @@
+.loginBrand {
+    color: white;
+    font-weight: 100;
+    padding: 10px 5px 5px 5px;
+}
+
+@media (min-width: 768px) {
+    .loginBrand {
+        text-align: center;
+        padding: 20px 0 0 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .loginBrand {
+        padding: 50px 0 10px 0;
+    }
+}
+
+.loginBrand svg {
+    height: 18px;
+    padding-top: 3px;
+    fill: #DC3023;
+}
+
+@media (min-width: 768px) {
+    .loginBrand svg {
+        padding-top: 0;
+        width: 100px;
+        height: auto;
+        position: absolute;
+        left: 50%;
+        top: 15px;
+        margin-left: -50px;
+        opacity: 0.2;
+    }
+}
+
+@media (min-width: 992px) {
+    .loginBrand svg {
+        width: 200px;
+        top: 40px;
+        margin-left: -100px;
+    }
+}
+
+.loginBrand .title {
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+@media (min-width: 768px) {
+    .loginBrand .title {
+        display: block;
+        font-size: 40px;
+    }
+}
+
+@media (min-width: 992px) {
+    .loginBrand .title {
+        font-size: 60px;
+    }
+}
+
+.loginBrand .title strong {
+    font-weight: 500;
+}
+
+@media (min-width: 768px) {
+    .loginBrand .tt-motto {
+        font-size: 20px;
+        color: #707a81;
+    }
+}
+
+@media (min-width: 992px) {
+    .loginBrand .tt-motto {
+        font-size: 25px;
+    }
+}

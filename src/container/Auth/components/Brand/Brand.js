@@ -1,7 +1,7 @@
 import React from 'react';
 import { Motto } from '@components';
 
-import styles from './Brand.css';
+import styles from './Brand.module.css';
 
 /**
  * Brand
@@ -29,7 +29,7 @@ const Brand = ({ motto }) => (<div className={styles.loginBrand}>
     </span>
 
     <small className={styles['tt-motto']}>
-        <Motto house={motto.house} motto={motto.motto} />
+        <Motto />
     </small>
 </div>);
 
