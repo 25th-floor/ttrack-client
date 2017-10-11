@@ -1,0 +1,22 @@
+/* global timetrack variables */
+/* navigation */
+.site-container {
+  padding-top: 50px;
+  transition: padding-left 0.5s ease-in-out;
+}
+@media (min-width: 992px) {
+  .site-container {
+    padding-top: 0;
+    padding-left: 60px;
+  }
+}
+@media (min-width: 1200px) {
+  .site-container {
+    padding-left: 200px;
+  }
+}
+@media (min-width: 1560px) {
+  .site-container {
+    padding-left: 300px;
+  }
+}

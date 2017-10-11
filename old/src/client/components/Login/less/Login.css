@@ -1,0 +1,81 @@
+/* login page layout */
+/* global timetrack variables */
+/* navigation */
+.login .loginBrand {
+  color: white;
+  font-weight: 100;
+  padding: 10px 5px 5px 5px;
+}
+@media (min-width: 768px) {
+  .login .loginBrand {
+    text-align: center;
+    padding: 20px 0 0 0;
+  }
+}
+@media (min-width: 992px) {
+  .login .loginBrand {
+    padding: 50px 0 10px 0;
+  }
+}
+.login .loginBrand svg {
+  height: 18px;
+  padding-top: 3px;
+  fill: #DC3023;
+}
+@media (min-width: 768px) {
+  .login .loginBrand svg {
+    padding-top: 0;
+    width: 100px;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 15px;
+    margin-left: -50px;
+    opacity: 0.2;
+  }
+}
+@media (min-width: 992px) {
+  .login .loginBrand svg {
+    width: 200px;
+    top: 40px;
+    margin-left: -100px;
+  }
+}
+.login .loginBrand .title {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+@media (min-width: 768px) {
+  .login .loginBrand .title {
+    display: block;
+    font-size: 40px;
+  }
+}
+@media (min-width: 992px) {
+  .login .loginBrand .title {
+    font-size: 60px;
+  }
+}
+.login .loginBrand .title strong {
+  font-weight: 500;
+}
+@media (min-width: 768px) {
+  .login .loginBrand .tt-motto {
+    font-size: 20px;
+    color: #707a81;
+  }
+}
+@media (min-width: 992px) {
+  .login .loginBrand .tt-motto {
+    font-size: 25px;
+  }
+}
+.login h1 {
+  font-size: 36px;
+  font-weight: 300;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.66);
+}
+/* :global(#login footer.footer .footer-copyright) {
+    text-align : center;
+} */

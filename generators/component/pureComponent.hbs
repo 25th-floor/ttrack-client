@@ -1,0 +1,31 @@
+// @flow
+
+import * as classnames from 'classnames';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
+
+import './{{ properCase name }}.css';
+
+export interface I{{ properCase name }}Props {
+    children?: any;
+}
+
+class {{ properCase name }} extends PureComponent<I{{ properCase name }}Props, {}> {
+    static defaultProps = {
+        // empty
+    };
+
+    static propTypes = {
+        children: PropTypes.node
+    };
+
+    render() {
+        const {{ camelCase name }}ClassNames = classnames({
+        return (
+            // <h1 className={ {{ camelCase name }}ClassNames}> {{ properCase name  }}</h1>
+            <h1> {{ properCase name  }}</h1>
+        );
+    }
+}
+
+export default {{ properCase name }};
