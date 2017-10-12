@@ -50,8 +50,8 @@ export class YearSelection extends Component {
         const yearNumber = year.format('YY');
         const yearShort = year.format(format);
 
+        // TODO NO BIND !!!
         const onSelectYear = this.selectYear.bind(this, year);
-        console.log(className);
         return (
             <li className={className} key={index}>
                 <a onClick={onSelectYear} role="button" tabIndex={0}>

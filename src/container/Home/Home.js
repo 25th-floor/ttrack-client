@@ -1,36 +1,62 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { Utils } from '@data';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
 import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
+import { Weeks } from './components/Weeks';
 
 import styles from './Home.module.css';
 
-const mapStateToProps = ({ isAuthenticated, user }) => ({
+const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
     isAuthenticated,
     user,
+    history,
+});
+
+const mapDispatchToProps = dispatch => ({
+    logout: bindActionCreators(Actions.Auth.logout, dispatch),
 });
 
 export class HomeContainer extends Component {
+    componentDidMount() {
+        console.log(this);
+        // Resources.Timesheet.getTimesheetFromUser()
+    }
+
+    handleLogout = (user) => {
+        this.props.logout(user);
+        // this.props.history.push('/');
+    }
+
     handleChangeDate() {
         console.log('handleChangeDate');
     }
 
+    handelSaveDay() {
+        console.log('handelSaveDay');
+    }
+
     render() {
-        const { isAuthenticated, user } = this.props;
+        const { isAuthenticated, user, weeks, types } = this.props;
         if (!isAuthenticated) return null;
+
+        const activeMonth = Utils.getMomentToday();
+
         return (
             <div className={styles['site-container']}>
                 <div className="container-fluid">
                     <div id={styles.month}>
-                        <Navigation user={user} />
+                        <Navigation user={user} onLogout={this.handleLogout} />
                         <div className={styles.pageHeader}>
                             <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
                             <DatePicker
-                                activeMonth={Utils.getMomentToday()}
+                                activeMonth={activeMonth}
                                 years={Utils.getYearsForUser(user, Utils.getMomentToday())}
                                 months={Utils.getMonthsForUser(user, Utils.getMomentToday())}
                                 onChangeDate={this.handleChangeDate}
@@ -38,7 +64,7 @@ export class HomeContainer extends Component {
                             <div className="clearfix" />
                         </div>
 
-                        <fieldset className={`${styles.monthHeader} hide`}>
+                        <fieldset className={`${styles.monthHeader}`}>
                             <dl>
                                 <dt className="col-sm-3 col-md-1 col-lg-1">Datum</dt>
                                 <dt className="hidden-sm col-md-2 tt-col-lg-1 col-lg-1">Wochentag</dt>
@@ -48,7 +74,6 @@ export class HomeContainer extends Component {
                                 <dt className="col-sm-4 col-lg-6">Kommentar</dt>
                             </dl>
                         </fieldset>
-
                     </div>
                 </div>
                 <Footer />
@@ -57,5 +82,15 @@ export class HomeContainer extends Component {
     }
 }
 
+/* <Weeks
+weeks={weeks}
+activeMonth={activeMonth}
+types={types}
+user={user}
+onSaveDay={this.onSaveDay}
+/> */
+
 //    <Footer />
-export const Home = connect(mapStateToProps, null)(HomeContainer);
+export const Home = withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(HomeContainer),
+);

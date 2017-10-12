@@ -7,7 +7,7 @@ import styles from './Navigation.module.css';
 import { ProfileWidget } from '../ProfileWidget';
 
 export type NavigationProps = {
-    handleLogout: () => {},
+    onLogout: () => {},
     user: any,
 };
 
@@ -62,7 +62,7 @@ export class Navigation extends Component {
                                 </a>
                             </li>
                             <li className={`logout ${styles.logout}`}>
-                                <a onClick={this.props.handleLogout} href="">
+                                <a onClick={this.props.onLogout} href="">
                                     <i className="fa fa-power-off" />
                                     <span>Logout</span>
                                 </a>

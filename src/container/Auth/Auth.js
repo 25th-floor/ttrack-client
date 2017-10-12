@@ -26,7 +26,8 @@ const motto = R.indexOf(
     Utils.getRandomInt(0, R.length(mottos)),
 )(mottos);
 
-const mapStateToProps = ({ isAuthenticated, buildInfo }) => ({
+const mapStateToProps = ({ isAuthenticated, buildInfo }, { history }) => ({
+    history,
     isAuthenticated,
     buildInfo,
 });
@@ -62,6 +63,7 @@ export class AuthContainer extends Component {
 
     handleLogin = (user) => {
         this.props.login(user);
+        this.props.history.push('/home');
     }
 
     renderLogout(userId, history) {
@@ -69,12 +71,13 @@ export class AuthContainer extends Component {
     }
 
     render() {
+        console.log('redner');
         const { buildInfo, isAuthenticated } = this.props;
         const { users } = this.state;
-
-        if (isAuthenticated) return null;
         return (<Login users={users} onUserSelect={this.handleLogin} />);
     }
 }
 
-export const Auth = connect(mapStateToProps, mapDispatchToProps)(AuthContainer);
+export const Auth = withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(AuthContainer),
+);
