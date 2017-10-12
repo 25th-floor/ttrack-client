@@ -1,7 +1,5 @@
 // @flow
-import faker from 'faker';
 import React, { Component } from 'react';
-
 import styles from './ProfileWidget.module.css';
 
 export type ProfileWidgetProps = {
@@ -21,7 +19,7 @@ export class ProfileWidget extends Component {
         return (
             <div id={styles.profileWidget}>
                 <div className={styles.image}>
-                    <img src={imgSrc} alt="" />
+                    <img src={'/16.jpg'} alt="" />
                 </div>
                 <div className={styles.name}>
                     <span className="firstname">{user.usr_firstname} </span>

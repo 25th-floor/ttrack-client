@@ -1,6 +1,5 @@
 // @flow
 import R from 'ramda';
-import faker from 'faker';
 import React, { Component } from 'react';
 
 import styles from './UserSelection.module.css';
@@ -34,13 +33,11 @@ export class UserSelection extends Component {
 
     renderUserItem(user, index) {
         const { usr_Id, usr_firstname, usr_lastname } = user;
-        const imgSrc = faker.image.imageUrl(250, 250);
-        // `/images/users/${userId}.jpg`;
         return (
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={() => this.handleBla(user)} role="button" tabIndex="0">
                     <div className={styles.imageContainer}>
-                        <img src={imgSrc} alt="" />
+                        <img src={'/16.jpg'} alt="" />
                     </div>
                     <span>
                         {usr_firstname}
