@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Footer, Motto } from '@components';
+import { Footer } from '@components';
 
 import { UserSelection } from '../UserSelection';
 import { Brand } from '../Brand';

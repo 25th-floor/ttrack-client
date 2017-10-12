@@ -2,20 +2,21 @@
 
 import React, { Component } from 'react';
 
-import './{{ properCase name }}.css';
+import styles from './{{ properCase name }}.module.css';
 
 export type {{ properCase name }}Props = {
-    children?: React.Element<any>,
 };
 
 /**
  * {{ properCase name }}
  */
 
-export default class {{ properCase name }} extends Component {
+export class {{ properCase name }} extends Component {
     props: {{ properCase name }}Props;
 
     render() {
         return (<h1> {{ properCase name  }}</h1>);
     }
 }
+
+export default {{ properCase name }};

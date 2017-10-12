@@ -44,7 +44,7 @@ module.exports = {
             abortOnFail: true,
         }, {
             type: 'add',
-            path: `${appRoot}/src/container/{{properCase name}}/{{properCase name}}.css`,
+            path: `${appRoot}/src/container/{{properCase name}}/{{properCase name}}.module.css`,
             templateFile: './container/css.hbs',
             abortOnFail: true,
         }];

@@ -1,0 +1,138 @@
+  .monthSelection .yearSelection,
+  .monthSelection {
+    position: relative;
+  }
+  @media (min-width: 768px) {
+    .monthSelection .yearSelection,
+    .monthSelection {
+      display: table-row;
+    }
+  }
+  .monthSelection .yearSelection ul li.today a,
+  .monthSelection ul li.today a {
+    background: rgba(47, 160, 132, 0.4);
+  }
+  .monthSelection .yearSelection ul li.tt-button-today a:hover,
+  .monthSelection ul li.tt-button-today a:hover {
+    background: rgba(47, 160, 132, 0.6);
+  }
+  .monthSelection .yearSelection {
+    background: rgba(160, 169, 174, 0.4);
+  }
+  .monthSelection .yearSelection ul li a:hover {
+    background: rgba(220, 48, 35, 0.6);
+  }
+  .monthSelection .yearSelection ul li.active a {
+    background: #DC3023;
+  }
+  .monthSelection .yearSelection ul li.active a:hover {
+    background: #DC3023;
+  }
+  @media (max-width: 767px) {
+    .monthSelection .yearSelection li {
+      width: auto;
+    }
+  }
+  .monthSelection {
+    background: rgba(141, 149, 153, 0.4);
+  }
+  .monthSelection ul li a:hover {
+    background: rgba(220, 48, 35, 0.6);
+  }
+  .monthSelection ul li.active a {
+    background: #DC3023;
+  }
+  .monthSelection ul li.active a:hover {
+    background: #DC3023;
+  }
+  .monthSelection h2 {
+    color: rgba(200, 200, 200, 0.7);
+    margin: 0;
+    padding: 10px 10px;
+    font-weight: 500;
+    font-size: 24px;
+    text-transform: uppercase;
+    vertical-align: top;
+    display: block;
+    position: absolute;
+    top: -4px;
+    right: 0;
+    opacity: 0.5;
+  }
+  @media (min-width: 768px) {
+    .monthSelection h2 {
+      display: table-cell;
+      position: inherit;
+      opacity: 1;
+    }
+  }
+  @media (min-width: 1200px) {
+    .monthSelection h2 {
+      font-size: 34px;
+    }
+  }
+  .monthSelection ul {
+    padding: 0;
+    margin-bottom: 0;
+    display: table-cell;
+  }
+  @media (min-width: 768px) {
+    .monthSelection ul {
+      width: 100%;
+    }
+  }
+  .monthSelection ul li {
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    text-transform: uppercase;
+  }
+  .monthSelection ul li.tt-button-today {
+    float: right;
+    min-width: 90px;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .monthSelection ul li.tt-button-today {
+      min-width: 109px;
+    }
+  }
+  .monthSelection ul li a {
+    display: block;
+    padding: 11px 10px;
+    font-size: 10px;
+    font-weight: 100;
+    color: #c8c8c8;
+    cursor: pointer;
+  }
+  @media (min-width: 768px) {
+    .monthSelection ul li a {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 1200px) {
+    .monthSelection ul li a {
+      font-size: 22px;
+      padding: 13px 10px;
+    }
+  }
+  .monthSelection ul li.future a {
+    color: #646464;
+  }
+  .monthSelection ul li a:hover {
+    color: white;
+  }
+  .monthSelection ul li.active a {
+    color: white;
+  }
+  .monthSelection ul li .short,
+  .monthSelection ul li .full {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .monthSelection ul li .number {
+      display: none;
+    }
+    .monthSelection ul li .short {
+      display: block;
+    }
+  }

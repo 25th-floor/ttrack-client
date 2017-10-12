@@ -63,7 +63,7 @@ module.exports = {
             abortOnFail: true,
         }, {
             type: 'add',
-            path: `${appRoot}/src/{{path}}/{{properCase name}}/{{properCase name}}.css`,
+            path: `${appRoot}/src/{{path}}/{{properCase name}}/{{properCase name}}.module.css`,
             templateFile: './component/css.hbs',
             abortOnFail: true,
         }, {
