@@ -14,8 +14,6 @@ export class ProfileWidget extends Component {
 
     render() {
         const { user } = this.props;
-        const imgSrc = faker.image.imageUrl();
-
         return (
             <div id={styles.profileWidget}>
                 <div className={styles.image}>

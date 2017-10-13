@@ -26,12 +26,23 @@ const mapDispatchToProps = dispatch => ({
 export class HomeContainer extends Component {
     componentDidMount() {
         console.log(this);
+        const { user } = this.props;
+        const a = Utils.getYearsForUser(
+            user,
+            Utils.getMomentToday(),
+        );
+        console.log(this.props);
+        /*         const c = Utils.getMonthsForUser(user, Utils.getMomentToday());
+        const found = Utils.getNearestDateWithinEmployment(Utils.getMomentToday(), user);
+
+        console.log(found); */
+        // console.log(a.map(b => b.format('YYYY')));
+        // console.log(c.map(d => d.format('MM')));
         // Resources.Timesheet.getTimesheetFromUser()
     }
 
     handleLogout = (user) => {
         this.props.logout(user);
-        // this.props.history.push('/');
     }
 
     handleChangeDate() {
