@@ -1,5 +1,8 @@
 // @flow
 import R from 'ramda';
+import moment from 'moment';
+import momentDuration from 'moment-duration-format';
+
 import React, { Component } from 'react';
 import classSet from 'class-set';
 
@@ -48,18 +51,20 @@ export class Weeks extends Component {
         return <dd className={className}>{str}</dd>;
     }
 
+    tracer = R.tap(console.log);
+
     renderWeekSum(week) {
         const workDuration = week.workDuration.format('hh:mm', { trim: false });
 
         const diff = week.diffUntilToday;
         const carry = week.carry;
 
-        const firstDate = R.first(week.days).date;
-        const lastDate = R.last(week.days).date;
+        const firstDayOfWeek = R.last(week.days);
+        const lastDayOfWeek = R.last(week.days);
 
         const className = classSet(styles.weekSumRow,
-            !Utils.isDateInEmploymentInterval(firstDate, this.props.user) &&
-            !Utils.isDateInEmploymentInterval(lastDate, this.props.user) ? styles.dayOutOfScope : null,
+            !Utils.isDateInEmploymentInterval(firstDayOfWeek.date, this.props.user) &&
+            !Utils.isDateInEmploymentInterval(lastDayOfWeek.date, this.props.user) ? styles.dayOutOfScope : null,
         );
 
         let carryTime = '';
@@ -71,8 +76,9 @@ export class Weeks extends Component {
             );
             diffTime = this.renderDeltaItem('col-xs-2 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1', diff);
         }
+
         return (
-            <fieldset className={className}>
+            <fieldset key={`weeksum-${week.weekNr}`} className={className}>
                 <legend>Wochensumme {week.weekNr}</legend>
 
                 <dl>
@@ -108,10 +114,13 @@ export class Weeks extends Component {
         const weeks = this.props.weeks;
         return (
             <div className={styles.weeks}>
-                {weeks.map(this.renderWeekItem)}
+                {
+                    this.renderWeekItem(weeks['2017-39'])
+                }
             </div>
         );
     }
 }
+// {R.mapObjIndexed(this.renderWeekItem)(weeks[0])}
 
 export default Weeks;

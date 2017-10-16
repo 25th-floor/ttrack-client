@@ -7,6 +7,7 @@ import {
     withRouter,
     BrowserRouter as Router,
     Route,
+    Switch,
 } from 'react-router-dom';
 
 import { AppContainer } from 'react-hot-loader';
@@ -16,13 +17,6 @@ import { store, Utils } from '@data';
 import { Home, Auth as Authentication } from './container';
 
 const Index = bla => <Redirect push to="/month" />;
-
-/* const PrivateRouteC = ({ component: Component, ...rest }) => {
-    // on /auth do nothing
-    if (rest.history.location.pathname === '/auth') return null;
-    if (!rest.isAuthenticated) return (<Redirect push to="/auth" />);
-    return <Route {...rest} render={props => <Component {...props} />} />;
-}; */
 
 const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
     isAuthenticated,
@@ -59,29 +53,23 @@ const dateValidation = ({ user, location }, RouterPath) => {
 
     // returns false if it is valid
     if (found === false) {
-        return !found;
+        return true;
     }
 
     const validDateFormat = Utils.getMomentToday().format('YYYY-MM');
-    return `/month/${validDateFormat}`; // (<Redirect push to={`/month/${validDateFormat}`} />);
+    return `/month/${validDateFormat}`;
 };
-
-const Foobar = () => (
-    <h1>hello 1</h1>
-);
-
-const Foo = () => (
-    <h1>hello 2</h1>
-);
 
 export const App = () => (
     <AppContainer>
         <Provider store={store}>
             <Router>
                 <div>
-                    <PrivateRoute exact path="/" component={Index} />
-                    <PrivateRoute exact path="/month" component={Home} />
-                    <PrivateRoute exact path="/month/:date" validation={dateValidation} component={Home} />
+                    <Switch>
+                        <PrivateRoute path="/month/:date" validation={dateValidation} component={Home} />
+                        <PrivateRoute path="/month" component={Home} />
+                        <PrivateRoute path="/" component={Index} />
+                    </Switch>
                     <Route exact path="/auth" component={Authentication} />
                 </div>
             </Router>

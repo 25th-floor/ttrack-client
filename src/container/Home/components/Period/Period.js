@@ -1,5 +1,7 @@
 // @flow
 import moment from 'moment';
+import momentDuration from 'moment-duration-format';
+
 import React, { Component } from 'react';
 
 import { Utils } from '@data';
@@ -31,6 +33,7 @@ export class Period extends Component {
     }
 
     renderPeriodItem(period, index) {
+        // debugger;
         const start = moment.duration(getDurationObject(period.per_start)).format('hh:mm', { trim: false });
         const end = moment.duration(getDurationObject(period.per_stop)).format('hh:mm', { trim: false });
         const pause = Utils.formatDurationHoursToLocale(

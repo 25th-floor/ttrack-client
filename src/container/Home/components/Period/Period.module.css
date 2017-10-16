@@ -1,1 +1,8 @@
 
+.periods {
+    font-size: 0.9em;
+    color: #aaa;
+  }
+  .periods .periodRow {
+    clear: both;
+  }

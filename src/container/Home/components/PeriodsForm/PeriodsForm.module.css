@@ -1,1 +1,14 @@
-
+.form {
+    clear: both;
+    padding: 0 15px;
+  }
+  .form .row {
+    padding: 15px;
+    border-top: 1px solid #DDD;
+  }
+  .form .row:first-child {
+    border-top: none;
+  }
+  .form .btn {
+    margin: 0 5px;
+  }

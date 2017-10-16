@@ -24,6 +24,7 @@ export class PeriodComment extends Component {
         if (!comment || !comment.length) {
             if (isPeriodDuration) return false;
             comment = Utils.getDurationDescription(period.duration);
+            debugger;
         }
 
         const icon = period.getIn(['type', 'pty_config', 'icon']);

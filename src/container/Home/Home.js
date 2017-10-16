@@ -1,5 +1,6 @@
+import R from 'ramda';
+import moment from 'moment';
 import React, { Component } from 'react';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -23,26 +24,86 @@ const mapDispatchToProps = dispatch => ({
     logout: bindActionCreators(Actions.Auth.logout, dispatch),
 });
 
-export class HomeContainer extends Component {
-    componentDidMount() {
-        console.log(this);
-        const { user } = this.props;
-        const a = Utils.getYearsForUser(
-            user,
-            Utils.getMomentToday(),
-        );
-        console.log(this.props);
-        /*         const c = Utils.getMonthsForUser(user, Utils.getMomentToday());
-        const found = Utils.getNearestDateWithinEmployment(Utils.getMomentToday(), user);
+function getDurationType(period, targetTime, type) {
+    const cfg = type.pty_config.types;
 
-        console.log(found); */
-        // console.log(a.map(b => b.format('YYYY')));
-        // console.log(c.map(d => d.format('MM')));
-        // Resources.Timesheet.getTimesheetFromUser()
+    if (period.per_id !== null) {
+        const start = period.per_start;
+        const duration = moment.duration(period.per_duration);
+        const target = moment.duration(targetTime);
+
+        if (cfg.period && start && moment.duration(start).as('minutes') >= 0) return 'period';
+        if (cfg.halfday && duration.as('hours') === (target.as('hours') / 2)) return 'halfday';
+        if (cfg.fullday && duration.as('hours') === target.as('hours')) return 'fullday';
+        if (cfg.duration) return 'duration';
+    } else {
+        if (cfg.period) return 'period';
+        if (cfg.fullday) return 'fullday';
+        if (cfg.halfday) return 'halfday';
+        if (cfg.duration) return 'duration';
+    }
+
+    return 'none';
+}
+
+function assocPeriodWithType(typeMap, targetTime, period) {
+    const type = typeMap[period.per_pty_id];
+    const duration = getDurationType(period, targetTime, type);
+    return {
+        ...period,
+        type,
+        duration,
+    };
+}
+
+function assocPeriodsWithTypes(types, days) {
+    const typeMap = R.compose(
+        R.map(R.head),
+        R.groupBy(type => type.pty_id),
+    )(types);
+
+    // updateIn periods
+    return [...R.map(
+        day => ({
+            ...day,
+            periods: R.map(
+                R.curry(assocPeriodWithType)(typeMap, day.day_target_time),
+            )(day.periods),
+        }),
+    )(days)];
+}
+
+export class HomeContainer extends Component {
+    async componentDidMount() {
+        const { user, match } = this.props;
+        let activeMonth = match.params.date;
+        if (!activeMonth) {
+            activeMonth = Utils.getMomentToday();
+        }
+
+        const boundaries = Utils.getFirstAndLastDayOfMonth(activeMonth);
+        const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
+            this.props.user,
+            boundaries.firstDay.format('YYYY-MM-DD'),
+            boundaries.lastDay.format('YYYY-MM-DD'),
+        );
+        const periodTypes = await Resources.Timesheet.getTypes();
+        const days = assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
+        await this.setState({
+            weeks: Utils.createWeeks(
+                days,
+                responseTimeSheet.carryTime,
+            ),
+            types: periodTypes,
+        });
     }
 
     handleLogout = (user) => {
         this.props.logout(user);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('RECEIVE NEW PROPS', this.props, nextProps);
     }
 
     handleChangeDate() {
@@ -54,7 +115,7 @@ export class HomeContainer extends Component {
     }
 
     render() {
-        const { isAuthenticated, user, weeks, types } = this.props;
+        const { isAuthenticated, user } = this.props;
         if (!isAuthenticated) return null;
 
         const activeMonth = Utils.getMomentToday();
@@ -87,19 +148,19 @@ export class HomeContainer extends Component {
                         </fieldset>
                     </div>
                 </div>
+                {this.state
+                 && <Weeks
+                     weeks={this.state.weeks}
+                     activeMonth={activeMonth}
+                     types={this.state.types}
+                     user={user}
+                     onSaveDay={this.onSaveDay}
+                 />}
                 <Footer />
             </div>
         );
     }
 }
-
-/* <Weeks
-weeks={weeks}
-activeMonth={activeMonth}
-types={types}
-user={user}
-onSaveDay={this.onSaveDay}
-/> */
 
 //    <Footer />
 export const Home = withRouter(
