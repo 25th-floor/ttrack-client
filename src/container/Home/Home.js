@@ -110,8 +110,9 @@ export class HomeContainer extends Component {
         console.log('handleChangeDate');
     }
 
-    handelSaveDay() {
+    handelSaveDay(date, periods, removed) {
         console.log('handelSaveDay');
+        console.log(date, periods, removed);
     }
 
     render() {
@@ -154,7 +155,7 @@ export class HomeContainer extends Component {
                      activeMonth={activeMonth}
                      types={this.state.types}
                      user={user}
-                     onSaveDay={this.onSaveDay}
+                     onSaveDay={this.handelSaveDay}
                  />}
                 <Footer />
             </div>

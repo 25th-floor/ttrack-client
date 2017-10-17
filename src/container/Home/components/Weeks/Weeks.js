@@ -51,8 +51,6 @@ export class Weeks extends Component {
         return <dd className={className}>{str}</dd>;
     }
 
-    tracer = R.tap(console.log);
-
     renderWeekSum(week) {
         const workDuration = week.workDuration.format('hh:mm', { trim: false });
 
@@ -112,11 +110,10 @@ export class Weeks extends Component {
 
     render() {
         const weeks = this.props.weeks;
+        debugger;
         return (
             <div className={styles.weeks}>
-                {
-                    this.renderWeekItem(weeks['2017-39'])
-                }
+                { R.compose(R.map(this.renderWeekItem), R.values)(weeks) }
             </div>
         );
     }

@@ -24,15 +24,14 @@ export class PeriodComment extends Component {
         if (!comment || !comment.length) {
             if (isPeriodDuration) return false;
             comment = Utils.getDurationDescription(period.duration);
-            debugger;
         }
 
-        const icon = period.getIn(['type', 'pty_config', 'icon']);
-        const name = period.getIn(['type', 'pty_name']);
+        const icon = period.type.pty_config.icon;
+        const name = period.type.pty_name;
 
         const style = {
-            backgroundColor: period.getIn(['type', 'pty_config', 'bgcolor']),
-            color: period.getIn(['type', 'pty_config', 'color']),
+            backgroundColor: period.type.pty_config.bgcolor,
+            color: period.type.pty_config.color,
         };
 
         return (
