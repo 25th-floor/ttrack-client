@@ -1,3 +1,7 @@
-[ ] - refactor step schema 
-        - inputs
-        - values
+[ ] - Flowtype
+[ ] - unit tests
+[ ] - move utils function to own namespace
+[ ] - move constants to constant namespace
+[ ] - create base layout components
+    [ ] - Brand component
+    [ ] - 
