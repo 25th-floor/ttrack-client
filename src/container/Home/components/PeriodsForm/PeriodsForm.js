@@ -8,7 +8,7 @@ import R from 'ramda';
 import React, { Component } from 'react';
 import { Utils } from '@data';
 
-import { Period } from '../Period';
+import { PeriodsFormRow } from '../PeriodsFormRow';
 
 import styles from './PeriodsForm.module.css';
 
@@ -114,7 +114,7 @@ export class PeriodsForm extends Component {
         return (
             <div className={styles.form}>
                 <form onSubmit={this.handleSave} onKeyDown={this.handleKeyDown}>
-                    {periods.map((period, index) => (<Period
+                    {periods.map((period, index) => (<PeriodsFormRow
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
@@ -135,11 +135,15 @@ export class PeriodsForm extends Component {
                             className={`${styles.btn} btn btn-primary pull-right`}
                             disabled={disableSaveButton}
                             onClick={this.handleSave}
-                        >Speichern</button>
+                        >
+                        Speichern
+                        </button>
                         <button
                             className={`${styles.btn} btn btn-default pull-right`}
                             onClick={this.handleCancel}
-                        >Abbrechen</button>
+                        >
+                        Abbrechen
+                        </button>
 
                         <button
                             className={`${styles.btn} btn btn-success`}
