@@ -89,11 +89,13 @@ export class HomeContainer extends Component {
         );
         const periodTypes = await Resources.Timesheet.getTypes();
         const days = assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
+        const weeks = Utils.createWeeks(
+            days,
+            responseTimeSheet.carryTime,
+        );
+
         await this.setState({
-            weeks: Utils.createWeeks(
-                days,
-                responseTimeSheet.carryTime,
-            ),
+            weeks,
             types: periodTypes,
         });
     }

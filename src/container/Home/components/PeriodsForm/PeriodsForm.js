@@ -32,10 +32,11 @@ export class PeriodsForm extends Component {
         this.handleUpdatePeriod = this.handleUpdatePeriod.bind(this);
         // add at least one element if turning to edit mode
         let periods = props.periods;
-        if (periods.size === 0) {
-            periods = periods.push({ id: 1 });
+        if (periods.length === 0) {
+            periods = [
+                { id: 1 },
+            ];
         }
-
         this.state = {
             // todo id setzen
             periods,
@@ -48,19 +49,20 @@ export class PeriodsForm extends Component {
     handleAddPeriod() {
         const maxId = this.state.periods.reduce((max, fi) => Math.max(max, fi.id), 0);
         this.setState({
-            periods: this.state.periods.push({ id: maxId + 1 }),
+            periods: R.append({ id: maxId + 1 })(this.state.periods),
             removed: this.state.removed,
         });
     }
 
-    handleRemovePeriod(index) {
-        const toBeRemoved = this.state.periods.index;
+    handleRemovePeriod = (index) => {
+        const toBeRemoved = this.state.periods[index];
         const removed = this.state.removed;
         if (toBeRemoved.per_id) {
             removed.push(toBeRemoved.per_id);
         }
 
-        const periods = this.state.periods.delete(index);
+        const periods = R.remove(index, 1)(this.state.periods);
+
         this.setState({
             periods,
             removed,
@@ -100,7 +102,7 @@ export class PeriodsForm extends Component {
 
     isValid() {
         // no periods
-        if (this.state.periods.size === 0 && this.state.removed.length === 0) return false;
+        if (this.state.removed.length === 0) return false;
         // not valid
         if (!Utils.validatePeriods(this.state.periods)) return false;
         return true;
@@ -110,6 +112,7 @@ export class PeriodsForm extends Component {
         const periods = this.state.periods;
         const disableSaveButton = !this.isValid();
         const isOverlapping = Utils.isOverlapping(periods);
+        console.log(periods, R.length(periods));
 
         return (
             <div className={styles.form}>
@@ -120,8 +123,8 @@ export class PeriodsForm extends Component {
                         dayTargetTime={this.props.dayTargetTime}
                         key={(period.per_id || period.id)}
                         index={index}
-                        onRemove={R.curry(this.handleRemovePeriod, index)}
-                        onUpdate={R.curry(this.handleUpdatePeriod, index)}
+                        onRemove={() => this.handleRemovePeriod(index)}
+                        onUpdate={() => this.handleUpdatePeriod(index, period)}
                     />))}
 
                     { isOverlapping ? <div className="alert alert-warning">
