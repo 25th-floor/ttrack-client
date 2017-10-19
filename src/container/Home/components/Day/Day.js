@@ -23,14 +23,16 @@ export class Day extends Component {
         super(props, context);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleEditClick = this.handleEditClick.bind(this);
-        this.onSave = this.onSave.bind(this);
+
         this.state = { edit: false };
     }
 
-    onSave(date, periods, removed) {
-        this.props.onSaveDay(date, periods, removed);
-        this.setState({ edit: false });
-    }
+    onSave = R.curry(
+        (date, periods, removed) => {
+            this.props.onSaveDay(date, periods, removed);
+            this.setState({ edit: false });
+        },
+    );
 
     handleEditClick() {
         // don't var user get out with this click
@@ -104,7 +106,7 @@ export class Day extends Component {
             durationBlock = <div className="col-xs-2 col-sm-3 col-lg-3 tt-col-lg-3" />;
         }
 
-        // const onSaveDate = this.onSave.bind(this, date);
+        const onSave = this.onSave(date);
 
         return (
             <fieldset
@@ -135,7 +137,7 @@ export class Day extends Component {
                     date={date}
                     dayTargetTime={day.day_target_time}
                     onCancel={this.handleCancel}
-                    onSave={R.curry(this.onSave)(date)}
+                    onSave={onSave}
                 />
                     : <Period periods={day.periods} />}
 
