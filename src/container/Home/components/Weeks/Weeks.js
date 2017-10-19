@@ -110,7 +110,6 @@ export class Weeks extends Component {
 
     render() {
         const weeks = this.props.weeks;
-        debugger;
         return (
             <div className={styles.weeks}>
                 { R.compose(R.map(this.renderWeekItem), R.values)(weeks) }
