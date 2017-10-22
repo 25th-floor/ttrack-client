@@ -76,18 +76,21 @@ function assocPeriodsWithTypes(types, days) {
 export class HomeContainer extends Component {
     async componentDidMount() {
         const { user, match } = this.props;
+        this.setActiveMonth(this.props);
+        this.getWeeks = this.getWeeks.bind(this);
+        this.getWeeks(this.activeMonth);
+    }
+
+    setActiveMonth = ({ match }) => {
         this.activeMonth = match.params.date;
         if (!this.activeMonth) {
             this.activeMonth = Utils.getMomentToday();
         }
-
-        this.getWeeks = this.getWeeks.bind(this);
-
-        this.getWeeks(this.activeMonth);
     }
 
     async getWeeks(activeMonth) {
-        const boundaries = Utils.getFirstAndLastDayOfMonth(activeMonth);
+        const date = moment(activeMonth, 'YYYY-MM', true).startOf('month');
+        const boundaries = Utils.getFirstAndLastDayOfMonth(date);
         const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
             this.props.user,
             boundaries.firstDay.format('YYYY-MM-DD'),
@@ -111,11 +114,16 @@ export class HomeContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('RECEIVE NEW PROPS', this.props, nextProps);
+        // will set active month from router params or uses the current month
+        this.setActiveMonth(nextProps);
+        // fetch timesheet from selected month
+        this.getWeeks(this.activeMonth);
     }
 
-    handleChangeDate() {
-        console.log('handleChangeDate');
+    handleChangeDate = (date) => {
+        console.log('handleChangeDate', date.format('YYYY-MM'));
+        const fmtDate = date.format('YYYY-MM');
+        this.props.history.push(`/month/${fmtDate}`);
     }
 
     handelSaveDay = async (date, periods, removed) => {
