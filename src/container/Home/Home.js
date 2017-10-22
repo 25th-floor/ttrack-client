@@ -119,21 +119,20 @@ export class HomeContainer extends Component {
     }
 
     handelSaveDay = async (date, periods, removed) => {
-        console.log('handelSaveDay');
         const { user } = this.props;
         const res = await Resources.Timesheet.saveDay(
             user.usr_id,
             date,
             periods,
             removed);
-        console.log(res);
-        console.log(date, periods, removed);
+        // success reload props
+        if (res.length !== 0) this.getWeeks(this.activeMonth);
     }
 
     render() {
         const { isAuthenticated, user } = this.props;
         if (!isAuthenticated) return null;
-
+        console.log('RENDER');
         const activeMonth = Utils.getMomentToday();
 
         return (
