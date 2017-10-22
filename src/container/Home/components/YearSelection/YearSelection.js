@@ -1,6 +1,7 @@
 // @flow
 import moment from 'moment';
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import classSet from 'class-set';
 
 import { Utils } from '@data';
@@ -16,48 +17,25 @@ export type YearSelectionProps = {
 
 export class YearSelection extends Component {
     props: YearSelectionProps;
+    today = Utils.getMomentToday();
 
-    constructor(props, context) {
-        super(props, context);
-        this.handleToday = this.handleToday.bind(this);
-        this.renderYearItem = this.renderYearItem.bind(this);
-        this.selectYear = this.selectYear.bind(this);
-        const today = Utils.getMomentToday();
-
-        this.state = {
-            today,
-        };
-    }
-
-    handleToday() {
-        this.props.onChangeDate(this.state.today);
-    }
-
-    selectYear(year) {
-        const date = this.props.activeMonth.clone().year(year.format('YYYY'));
-        this.props.onChangeDate(date);
-    }
-
-    renderYearItem(year, index) {
+    renderYearItem = (year, index) => {
         const format = 'YYYY';
-
         const className = classSet('col-xs-1',
             year.isSame(this.props.activeMonth, 'year') ? styles.active : null,
-            year.isSame(this.state.today, 'year') ? styles.today : null,
-            year.isAfter(this.state.today, 'year') ? styles.future : null,
+            year.isSame(this.today, 'year') ? styles.today : null,
+            year.isAfter(this.today, 'year') ? styles.future : null,
         );
-
-        const yearNumber = year.format('YY');
-        const yearShort = year.format(format);
-
-        // TODO NO BIND !!!
-        const onSelectYear = this.selectYear.bind(this, year);
+        const fmtYear = this.props.activeMonth.clone().year(year.format('YYYY')).format('YYYY-MM');
         return (
             <li className={className} key={index}>
-                <a onClick={onSelectYear} role="button" tabIndex={0}>
-                    <span className={styles.number}>{yearNumber}</span>
-                    <span className={styles.short}>{yearShort}</span>
-                </a>
+                <NavLink
+                    to={`/month/${fmtYear}`}
+                    activeClassName={`${styles.active}`}
+                >
+                    <span className={styles.number}>{year.format('YY')}</span>
+                    <span className={styles.short}>{year.format('YYYY')}</span>
+                </NavLink>
             </li>
         );
     }
@@ -66,17 +44,16 @@ export class YearSelection extends Component {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
             return '';
         }
-
+        const fmtToday = this.props.activeMonth.startOf('month').format('YYYY-MM');
         return (
             <li className={`${styles.today} col-sm-1 ${styles['tt-button-today']}`}>
-                <a onClick={this.handleToday} role="button" tabIndex={0}> Today </a>
+                <NavLink to={`/month/${fmtToday}`} activeClassName="active" > Today </NavLink>
             </li>
         );
     }
 
     render() {
         const years = this.props.years;
-
         return (
             <div className={styles.yearSelection}>
                 <h2>Year</h2>

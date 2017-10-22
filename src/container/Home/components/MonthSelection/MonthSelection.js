@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import classSet from 'class-set';
 import styles from './MonthSelection.module.css';
 
@@ -13,18 +14,7 @@ export type MonthSelectionProps = {
 
 export class MonthSelection extends Component {
     props: MonthSelectionProps;
-    constructor(props, context) {
-        super(props, context);
-        this.renderMonthItem = this.renderMonthItem.bind(this);
-        this.selectMonth = this.selectMonth.bind(this);
-    }
-
-    selectMonth(month) {
-        const date = this.props.activeMonth.clone().month(month.format('MMMM'));
-        this.props.onChangeDate(date);
-    }
-
-    renderMonthItem(month, index) {
+    renderMonthItem = (month, index) => {
         const className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,
             month.isSame(this.today, 'month') ? styles.today : null,
@@ -34,16 +24,17 @@ export class MonthSelection extends Component {
         const monthNumber = month.format('M');
         const monthShort = month.format('MMM');
         const monthFull = month.format('MMMM');
-
-        const onSelectMonth = this.selectMonth.bind(this, month);
-
+        const fmtMonth = this.props.activeMonth.clone().month(month.format('MMMM')).format('YYYY-MM');
         return (
             <li className={className} key={index}>
-                <a onClick={onSelectMonth} role="button" tabIndex={0}>
+                <NavLink
+                    to={`/month/${fmtMonth}`}
+                    activeClassName="active"
+                >
                     <span className={styles.number}>{monthNumber}</span>
                     <span className={styles.short}>{monthShort}</span>
                     <span className={styles.full}>{monthFull}</span>
-                </a>
+                </NavLink>
             </li>
         );
     }

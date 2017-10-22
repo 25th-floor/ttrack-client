@@ -17,21 +17,12 @@ export class DatePicker extends Component {
     props: DatePickerProps;
 
     render() {
-        const { activeMonth, years, months, onChangeDate } = this.props;
+        const { activeMonth, years, months } = this.props;
 
         return (<div className={styles.dateSelection}>
             <div className={`row ${styles.touchVersion}`}>
-                <YearSelection
-                    activeMonth={activeMonth}
-                    years={years}
-                    onChangeDate={onChangeDate}
-                />
-
-                <MonthSelection
-                    activeMonth={activeMonth}
-                    months={months}
-                    onChangeDate={onChangeDate}
-                />
+                <YearSelection activeMonth={activeMonth} years={years} />
+                <MonthSelection activeMonth={activeMonth} months={months} />
             </div>
         </div>);
     }

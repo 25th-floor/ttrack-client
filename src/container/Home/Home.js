@@ -120,12 +120,6 @@ export class HomeContainer extends Component {
         this.getWeeks(this.activeMonth);
     }
 
-    handleChangeDate = (date) => {
-        console.log('handleChangeDate', date.format('YYYY-MM'));
-        const fmtDate = date.format('YYYY-MM');
-        this.props.history.push(`/month/${fmtDate}`);
-    }
-
     handelSaveDay = async (date, periods, removed) => {
         const { user } = this.props;
         const res = await Resources.Timesheet.saveDay(
@@ -141,8 +135,7 @@ export class HomeContainer extends Component {
         const { isAuthenticated, user } = this.props;
         if (!isAuthenticated) return null;
         console.log('RENDER');
-        const activeMonth = Utils.getMomentToday();
-
+        const activeMonth = moment(this.activeMonth, 'YYYY-MM', true).startOf('month');
         return (
             <div className={styles['site-container']}>
                 <div className="container-fluid">
@@ -154,7 +147,6 @@ export class HomeContainer extends Component {
                                 activeMonth={activeMonth}
                                 years={Utils.getYearsForUser(user, Utils.getMomentToday())}
                                 months={Utils.getMonthsForUser(user, Utils.getMomentToday())}
-                                onChangeDate={this.handleChangeDate}
                             />
                             <div className="clearfix" />
                         </div>
