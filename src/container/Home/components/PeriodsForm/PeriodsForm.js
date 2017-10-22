@@ -69,15 +69,20 @@ export class PeriodsForm extends Component {
         });
     }
 
-    handleUpdatePeriod(index, period) {
-        this.setState({
-            periods: {
-                index,
-                period,
-            },
-            removed: this.state.removed,
-        });
-    }
+    handleUpdatePeriod = R.curry(
+        (index, period) => {
+            const newPeriods = [
+                this.state.periods,
+            ];
+
+            newPeriods[index] = period;
+
+            this.setState({
+                periods: newPeriods,
+                removed: this.state.removed,
+            });
+        },
+    )
 
     handleSave(e) {
         e.preventDefault();
@@ -102,8 +107,11 @@ export class PeriodsForm extends Component {
 
     isValid() {
         // no periods
-        if (this.state.removed.length === 0) return false;
-        // not valid
+        const noPeriods = this.state.periods.length === 0;
+        const noRemoved = this.state.removed.length === 0;
+
+        if (noPeriods && noRemoved) return false;
+
         if (!Utils.validatePeriods(this.state.periods)) return false;
         return true;
     }
@@ -112,8 +120,6 @@ export class PeriodsForm extends Component {
         const periods = this.state.periods;
         const disableSaveButton = !this.isValid();
         const isOverlapping = Utils.isOverlapping(periods);
-        console.log(periods, R.length(periods));
-
         return (
             <div className={styles.form}>
                 <form onSubmit={this.handleSave} onKeyDown={this.handleKeyDown}>
@@ -124,7 +130,7 @@ export class PeriodsForm extends Component {
                         key={(period.per_id || period.id)}
                         index={index}
                         onRemove={() => this.handleRemovePeriod(index)}
-                        onUpdate={() => this.handleUpdatePeriod(index, period)}
+                        onUpdate={R.curry(this.handleUpdatePeriod)(index)}
                     />))}
 
                     { isOverlapping ? <div className="alert alert-warning">

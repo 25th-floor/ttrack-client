@@ -35,7 +35,7 @@ export class PeriodsFormRow extends Component {
         if (!period.duration) {
             period = {
                 ...period,
-                duration: 'fullday',
+                duration: 'period',
             };
             // add duration per_duration object if needed
             period = {
@@ -120,7 +120,7 @@ export class PeriodsFormRow extends Component {
 
         this.updateState({
             ...this.state.period,
-            value,
+            ...value,
         });
     }
 
@@ -133,11 +133,11 @@ export class PeriodsFormRow extends Component {
 
     updateState(period) {
         // add duration per_duration object if needed
+        const per_duration = this.addDurationTime(period);
         const updatedPeriod = {
             ...period,
-            ...this.addDurationTime(period),
+            ...per_duration,
         };
-
         this.props.onUpdate(updatedPeriod);
         this.setState({ period: updatedPeriod });
     }
@@ -191,7 +191,7 @@ export class PeriodsFormRow extends Component {
         let periodElements = [];
         const elementCss = 'controls col-xs-6 col-sm-2 col-lg-1 tt-col-lg-1';
         const comment = { name: `${elementName}[per_comment]`, className: 'controls col-xs-12 col-lg-8' };
-        debugger;
+
         if (period.duration === Utils.PERIOD) {
             periodElements = [{
                 id: 'per_start',
@@ -243,8 +243,6 @@ export class PeriodsFormRow extends Component {
 
         const DurationRadio = this.renderDurationRadio(elementName, period.duration);
         const DurationRadios = R.map(DurationRadio)(durations);
-
-        console.log(periodElements);
 
         return (
             <div className={styles.row} key={period.per_id}>

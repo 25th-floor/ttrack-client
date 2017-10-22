@@ -76,11 +76,17 @@ function assocPeriodsWithTypes(types, days) {
 export class HomeContainer extends Component {
     async componentDidMount() {
         const { user, match } = this.props;
-        let activeMonth = match.params.date;
-        if (!activeMonth) {
-            activeMonth = Utils.getMomentToday();
+        this.activeMonth = match.params.date;
+        if (!this.activeMonth) {
+            this.activeMonth = Utils.getMomentToday();
         }
 
+        this.getWeeks = this.getWeeks.bind(this);
+
+        this.getWeeks(this.activeMonth);
+    }
+
+    async getWeeks(activeMonth) {
         const boundaries = Utils.getFirstAndLastDayOfMonth(activeMonth);
         const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
             this.props.user,
@@ -112,8 +118,15 @@ export class HomeContainer extends Component {
         console.log('handleChangeDate');
     }
 
-    handelSaveDay(date, periods, removed) {
+    handelSaveDay = async (date, periods, removed) => {
         console.log('handelSaveDay');
+        const { user } = this.props;
+        const res = await Resources.Timesheet.saveDay(
+            user.usr_id,
+            date,
+            periods,
+            removed);
+        console.log(res);
         console.log(date, periods, removed);
     }
 
