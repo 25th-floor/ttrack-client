@@ -49,7 +49,7 @@ export class TimeInput extends Component {
         );
 
         return (
-            <div className={css}>
+            <div className={css} key={this.props.id}>
                 <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input
                     type="text"

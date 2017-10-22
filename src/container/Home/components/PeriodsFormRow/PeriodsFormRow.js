@@ -178,6 +178,10 @@ export class PeriodsFormRow extends Component {
         );
     }
 
+    ref = (selectType) => {
+        this.selectType = selectType;
+    };
+
     render() {
         const period = this.state.period;
         const isValid = Utils.validatePeriod(period);
@@ -237,10 +241,6 @@ export class PeriodsFormRow extends Component {
             }];
         }
 
-        const ref = (selectType) => {
-            this.selectType = selectType;
-        };
-
         const DurationRadio = this.renderDurationRadio(elementName, period.duration);
         const DurationRadios = R.map(DurationRadio)(durations);
 
@@ -260,7 +260,7 @@ export class PeriodsFormRow extends Component {
                             name={`${elementName}[pty_id]`}
                             value={period.type.pty_id}
                             onChange={this.handleTypeChange}
-                            ref={ref}
+                            ref={this.ref}
                         >
                             {this.props.types.map(this.renderSelectOption)}
                         </select>
@@ -269,7 +269,7 @@ export class PeriodsFormRow extends Component {
                 </div>
 
                 <div className="row">
-                    {periodElements.map(p => (
+                    {periodElements.map((p, i) => (
                         <TimeInput
                             id={p.id}
                             label={p.label}
@@ -278,7 +278,7 @@ export class PeriodsFormRow extends Component {
                             placeholder={p.placeholder}
                             time={p.value}
                             required={p.required}
-                            key={p.id}
+                            key={`${p.id}-${i}-timeinput`}
                             round={p.round}
                             allowNegativeValues={p.negative || false}
                             onChange={this.handleTimeChange}

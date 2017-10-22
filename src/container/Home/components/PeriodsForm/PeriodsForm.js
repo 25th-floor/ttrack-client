@@ -46,8 +46,11 @@ export class PeriodsForm extends Component {
         };
     }
 
+    // TODO pseudo generation of id ???
     handleAddPeriod() {
-        const maxId = this.state.periods.reduce((max, fi) => Math.max(max, fi.id), 0);
+        const maxId = this.state.periods.reduce((max, fi) => Math.max(max, fi.per_id), 0);
+        const newPeriods = R.append({ id: maxId + 1 })(this.state.periods);
+
         this.setState({
             periods: R.append({ id: maxId + 1 })(this.state.periods),
             removed: this.state.removed,
@@ -71,12 +74,16 @@ export class PeriodsForm extends Component {
 
     handleUpdatePeriod = R.curry(
         (index, period) => {
+            console.log(this.state.periods);
             const newPeriods = [
-                this.state.periods,
+                ...this.state.periods,
             ];
 
-            newPeriods[index] = period;
-
+            newPeriods[index] = {
+                ...period,
+            };
+            debugger;
+            console.log(newPeriods);
             this.setState({
                 periods: newPeriods,
                 removed: this.state.removed,
@@ -127,7 +134,7 @@ export class PeriodsForm extends Component {
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
-                        key={(period.per_id || period.id)}
+                        key={`${(period.per_id || period.id)}-${index}`}
                         index={index}
                         onRemove={() => this.handleRemovePeriod(index)}
                         onUpdate={R.curry(this.handleUpdatePeriod)(index)}
