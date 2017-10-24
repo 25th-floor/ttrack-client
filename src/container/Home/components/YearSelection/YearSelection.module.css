@@ -99,6 +99,10 @@
     }
 }
 
+.yearSelection a:hover {
+    text-decoration : none;
+}
+
 .yearSelection ul li a {
     display     : block;
     padding     : 11px 10px;

@@ -3,190 +3,21 @@
 
 /* navigation */
 
-@media (min-width: 768px) {
-    .dateSelection {
-        float: right;
-    }
-}
-
 .dateSelection .touchVersion {
     display: block;
     margin-top: -8px;
 }
 
 @media (min-width: 768px) {
+    .dateSelection {
+        float: right;
+    }
+
     .dateSelection .touchVersion {
         margin-top: 0;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-    }
-}
-
-.dateSelection .touchVersion .yearSelection,
-.dateSelection .touchVersion .monthSelection {
-    position: relative;
-}
-
-@media (min-width: 768px) {
-    .dateSelection .touchVersion .yearSelection,
-    .dateSelection .touchVersion .monthSelection {
-        display: table-row;
-    }
-}
-
-.dateSelection .touchVersion .yearSelection ul li.today a,
-.dateSelection .touchVersion .monthSelection ul li.today a {
-    background: rgba(47, 160, 132, 0.4);
-}
-
-.dateSelection .touchVersion .yearSelection ul li.tt-button-today a:hover,
-.dateSelection .touchVersion .monthSelection ul li.tt-button-today a:hover {
-    background: rgba(47, 160, 132, 0.6);
-}
-
-.dateSelection .touchVersion .yearSelection {
-    background: rgba(160, 169, 174, 0.4);
-}
-
-.dateSelection .touchVersion .yearSelection ul li a:hover {
-    background: rgba(220, 48, 35, 0.6);
-}
-
-.dateSelection .touchVersion .yearSelection ul li.active a {
-    background: #DC3023;
-}
-
-.dateSelection .touchVersion .yearSelection ul li.active a:hover {
-    background: #DC3023;
-}
-
-@media (max-width: 767px) {
-    .dateSelection .touchVersion .yearSelection li {
-        width: auto;
-    }
-}
-
-.dateSelection .touchVersion .monthSelection {
-    background: rgba(141, 149, 153, 0.4);
-}
-
-.dateSelection .touchVersion .monthSelection ul li a:hover {
-    background: rgba(220, 48, 35, 0.6);
-}
-
-.dateSelection .touchVersion .monthSelection ul li.active a {
-    background: #DC3023;
-}
-
-.dateSelection .touchVersion .monthSelection ul li.active a:hover {
-    background: #DC3023;
-}
-
-.dateSelection .touchVersion h2 {
-    color: rgba(200, 200, 200, 0.7);
-    margin: 0;
-    padding: 10px 10px;
-    font-weight: 500;
-    font-size: 24px;
-    text-transform: uppercase;
-    vertical-align: top;
-    display: block;
-    position: absolute;
-    top: -4px;
-    right: 0;
-    opacity: 0.5;
-}
-
-@media (min-width: 768px) {
-    .dateSelection .touchVersion h2 {
-        display: table-cell;
-        position: inherit;
-        opacity: 1;
-    }
-}
-
-@media (min-width: 1200px) {
-    .dateSelection .touchVersion h2 {
-        font-size: 34px;
-    }
-}
-
-.dateSelection .touchVersion ul {
-    padding: 0;
-    margin-bottom: 0;
-    display: table-cell;
-}
-
-@media (min-width: 768px) {
-    .dateSelection .touchVersion ul {
-        width: 100%;
-    }
-}
-
-.dateSelection .touchVersion ul li {
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-    text-transform: uppercase;
-}
-
-.dateSelection .touchVersion ul li.tt-button-today {
-    float: right;
-    min-width: 90px;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-    .dateSelection .touchVersion ul li.tt-button-today {
-        min-width: 109px;
-    }
-}
-
-.dateSelection .touchVersion ul li a {
-    display: block;
-    padding: 11px 10px;
-    font-size: 10px;
-    font-weight: 100;
-    color: #c8c8c8;
-    cursor: pointer;
-}
-
-@media (min-width: 768px) {
-    .dateSelection .touchVersion ul li a {
-        font-size: 18px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .dateSelection .touchVersion ul li a {
-        font-size: 22px;
-        padding: 13px 10px;
-    }
-}
-
-.dateSelection .touchVersion ul li.future a {
-    color: #646464;
-}
-
-.dateSelection .touchVersion ul li a:hover {
-    color: white;
-}
-
-.dateSelection .touchVersion ul li.active a {
-    color: white;
-}
-
-.dateSelection .touchVersion ul li .short,
-.dateSelection .touchVersion ul li .full {
-    display: none;
-}
-
-@media (min-width: 768px) {
-    .dateSelection .touchVersion ul li .number {
-        display: none;
-    }
-    .dateSelection .touchVersion ul li .short {
-        display: block;
     }
 }

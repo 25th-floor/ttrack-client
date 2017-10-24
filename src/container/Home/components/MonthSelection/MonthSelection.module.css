@@ -61,6 +61,10 @@
     }
 }
 
+.monthSelection a:hover {
+    text-decoration : none;
+}
+
 .monthSelection ul {
     padding       : 0;
     margin-bottom : 0;
