@@ -31,6 +31,7 @@
     "classnames": "^2.2.5",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+    "enzyme": "^3.1.0",
     "eslint": "4.4.1",
     "eslint-config-react-app": "^2.0.1",
     "eslint-loader": "1.9.0",
@@ -93,7 +94,8 @@
       "src/**/*.{js,jsx}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/config/localStorageMock.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
@@ -107,7 +109,7 @@
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+        "node_modules/(?!@data|@components)"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
@@ -118,7 +120,8 @@
       "json",
       "web.jsx",
       "jsx",
-      "node"
+      "node",
+      "css"
     ]
   },
   "babel": {
