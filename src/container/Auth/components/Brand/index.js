@@ -1,7 +1,3 @@
 // @flow
 
-import Brand from './Brand';
-
-export {
-    Brand,
-};
+export { Brand } from './Brand';
