@@ -44,7 +44,7 @@ export class YearSelection extends Component {
         if (this.props.activeMonth.isSame(moment(), 'year')) {
             return '';
         }
-        const fmtToday = this.props.activeMonth.startOf('month').format('YYYY-MM');
+        const fmtToday = moment().startOf('month').format('YYYY-MM');
         return (
             <li className={`${styles.today} col-sm-1 ${styles['tt-button-today']}`}>
                 <NavLink to={`/month/${fmtToday}`} activeClassName="active" > Today </NavLink>
