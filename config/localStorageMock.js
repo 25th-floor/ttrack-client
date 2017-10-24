@@ -1,6 +1,5 @@
 class LocalStorageMock {
     constructor() {
-        console.log('Mock on');
         this.store = {};
     }
 
