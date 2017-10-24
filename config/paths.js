@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require,global-require */
+
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -9,14 +11,14 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
-function ensureSlash(path, needsSlash) {
-    const hasSlash = path.endsWith('/');
+function ensureSlash(workingPath, needsSlash) {
+    const hasSlash = workingPath.endsWith('/');
     if (hasSlash && !needsSlash) {
-        return path.substr(path, path.length - 1);
+        return workingPath.substr(workingPath, workingPath.length - 1);
     } else if (!hasSlash && needsSlash) {
-        return `${path}/`;
+        return `${workingPath}/`;
     }
-    return path;
+    return workingPath;
 }
 
 const getPublicUrl = appPackageJson =>

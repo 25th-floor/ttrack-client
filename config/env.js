@@ -1,4 +1,4 @@
-
+/* eslint-disable global-require */
 
 const fs = require('fs');
 const path = require('path');
@@ -79,6 +79,7 @@ function getClientEnvironment(publicUrl) {
     // Stringify all values so we can feed into Webpack DefinePlugin
     const stringified = {
         'process.env': Object.keys(raw).reduce((env, key) => {
+            // eslint-disable-next-line no-param-reassign
             env[key] = JSON.stringify(raw[key]);
             return env;
         }, {}),
