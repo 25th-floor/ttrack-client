@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import React, { Component } from 'react';
+import { Avatar } from '@components';
 
 import styles from './UserSelection.module.css';
 
@@ -35,7 +36,7 @@ export class UserSelection extends Component {
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={() => this.handleBla(user)} role="button" tabIndex="0">
                     <div className={styles.imageContainer}>
-                        <img src={`/images/${user.usr_id}.jpg`} alt="" />
+                        <Avatar user={user} />
                     </div>
                     <span>
                         {usr_firstname}
