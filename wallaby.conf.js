@@ -18,20 +18,20 @@ module.exports = function (wallaby) {
         compilers: {
             '**/*.js': wallaby.compilers.babel({
                 babel: require('babel-core'),
-                //presets: ['react-app'],
+                // presets: ['react-app'],
             }),
-        }, 
+        },
 
-        /*setup: function (w) {
+        /* setup: function (w) {
             w.testFramework.configure({
                setupTestFrameworkScriptFile: '<rootDir>/setup-jasmine-env.js'
             });
         }, */
 
         delays: {
-            run: 1000
+            run: 1000,
         },
-        
+
         testFramework: 'jest',
     };
 };
