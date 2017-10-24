@@ -7,8 +7,7 @@ import { TimeInput } from '../TimeInput';
 
 import styles from './PeriodsFormRow.module.css';
 
-export type PeriodsFormRowProps = {
-};
+export type PeriodsFormRowProps = {};
 
 function findType(types, value) {
     return types.find(type => type.pty_id === value);
@@ -265,7 +264,7 @@ export class PeriodsFormRow extends Component {
                             {this.props.types.map(this.renderSelectOption)}
                         </select>
                     </label>
-                    { DurationRadios }
+                    {DurationRadios}
                 </div>
 
                 <div className="row">
