@@ -9,4 +9,5 @@ then
 	/bin/run-parts --verbose --regex '\.sh$' "$DIR"
 fi
 
+echo "Starting nginx"
 exec "$@"

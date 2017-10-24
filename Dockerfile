@@ -2,7 +2,7 @@ FROM nginx:mainline
 
 RUN mkdir -p /var/www
 
-COPY public/ /var/www
+COPY build/ /var/www
 COPY docker/nginx/conf.d /etc/nginx/conf.d
 
 # Entrypoint related
