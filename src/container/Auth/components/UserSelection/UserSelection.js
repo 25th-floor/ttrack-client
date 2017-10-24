@@ -9,13 +9,11 @@ export type UserSelectionProps = {
     onSelect: ()=> {},
 };
 
-const SortByLastName = R.sortBy(R.prop('usr_lastname'));
-
+const SortByLastName = R.sortBy(R.compose(R.toLower, R.prop('usr_lastname')));
 
 /**
  * UserSelection
  */
-
 export class UserSelection extends Component {
     props: UserSelectionProps;
 
@@ -37,7 +35,7 @@ export class UserSelection extends Component {
             <li key={index} className="col-xs-6 col-sm-3">
                 <a onClick={() => this.handleBla(user)} role="button" tabIndex="0">
                     <div className={styles.imageContainer}>
-                        <img src={'/16.jpg'} alt="" />
+                        <img src={`/images/${user.usr_id}.jpg`} alt="" />
                     </div>
                     <span>
                         {usr_firstname}
