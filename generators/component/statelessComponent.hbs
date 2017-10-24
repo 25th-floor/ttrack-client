@@ -1,11 +1,14 @@
 import React from 'react';
-import './{{ properCase name }}.css';
+import styles from './{{ properCase name }}.module.css';
+
+export type {{ properCase name }}Props = {
+};
 
 /**
  * {{ properCase name }}
  */
-const {{ properCase name }} = (props: {{ properCase name }}Props) => {
-    return (<h1> {{ properCase name  }}</h1>);
-};
+export const {{ properCase name }} = (props: {{ properCase name }}Props) => (
+    <h1> {{ properCase name  }}</h1>
+);
 
 export default {{ properCase name }};

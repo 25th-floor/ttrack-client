@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment';
 import classSet from 'class-set';
 import styles from './MonthSelection.module.css';
 
@@ -14,6 +15,8 @@ export type MonthSelectionProps = {
 
 export class MonthSelection extends Component {
     props: MonthSelectionProps;
+    today = moment().startOf('month');
+
     renderMonthItem = (month, index) => {
         const className = classSet('col-xs-1',
             month.isSame(this.props.activeMonth, 'month') ? styles.active : null,

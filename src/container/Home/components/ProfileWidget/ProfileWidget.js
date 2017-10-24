@@ -1,5 +1,7 @@
 // @flow
 import React, { Component } from 'react';
+import { Avatar } from '@components';
+
 import styles from './ProfileWidget.module.css';
 
 export type ProfileWidgetProps = {
@@ -17,7 +19,7 @@ export class ProfileWidget extends Component {
         return (
             <div id={styles.profileWidget}>
                 <div className={styles.image}>
-                    <img src={'/16.jpg'} alt="" />
+                    <Avatar user={user} />
                 </div>
                 <div className={styles.name}>
                     <span className="firstname">{user.usr_firstname} </span>

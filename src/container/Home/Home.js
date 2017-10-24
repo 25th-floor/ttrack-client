@@ -146,7 +146,7 @@ export class HomeContainer extends Component {
                             <DatePicker
                                 activeMonth={activeMonth}
                                 years={Utils.getYearsForUser(user, Utils.getMomentToday())}
-                                months={Utils.getMonthsForUser(user, Utils.getMomentToday())}
+                                months={Utils.getMonthsForUser(user, activeMonth)}
                             />
                             <div className="clearfix" />
                         </div>

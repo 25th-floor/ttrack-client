@@ -5,7 +5,8 @@
   "author": "25th floor",
   "license": "MIT",
   "engines": {
-    "yarn": ">= 0.27.5"
+    "yarn": ">= 0.27.5",
+    "node": ">= 8.5.0"
   },
   "quokka": {
     "babel": {
