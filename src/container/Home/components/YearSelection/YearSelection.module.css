@@ -1,98 +1,6 @@
 /* YearSelection */
-.yearSelection {
-    background : rgba(160, 169, 174, 0.4);
-    position   : relative;
-}
-
-@media (min-width : 768px) {
-    .yearSelection {
-        display : table-row;
-    }
-}
-
-.yearSelection h2 {
-    color          : rgba(200, 200, 200, 0.7);
-    margin         : 0;
-    padding        : 10px 10px;
-    font-weight    : 500;
-    font-size      : 24px;
-    text-transform : uppercase;
-    vertical-align : top;
-    display        : block;
-    position       : absolute;
-    top            : -4px;
-    right          : 0;
-    opacity        : 0.5;
-}
-
-@media (min-width : 768px) {
-    .yearSelection h2 {
-        display  : table-cell;
-        position : inherit;
-        opacity  : 1;
-    }
-}
-
-@media (min-width : 1200px) {
-    .yearSelection h2 {
-        font-size : 34px;
-    }
-}
-
-.yearSelection ul {
-    padding       : 0;
-    margin-bottom : 0;
-    display       : table-cell;
-}
-
-@media (min-width : 768px) {
-    .yearSelection ul {
-        width : 100%;
-    }
-}
 
 /* Year */
-.year {
-    list-style-type : none;
-    text-align      : center;
-    padding         : 0;
-    text-transform  : uppercase;
-}
-
-@media (max-width : 767px) {
-    .year {
-        width : auto;
-    }
-}
-
-.year a {
-    display         : block;
-    padding         : 11px 10px;
-    font-size       : 10px;
-    font-weight     : 100;
-    color           : #c8c8c8;
-    cursor          : pointer;
-    text-decoration : none;
-}
-
-@media (min-width : 768px) {
-    .year a {
-        font-size : 18px;
-    }
-}
-
-@media (min-width : 1200px) {
-    .year a {
-        font-size : 22px;
-        padding   : 13px 10px;
-    }
-}
-
-.year a:hover {
-    background : rgba(220, 48, 35, 0.6);
-    color      : white;
-}
-
 .today a {
     background : rgba(47, 160, 132, 0.4);
 }
@@ -101,77 +9,33 @@
     color : #646464;
 }
 
-.active a {
-    background : #DC3023;
-    color      : white;
-}
-
-.active a:hover {
-    background : #DC3023;
-}
-
-.yearSelection ul li .short,
-.yearSelection ul li .full {
+.year .short,
+.year .full {
     display : none;
 }
 
 @media (min-width : 768px) {
-    .yearSelection ul li .number {
+    .year .number {
         display : none;
     }
 
-    .yearSelection ul li .short {
+    .year .short {
         display : block;
     }
 }
 
 /* Today Button */
-.todayButton {
-    list-style-type : none;
-    text-align      : center;
-    padding         : 0;
-    text-transform  : uppercase;
-    float           : right;
-    min-width       : 90px;
-}
-
-@media (min-width : 768px) and (max-width : 991px) {
-    .todayButton {
-        min-width : 109px;
-    }
-}
-
-@media (max-width : 767px) {
-    .todayButton {
-        width : auto;
-    }
+li.todayButton {
+    float     : right;
+    min-width : 90px;
 }
 
 .todayButton a {
-    background      : rgba(47, 160, 132, 0.4);
-    display         : block;
-    padding         : 11px 10px;
-    font-size       : 10px;
-    font-weight     : 100;
-    color           : #c8c8c8;
-    cursor          : pointer;
-    text-decoration : none;
+    background : rgba(47, 160, 132, 0.4);
+    color      : #c8c8c8;
 }
 
-@media (min-width : 768px) {
-    .todayButton a {
-        font-size : 18px;
-    }
-}
-
-@media (min-width : 1200px) {
-    .todayButton a {
-        font-size : 22px;
-        padding   : 13px 10px;
-    }
-}
-
-.todayButton a:hover {
+.todayButton.button a:hover {
     background : rgba(47, 160, 132, 0.6);
     color      : white;
 }

@@ -1,11 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import classSet from 'class-set';
 
 import type Moment from 'moment';
+
+import { DatePickerContainer } from '../DatePickerContainer';
+import { DatePickerButton } from '../DatePickerButton';
 
 import styles from './MonthSelection.module.css';
 
@@ -16,11 +18,10 @@ type MonthProps = {
 };
 
 const Month = ({ month, today, activeMonth }: MonthProps) => {
+    const isActive = month.isSame(activeMonth, 'month');
     const className = classSet(
         'col-xs-1',
-        styles.month,
-        month.isSame(activeMonth, 'month') ? styles.active : null,
-        month.isSame(today, 'month') ? styles.today : null,
+        month.isSame(today, 'month') && !isActive ? styles.today : null,
         month.isAfter(today, 'month') ? styles.future : null,
     );
 
@@ -30,16 +31,11 @@ const Month = ({ month, today, activeMonth }: MonthProps) => {
     const fmtMonth = activeMonth.clone().month(month.format('MMMM')).format('YYYY-MM');
 
     return (
-        <li className={className} key={fmtMonth}>
-            <NavLink
-                to={`/month/${fmtMonth}`}
-                activeClassName="active"
-            >
-                <span className={styles.number}>{monthNumber}</span>
-                <span className={styles.short}>{monthShort}</span>
-                <span className={styles.full}>{monthFull}</span>
-            </NavLink>
-        </li>
+        <DatePickerButton className={className} key={fmtMonth} link={`/month/${fmtMonth}`}>
+            <span className={styles.number}>{monthNumber}</span>
+            <span className={styles.short}>{monthShort}</span>
+            <span className={styles.full}>{monthFull}</span>
+        </DatePickerButton>
     );
 };
 
@@ -59,12 +55,10 @@ export class MonthSelection extends Component {
         const { months, activeMonth } = this.props;
 
         return (
-            <div className={styles.monthSelection}>
-                <h2>Month</h2>
-                <ul className="col-xs-10">
-                    {months.map(m => (<Month month={m} activeMonth={activeMonth} today={this.today} />))}
-                </ul>
-            </div>
+            <DatePickerContainer title={'Month'}>
+                {months.map(m => (
+                    <Month month={m} activeMonth={activeMonth} today={this.today} key={m.format('M')} />))}
+            </DatePickerContainer>
         );
     }
 }
