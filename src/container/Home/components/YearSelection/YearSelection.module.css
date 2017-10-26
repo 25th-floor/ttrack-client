@@ -1,42 +1,12 @@
-/* global timetrack variables */
-/* navigation */
+/* YearSelection */
 .yearSelection {
-    position : relative;
+    background : rgba(160, 169, 174, 0.4);
+    position   : relative;
 }
 
 @media (min-width : 768px) {
     .yearSelection {
         display : table-row;
-    }
-}
-
-.yearSelection ul li.today a {
-    background : rgba(47, 160, 132, 0.4);
-}
-
-.yearSelection ul li.tt-button-today a:hover {
-    background : rgba(47, 160, 132, 0.6);
-}
-
-.yearSelection {
-    background : rgba(160, 169, 174, 0.4);
-}
-
-.yearSelection ul li a:hover {
-    background : rgba(220, 48, 35, 0.6);
-}
-
-.yearSelection ul li.active a {
-    background : #DC3023;
-}
-
-.yearSelection ul li.active a:hover {
-    background : #DC3023;
-}
-
-@media (max-width : 767px) {
-    .yearSelection li {
-        width : auto;
     }
 }
 
@@ -81,60 +51,63 @@
     }
 }
 
-.yearSelection ul li {
+/* Year */
+.year {
     list-style-type : none;
     text-align      : center;
     padding         : 0;
     text-transform  : uppercase;
 }
 
-.yearSelection ul li.tt-button-today {
-    float     : right;
-    min-width : 90px;
-}
-
-@media (min-width : 768px) and (max-width : 991px) {
-    .yearSelection ul li.tt-button-today {
-        min-width : 109px;
+@media (max-width : 767px) {
+    .year {
+        width : auto;
     }
 }
 
-.yearSelection a:hover {
+.year a {
+    display         : block;
+    padding         : 11px 10px;
+    font-size       : 10px;
+    font-weight     : 100;
+    color           : #c8c8c8;
+    cursor          : pointer;
     text-decoration : none;
 }
 
-.yearSelection ul li a {
-    display     : block;
-    padding     : 11px 10px;
-    font-size   : 10px;
-    font-weight : 100;
-    color       : #c8c8c8;
-    cursor      : pointer;
-}
-
 @media (min-width : 768px) {
-    .yearSelection ul li a {
+    .year a {
         font-size : 18px;
     }
 }
 
 @media (min-width : 1200px) {
-    .yearSelection ul li a {
+    .year a {
         font-size : 22px;
         padding   : 13px 10px;
     }
 }
 
-.yearSelection ul li.future a {
+.year a:hover {
+    background : rgba(220, 48, 35, 0.6);
+    color      : white;
+}
+
+.today a {
+    background : rgba(47, 160, 132, 0.4);
+}
+
+.future a {
     color : #646464;
 }
 
-.yearSelection ul li a:hover {
-    color : white;
+.active a {
+    background : #DC3023;
+    color      : white;
 }
 
-.yearSelection ul li.active a {
-    color : white;
+.active a:hover {
+    background : #DC3023;
 }
 
 .yearSelection ul li .short,
@@ -150,4 +123,55 @@
     .yearSelection ul li .short {
         display : block;
     }
+}
+
+/* Today Button */
+.todayButton {
+    list-style-type : none;
+    text-align      : center;
+    padding         : 0;
+    text-transform  : uppercase;
+    float           : right;
+    min-width       : 90px;
+}
+
+@media (min-width : 768px) and (max-width : 991px) {
+    .todayButton {
+        min-width : 109px;
+    }
+}
+
+@media (max-width : 767px) {
+    .todayButton {
+        width : auto;
+    }
+}
+
+.todayButton a {
+    background      : rgba(47, 160, 132, 0.4);
+    display         : block;
+    padding         : 11px 10px;
+    font-size       : 10px;
+    font-weight     : 100;
+    color           : #c8c8c8;
+    cursor          : pointer;
+    text-decoration : none;
+}
+
+@media (min-width : 768px) {
+    .todayButton a {
+        font-size : 18px;
+    }
+}
+
+@media (min-width : 1200px) {
+    .todayButton a {
+        font-size : 22px;
+        padding   : 13px 10px;
+    }
+}
+
+.todayButton a:hover {
+    background : rgba(47, 160, 132, 0.6);
+    color      : white;
 }
