@@ -1,0 +1,52 @@
+.container {
+    background : rgba(160, 169, 174, 0.4);
+    position   : relative;
+}
+
+@media (min-width : 768px) {
+    .container {
+        display : table-row;
+    }
+}
+
+.container h2 {
+    color          : rgba(200, 200, 200, 0.7);
+    margin         : 0;
+    padding        : 10px 10px;
+    font-weight    : 500;
+    font-size      : 24px;
+    text-transform : uppercase;
+    vertical-align : top;
+    display        : block;
+    position       : absolute;
+    top            : -4px;
+    right          : 0;
+    opacity        : 0.5;
+}
+
+@media (min-width : 768px) {
+    .container h2 {
+        display  : table-cell;
+        position : inherit;
+        opacity  : 1;
+    }
+}
+
+@media (min-width : 1200px) {
+    .container h2 {
+        font-size : 34px;
+    }
+}
+
+.container ul {
+    padding       : 0;
+    margin-bottom : 0;
+    display       : table-cell;
+}
+
+@media (min-width : 768px) {
+    .container ul {
+        width : 100%;
+    }
+}
+

@@ -1,68 +1,62 @@
 // @flow
 import moment from 'moment';
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import classSet from 'class-set';
+
+import type Moment from 'moment';
 
 import { Utils } from '@data';
 
+import { DatePickerContainer } from '../DatePickerContainer';
+import { DatePickerButton } from '../DatePickerButton';
 import styles from './YearSelection.module.css';
 
+type YearProps = {
+    activeMonth: Moment,
+    year: Moment,
+    today: Moment,
+};
+const Year = ({ year, activeMonth, today }: YearProps) => {
+    const isActive = year.isSame(activeMonth, 'year');
+    const className = classSet(
+        styles.year,
+        year.isSame(today, 'year') && !isActive ? styles.today : null,
+        year.isAfter(today, 'year') ? styles.future : null,
+    );
+    const fmtYear = activeMonth.clone().year(year.format('YYYY')).format('YYYY-MM');
+    return (
+        <DatePickerButton className={className} key={fmtYear} link={`/month/${fmtYear}`}>
+            <span className={styles.number}>{year.format('YY')}</span>
+            <span className={styles.short}>{year.format('YYYY')}</span>
+        </DatePickerButton>
+    );
+};
+
 export type YearSelectionProps = {
+    activeMonth: Moment,
+    years: Array<Moment>,
 };
 
 /**
  * YearSelection
  */
-
 export class YearSelection extends Component {
     props: YearSelectionProps;
     today = Utils.getMomentToday();
 
-    renderYearItem = (year, index) => {
-        const format = 'YYYY';
-        const className = classSet('col-xs-1',
-            year.isSame(this.props.activeMonth, 'year') ? styles.active : null,
-            year.isSame(this.today, 'year') ? styles.today : null,
-            year.isAfter(this.today, 'year') ? styles.future : null,
-        );
-        const fmtYear = this.props.activeMonth.clone().year(year.format('YYYY')).format('YYYY-MM');
-        return (
-            <li className={className} key={index}>
-                <NavLink
-                    to={`/month/${fmtYear}`}
-                    activeClassName={`${styles.active}`}
-                >
-                    <span className={styles.number}>{year.format('YY')}</span>
-                    <span className={styles.short}>{year.format('YYYY')}</span>
-                </NavLink>
-            </li>
-        );
-    }
+    render() {
+        const { years, activeMonth } = this.props;
 
-    renderTodayButton() {
-        if (this.props.activeMonth.isSame(moment(), 'year')) {
-            return '';
-        }
+        const showToday = !activeMonth.isSame(this.today, 'year');
         const fmtToday = moment().startOf('month').format('YYYY-MM');
         return (
-            <li className={`${styles.today} col-sm-1 ${styles['tt-button-today']}`}>
-                <NavLink to={`/month/${fmtToday}`} activeClassName="active" > Today </NavLink>
-            </li>
-        );
-    }
+            <DatePickerContainer title={'Year'}>
+                {years.map(y => (<Year year={y} today={this.today} activeMonth={activeMonth} key={y.format('YYYY')} />))}
 
-    render() {
-        const years = this.props.years;
-        return (
-            <div className={styles.yearSelection}>
-                <h2>Year</h2>
-                <ul>
-                    {years.map(this.renderYearItem)}
-
-                    {this.renderTodayButton()}
-                </ul>
-            </div>
+                {showToday && (
+                    <DatePickerButton link={`/month/${fmtToday}`} className={styles.todayButton}> Today </DatePickerButton>
+                )}
+            </DatePickerContainer>
         );
     }
 }
