@@ -1,0 +1,1028 @@
+{
+    "days": [
+        {
+            "day_id": 18462,
+            "day_date": "2017-09-25T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18702,
+                    "per_break": null,
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 4,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18462,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 13,
+                        "minutes": 30
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18463,
+            "day_date": "2017-09-26T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18703,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8
+                    },
+                    "per_day_id": 18463,
+                    "per_start": {
+                        "hours": 10,
+                        "minutes": 45
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 45
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18472,
+            "day_date": "2017-09-27T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18714,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8,
+                        "minutes": 15
+                    },
+                    "per_day_id": 18472,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 45
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18502,
+            "day_date": "2017-09-28T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18755,
+                    "per_break": {
+                        "hours": 1
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18502,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 30
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18503,
+            "day_date": "2017-09-29T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18756,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8
+                    },
+                    "per_day_id": 18503,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 17,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-09-30T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-01T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": 18504,
+            "day_date": "2017-10-02T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18757,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18504,
+                    "per_start": {
+                        "hours": 10,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 30
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18539,
+            "day_date": "2017-10-03T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18800,
+                    "per_break": null,
+                    "per_comment": null,
+                    "per_pty_id": "Sick",
+                    "per_duration": {
+                        "hours": 7,
+                        "minutes": 42
+                    },
+                    "per_day_id": 18539,
+                    "per_start": null,
+                    "per_stop": null,
+                    "pty_name": "Krankenstand"
+                }
+            ],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": 18540,
+            "day_date": "2017-10-04T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18801,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8
+                    },
+                    "per_day_id": 18540,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 30
+                    },
+                    "per_stop": {
+                        "hours": 17,
+                        "minutes": 30
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18574,
+            "day_date": "2017-10-05T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18850,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18574,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 17,
+                        "minutes": 30
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18575,
+            "day_date": "2017-10-06T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18851,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 6,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18575,
+                    "per_start": {
+                        "hours": 8,
+                        "minutes": 30
+                    },
+                    "per_stop": {
+                        "hours": 15,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                },
+                {
+                    "per_id": 18987,
+                    "per_break": null,
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 2
+                    },
+                    "per_day_id": 18575,
+                    "per_start": {
+                        "hours": 12,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 14,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-07T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-08T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": 18573,
+            "day_date": "2017-10-09T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18849,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 7,
+                        "minutes": 30
+                    },
+                    "per_day_id": 18573,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 15
+                    },
+                    "per_stop": {
+                        "hours": 16,
+                        "minutes": 45
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18591,
+            "day_date": "2017-10-10T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18876,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 7,
+                        "minutes": 15
+                    },
+                    "per_day_id": 18591,
+                    "per_start": {
+                        "hours": 11,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 15
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18592,
+            "day_date": "2017-10-11T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18877,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 9
+                    },
+                    "per_day_id": 18592,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18602,
+            "day_date": "2017-10-12T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18894,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 8,
+                        "minutes": 45
+                    },
+                    "per_day_id": 18602,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 15
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18623,
+            "day_date": "2017-10-13T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18919,
+                    "per_break": null,
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 6
+                    },
+                    "per_day_id": 18623,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 15,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-14T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-15T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": 18624,
+            "day_date": "2017-10-16T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18920,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 9
+                    },
+                    "per_day_id": 18624,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18653,
+            "day_date": "2017-10-17T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18958,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": null,
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 6,
+                        "minutes": 45
+                    },
+                    "per_day_id": 18653,
+                    "per_start": {
+                        "hours": 9,
+                        "minutes": 15
+                    },
+                    "per_stop": {
+                        "hours": 16,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18656,
+            "day_date": "2017-10-18T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18962,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": "6 - 22 uhr inkl reisezeit",
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 10
+                    },
+                    "per_day_id": 18656,
+                    "per_start": {
+                        "hours": 8,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 18,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18657,
+            "day_date": "2017-10-19T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18964,
+                    "per_break": {
+                        "minutes": 30
+                    },
+                    "per_comment": "",
+                    "per_pty_id": "Work",
+                    "per_duration": {
+                        "hours": 11
+                    },
+                    "per_day_id": 18657,
+                    "per_start": {
+                        "hours": 8,
+                        "minutes": 0
+                    },
+                    "per_stop": {
+                        "hours": 19,
+                        "minutes": 0
+                    },
+                    "pty_name": "Arbeitszeit"
+                }
+            ],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18670,
+            "day_date": "2017-10-20T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18671,
+            "day_date": "2017-10-21T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-22T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-23T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-24T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-25T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18499,
+            "day_date": "2017-10-26T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18751,
+                    "per_break": null,
+                    "per_comment": "Nationalfeiertag",
+                    "per_pty_id": "Holiday",
+                    "per_duration": {
+                        "hours": 7,
+                        "minutes": 42
+                    },
+                    "per_day_id": 18499,
+                    "per_start": null,
+                    "per_stop": null,
+                    "pty_name": "Feiertag"
+                }
+            ],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-27T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-28T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-29T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-30T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-10-31T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": 18500,
+            "day_date": "2017-11-01T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [
+                {
+                    "per_id": 18752,
+                    "per_break": null,
+                    "per_comment": "Allerheiligen",
+                    "per_pty_id": "Holiday",
+                    "per_duration": {
+                        "hours": 7,
+                        "minutes": 42
+                    },
+                    "per_day_id": 18500,
+                    "per_start": null,
+                    "per_stop": null,
+                    "pty_name": "Feiertag"
+                }
+            ],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-11-02T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-11-03T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {
+                "hours": 7,
+                "minutes": 42
+            },
+            "periods": [],
+            "remaining": {
+                "hours": 7,
+                "minutes": 42
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-11-04T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        },
+        {
+            "day_id": null,
+            "day_date": "2017-11-05T00:00:00.000Z",
+            "day_usr_id": 16,
+            "day_target_time": {},
+            "periods": [],
+            "remaining": {
+                "hours": 0,
+                "minutes": 0
+            }
+        }
+    ],
+    "carryTime": {
+        "hours": 11,
+        "minutes": 54
+    },
+    "carryFrom": "2017-03-01T00:00:00.000Z",
+    "carryTo": "2017-09-24T00:00:00.000Z"
+}

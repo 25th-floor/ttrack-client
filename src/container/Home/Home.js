@@ -24,55 +24,6 @@ const mapDispatchToProps = dispatch => ({
     logout: bindActionCreators(Actions.Auth.logout, dispatch),
 });
 
-function getDurationType(period, targetTime, type) {
-    const cfg = type.pty_config.types;
-
-    if (period.per_id !== null) {
-        const start = period.per_start;
-        const duration = moment.duration(period.per_duration);
-        const target = moment.duration(targetTime);
-
-        if (cfg.period && start && moment.duration(start).as('minutes') >= 0) return 'period';
-        if (cfg.halfday && duration.as('hours') === (target.as('hours') / 2)) return 'halfday';
-        if (cfg.fullday && duration.as('hours') === target.as('hours')) return 'fullday';
-        if (cfg.duration) return 'duration';
-    } else {
-        if (cfg.period) return 'period';
-        if (cfg.fullday) return 'fullday';
-        if (cfg.halfday) return 'halfday';
-        if (cfg.duration) return 'duration';
-    }
-
-    return 'none';
-}
-
-function assocPeriodWithType(typeMap, targetTime, period) {
-    const type = typeMap[period.per_pty_id];
-    const duration = getDurationType(period, targetTime, type);
-    return {
-        ...period,
-        type,
-        duration,
-    };
-}
-
-function assocPeriodsWithTypes(types, days) {
-    const typeMap = R.compose(
-        R.map(R.head),
-        R.groupBy(type => type.pty_id),
-    )(types);
-
-    // updateIn periods
-    return [...R.map(
-        day => ({
-            ...day,
-            periods: R.map(
-                R.curry(assocPeriodWithType)(typeMap, day.day_target_time),
-            )(day.periods),
-        }),
-    )(days)];
-}
-
 export class HomeContainer extends Component {
     async componentDidMount() {
         const { user, match } = this.props;
@@ -97,7 +48,8 @@ export class HomeContainer extends Component {
             boundaries.lastDay.format('YYYY-MM-DD'),
         );
         const periodTypes = await Resources.Timesheet.getTypes();
-        const days = assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
+        const days = Utils.assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
+
         const weeks = Utils.createWeeks(
             days,
             responseTimeSheet.carryTime,
