@@ -1,8 +1,6 @@
 {
     "parser": "babel-eslint",
-    "extends": [
-        "airbnb"
-    ],
+    "extends": ["airbnb", "prettier", "prettier/flowtype", "prettier/react"],
     "env": {
         "jasmine": true,
         "mocha": true,
@@ -11,13 +9,8 @@
     },
     "plugins": [ "react" ],
     "rules": {
-        "no-unused-vars":0,
-        "no-console":0,
-        "no-debugger":0,
-
         "react/no-did-mount-set-state": 0,
         "camelcase":0,
-
         "no-plusplus": [
             2,
         {
