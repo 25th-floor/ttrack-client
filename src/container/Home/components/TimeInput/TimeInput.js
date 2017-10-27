@@ -4,15 +4,28 @@ import classSet from 'class-set';
 import React, { Component } from 'react';
 import { Utils } from '@data';
 
+import type { DurationType } from '@data/Resources';
+
 import styles from './TimeInput.module.css';
 
+export type ChangeFnType = (name: string, duration: DurationType) => void;
+
 export type TimeInputProps = {
+    time: DurationType,
+    id: string,
+    label: string,
+    name: string,
+    placeholder: string,
+    css?: string,
+    required: boolean,
+    round?: number,
+    allowNegativeValues: boolean,
+    onChange: ChangeFnType,
 };
 
 /**
  * TimeInput
  */
-
 export class TimeInput extends Component {
     props: TimeInputProps;
 

@@ -2,19 +2,22 @@
 
 import React, { Component } from 'react';
 import { Motto } from '@components';
-import styles from './Navigation.module.css';
+
+import type { LogoutActionType } from '@data/Auth/AuthTypes';
+import type { UserType } from '@data/Resources';
 
 import { ProfileWidget } from '../ProfileWidget';
 
+import styles from './Navigation.module.css';
+
 export type NavigationProps = {
-    onLogout: () => {},
-    user: any,
+    onLogout: LogoutActionType,
+    user: UserType,
 };
 
 /**
  * Navigation
  */
-
 export class Navigation extends Component {
     props: NavigationProps;
 

@@ -8,13 +8,16 @@ import { withRouter } from 'react-router-dom';
 import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
+import type { UserType } from '@data/Resources';
+import type { LogoutActionType, AuthState } from '@data/Auth/AuthTypes';
+
 import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
 
 import styles from './Home.module.css';
 
-const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
+const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
     isAuthenticated,
     user,
     history,
@@ -73,9 +76,16 @@ function assocPeriodsWithTypes(types, days) {
     )(days)];
 }
 
-export class HomeContainer extends Component {
+export type MonthViewContainerProps = {
+    user: UserType,
+    isAuthenticated: boolean,
+    logout: LogoutActionType,
+};
+
+export class MonthViewContainer extends Component {
+    props: MonthViewContainerProps;
+
     async componentDidMount() {
-        const { user, match } = this.props;
         this.setActiveMonth(this.props);
         this.getWeeks = this.getWeeks.bind(this);
         this.getWeeks(this.activeMonth);
@@ -86,7 +96,7 @@ export class HomeContainer extends Component {
         if (!this.activeMonth) {
             this.activeMonth = Utils.getMomentToday();
         }
-    }
+    };
 
     async getWeeks(activeMonth) {
         const date = moment(activeMonth, 'YYYY-MM', true).startOf('month');
@@ -129,7 +139,7 @@ export class HomeContainer extends Component {
             removed);
         // success reload props
         if (res.length !== 0) this.getWeeks(this.activeMonth);
-    }
+    };
 
     render() {
         const { isAuthenticated, user } = this.props;
@@ -164,13 +174,13 @@ export class HomeContainer extends Component {
                     </div>
                 </div>
                 {this.state
-                 && <Weeks
-                     weeks={this.state.weeks}
-                     activeMonth={activeMonth}
-                     types={this.state.types}
-                     user={user}
-                     onSaveDay={this.handelSaveDay}
-                 />}
+                && <Weeks
+                    weeks={this.state.weeks}
+                    activeMonth={activeMonth}
+                    types={this.state.types}
+                    user={user}
+                    onSaveDay={this.handelSaveDay}
+                />}
                 <Footer />
             </div>
         );
@@ -179,5 +189,5 @@ export class HomeContainer extends Component {
 
 //    <Footer />
 export const Home = withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(HomeContainer),
+    connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer),
 );
