@@ -1,66 +1,56 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-    withRouter,
-} from 'react-router-dom';
-
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+
 import { Actions, Resources } from '@data';
+import type { UserType } from '@data/Resources/ResourcesTypes';
+import typeof { login } from '@data/Auth/AuthAction';
 
 import { Login } from './components/Login';
 
 export type AuthProps = {
-/*     isAuthenticated: boolean,
-    login: () => {},
-    logout: () => {}, */
+    login: login,
+    history: any,
 };
 
 const { Users } = Resources;
 
-const mapStateToProps = ({ isAuthenticated, buildInfo }, { history }) => ({
+const mapStateToProps = ({ history }) => ({
     history,
-    isAuthenticated,
-    buildInfo,
 });
 
 const mapDispatchToProps = dispatch => ({
     login: bindActionCreators(Actions.Auth.login, dispatch),
-    logout: bindActionCreators(Actions.Auth.logout, dispatch),
 });
+
+type State = {
+    users: Array<UserType>,
+};
 
 /**
  * Auth
  */
-export class AuthContainer extends Component {
-    props: AuthProps;
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: [],
-        };
-        this.handleLogout = this.handleLogout.bind(this);
-        this.handleLogin = this.handleLogin.bind(this);
-        this.renderLogout = this.renderLogout.bind(this);
-    }
-    async componentDidMount() {
+export class AuthContainer extends Component<AuthProps, State> {
+    state = {
+        users: [],
+    };
+
+    loadUsers = async () => {
         this.setState({
             users: await Users.collection(),
         });
+    };
+
+    componentDidMount() {
+        this.loadUsers();
     }
 
-    handleLogout = (user) => {
-        this.props.logout(user);
-    }
-
-    handleLogin = (user) => {
+    handleLogin = (user: UserType) => {
         this.props.login(user);
         this.props.history.push('/home');
-    }
-
-    renderLogout(userId, history) {
-        return (<button onClick={() => this.handleLogout(userId, history)} >Sign out</button>);
-    }
+    };
 
     render() {
         const { users } = this.state;

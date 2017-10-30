@@ -1,34 +1,26 @@
 // @flow
+import React, { Component } from 'react';
+
 import moment from 'moment';
 // import momentDuration from 'moment-duration-format';
 import 'moment-duration-format';
 
-import React, { Component } from 'react';
-
 import { Utils } from '@data';
+import type { AssocPeriodType } from '@data/Constants/utils';
 
 import { PeriodComment } from '../PeriodComment';
 
 import styles from './Period.module.css';
 
 export type PeriodProps = {
+    periods: Array<AssocPeriodType>,
 };
 
 /**
  * Period
  */
-
-export class Period extends Component {
-    props: PeriodProps;
-
-
-    constructor(props, context) {
-        super(props, context);
-        this.renderPeriodItem = this.renderPeriodItem.bind(this);
-    }
-
-    renderPeriodItem(period, index) {
-        // debugger;
+export class Period extends Component<PeriodProps> {
+    renderPeriodItem = (period: AssocPeriodType, index: number) => {
         const start = moment.duration(period.per_start).format('hh:mm', { trim: false });
         const end = moment.duration(period.per_stop).format('hh:mm', { trim: false });
         const pause = Utils.formatDurationHoursToLocale(moment.duration(period.per_break));
@@ -57,7 +49,7 @@ export class Period extends Component {
                 <div className="col-xs-2 col-sm-5 col-lg-offset-1"><PeriodComment period={period} /></div>
             </div>
         );
-    }
+    };
 
     render() {
         const { periods } = this.props;

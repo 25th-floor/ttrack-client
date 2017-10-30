@@ -47,8 +47,7 @@ export type MonthSelectionProps = {
 /**
  * MonthSelection
  */
-export class MonthSelection extends Component {
-    props: MonthSelectionProps;
+export class MonthSelection extends Component<MonthSelectionProps> {
     today = moment().startOf('month');
 
     render() {
