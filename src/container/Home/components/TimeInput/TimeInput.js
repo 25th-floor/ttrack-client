@@ -5,7 +5,7 @@ import classSet from 'class-set';
 import React, { Component } from 'react';
 import { Utils } from '@data';
 
-import type { DurationType } from '@data/Resources';
+import type { DurationType } from '@data/Resources/ResourcesTypes';
 
 // import styles from './TimeInput.module.css';
 

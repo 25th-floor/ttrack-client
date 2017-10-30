@@ -1,3 +1,5 @@
+// @flow
+
 import moment from 'moment';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
@@ -7,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
-import type { UserType } from '@data/Resources';
+import type { UserType } from '@data/Resources/ResourcesTypes';
 import type { LogoutActionType, AuthState } from '@data/Auth/AuthTypes';
 
 import { Navigation } from './components/Navigation';
