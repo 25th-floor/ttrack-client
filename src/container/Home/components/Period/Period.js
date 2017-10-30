@@ -11,12 +11,6 @@ import { PeriodComment } from '../PeriodComment';
 
 import styles from './Period.module.css';
 
-// TODO REMOVE
-function getDurationObject(immutable) {
-    if (immutable == null) return immutable;
-    return immutable;
-}
-
 export type PeriodProps = {
 };
 
@@ -35,11 +29,11 @@ export class Period extends Component {
 
     renderPeriodItem(period, index) {
         // debugger;
-        const start = moment.duration(getDurationObject(period.per_start)).format('hh:mm', { trim: false });
-        const end = moment.duration(getDurationObject(period.per_stop)).format('hh:mm', { trim: false });
-        const pause = Utils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.per_break)));
+        const start = moment.duration(period.per_start).format('hh:mm', { trim: false });
+        const end = moment.duration(period.per_stop).format('hh:mm', { trim: false });
+        const pause = Utils.formatDurationHoursToLocale(moment.duration(period.per_break));
 
-        const duration = Utils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.per_duration)));
+        const duration = Utils.formatDurationHoursToLocale(moment.duration(period.per_duration));
 
         if (period.per_start == null && period.per_stop == null) {
             const offsetClass = index === 0 ? 'col-sm-4 col-lg-5' : 'col-sm-4 col-sm-offset-5 col-lg-5';
