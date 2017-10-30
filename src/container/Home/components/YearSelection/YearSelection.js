@@ -50,7 +50,7 @@ export class YearSelection extends Component {
         const showToday = !activeMonth.isSame(this.today, 'year');
         const fmtToday = moment().startOf('month').format('YYYY-MM');
         return (
-            <DatePickerContainer title={'Year'}>
+            <DatePickerContainer title="Year">
                 {years.map(y => (<Year year={y} today={this.today} activeMonth={activeMonth} key={y.format('YYYY')} />))}
 
                 {showToday && (

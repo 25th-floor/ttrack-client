@@ -16,7 +16,7 @@ import { store, Utils } from '@data';
 
 import { Home, Auth as Authentication } from './container';
 
-const Index = bla => <Redirect push to="/month" />;
+const Index = () => <Redirect push to="/month" />;
 
 const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
     isAuthenticated,
@@ -24,24 +24,24 @@ const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
     history,
 });
 
-const PrivateRoute = withRouter(
-    connect(mapStateToProps, null)(({ component: Component, path: RouterPath, validation = () => true, ...rest }) => {
-        // on /auth do nothing
-        if (rest.history.location.pathname === '/auth') return null;
-        if (!rest.isAuthenticated) return (<Redirect push to="/auth" />);
-        const valid = validation(rest, RouterPath);
-        if (R.is(String, valid)) {
-            rest.history.push(valid);
-            return null;
-        }
+const PrivateRoute = withRouter(connect(mapStateToProps, null)(({
+    component: Component, path: RouterPath, validation = () => true, ...rest
+}) => {
+    // on /auth do nothing
+    if (rest.history.location.pathname === '/auth') return null;
+    if (!rest.isAuthenticated) return (<Redirect push to="/auth" />);
+    const valid = validation(rest, RouterPath);
+    if (R.is(String, valid)) {
+        rest.history.push(valid);
+        return null;
+    }
 
-        return (<Route
-            path={RouterPath}
-            {...rest}
-            render={props => <Component {...props} />}
-        />);
-    }),
-);
+    return (<Route
+        path={RouterPath}
+        {...rest}
+        render={props => <Component {...props} />}
+    />);
+}));
 
 const dateValidation = ({ user, location }, RouterPath) => {
     const match = matchPath(location.pathname, { path: RouterPath });

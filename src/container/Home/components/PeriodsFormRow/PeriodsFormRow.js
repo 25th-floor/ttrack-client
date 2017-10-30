@@ -1,4 +1,6 @@
 // @flow
+/* eslint-disable jsx-a11y/label-has-for */
+// TODO eslint
 import R from 'ramda';
 import React, { Component } from 'react';
 
@@ -23,7 +25,7 @@ export class PeriodsFormRow extends Component {
     constructor(props) {
         super(props);
 
-        let period = props.period;
+        let { period } = props;
         if (!period.type) {
             period = {
                 ...period,
@@ -167,7 +169,7 @@ export class PeriodsFormRow extends Component {
     });
 
     renderErrorMessages() {
-        const period = this.state.period;
+        const { period } = this.state;
         const errors = Utils.getAllErrors(period);
 
         return (
@@ -182,7 +184,7 @@ export class PeriodsFormRow extends Component {
     };
 
     render() {
-        const period = this.state.period;
+        const { period } = this.state;
         const isValid = Utils.validatePeriod(period);
 
         const elementName = `period-${period.per_id ? period.per_id : this.props.index}`;
@@ -248,7 +250,7 @@ export class PeriodsFormRow extends Component {
                 {!isValid ? this.renderErrorMessages() : ''}
 
                 <div className="pull-right">
-                    <a onClick={this.props.onRemove} role="button" tabIndex={0}>
+                    <a onClick={this.props.onRemove} role="button" href="/" tabIndex={0}>
                         <i className="fa fa-trash text-danger" />
                     </a>
                 </div>

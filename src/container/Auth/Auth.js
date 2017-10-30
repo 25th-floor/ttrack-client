@@ -1,15 +1,12 @@
 // @flow
-import R from 'ramda';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     withRouter,
-    Redirect,
-    Route,
 } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
-import { Actions, Resources, Constants, Utils } from '@data';
+import { Actions, Resources } from '@data';
 
 import { Login } from './components/Login';
 
@@ -20,11 +17,6 @@ export type AuthProps = {
 };
 
 const { Users } = Resources;
-const { mottos } = Constants;
-
-const motto = R.indexOf(
-    Utils.getRandomInt(0, R.length(mottos)),
-)(mottos);
 
 const mapStateToProps = ({ isAuthenticated, buildInfo }, { history }) => ({
     history,
@@ -71,13 +63,9 @@ export class AuthContainer extends Component {
     }
 
     render() {
-        console.log('redner');
-        const { buildInfo, isAuthenticated } = this.props;
         const { users } = this.state;
         return (<Login users={users} onUserSelect={this.handleLogin} />);
     }
 }
 
-export const Auth = withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(AuthContainer),
-);
+export const Auth = withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthContainer));

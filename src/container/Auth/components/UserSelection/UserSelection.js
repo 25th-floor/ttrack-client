@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import R from 'ramda';
 import React, { Component } from 'react';
 import { Avatar } from '@components';
@@ -28,13 +29,13 @@ export class UserSelection extends Component {
         this.props.onSelect(user);
     }
 
-    handleBla = user => this.props.onSelect(user)
+    handleSelectUser = user => this.props.onSelect(user)
 
     renderUserItem(user, index) {
-        const { usr_Id, usr_firstname, usr_lastname } = user;
+        const { usr_firstname, usr_lastname } = user;
         return (
             <li key={index} className="col-xs-6 col-sm-3">
-                <a onClick={() => this.handleBla(user)} role="button" tabIndex="0">
+                <a onClick={() => this.handleSelectUser(user)} href="#" role="button" tabIndex="0">
                     <div className={styles.imageContainer}>
                         <Avatar user={user} />
                     </div>

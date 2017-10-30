@@ -6,7 +6,7 @@ import styles from './Brand.module.css';
 /**
  * Brand
  */
-export const Brand = ({ motto }) => (
+export const Brand = () => (
     <div className={styles.loginBrand}>
         <svg viewBox="0 0 100 100">
             <path

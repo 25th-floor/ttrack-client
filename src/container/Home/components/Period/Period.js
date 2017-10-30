@@ -1,6 +1,7 @@
 // @flow
 import moment from 'moment';
-import momentDuration from 'moment-duration-format';
+// import momentDuration from 'moment-duration-format';
+import 'moment-duration-format';
 
 import React, { Component } from 'react';
 
@@ -36,13 +37,9 @@ export class Period extends Component {
         // debugger;
         const start = moment.duration(getDurationObject(period.per_start)).format('hh:mm', { trim: false });
         const end = moment.duration(getDurationObject(period.per_stop)).format('hh:mm', { trim: false });
-        const pause = Utils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.per_break)),
-        );
+        const pause = Utils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.per_break)));
 
-        const duration = Utils.formatDurationHoursToLocale(
-            moment.duration(getDurationObject(period.per_duration)),
-        );
+        const duration = Utils.formatDurationHoursToLocale(moment.duration(getDurationObject(period.per_duration)));
 
         if (period.per_start == null && period.per_stop == null) {
             const offsetClass = index === 0 ? 'col-sm-4 col-lg-5' : 'col-sm-4 col-sm-offset-5 col-lg-5';
@@ -69,7 +66,7 @@ export class Period extends Component {
     }
 
     render() {
-        const periods = this.props.periods;
+        const { periods } = this.props;
         return (
             <div className={styles.periods}>
                 {periods.map(this.renderPeriodItem)}

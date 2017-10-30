@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from 'react';
-
 import { Utils } from '@data';
 
 import styles from './PeriodComment.module.css';
@@ -17,7 +16,7 @@ export class PeriodComment extends Component {
     props: PeriodCommentProps;
 
     render() {
-        const period = this.props.period;
+        const { period } = this.props;
         const isPeriodDuration = period.duration === Utils.PERIOD;
         let comment = period.per_comment;
 
@@ -26,7 +25,7 @@ export class PeriodComment extends Component {
             comment = Utils.getDurationDescription(period.duration);
         }
 
-        const icon = period.type.pty_config.icon;
+        const { icon } = period.type.pty_config;
         const name = period.type.pty_name;
 
         const style = {

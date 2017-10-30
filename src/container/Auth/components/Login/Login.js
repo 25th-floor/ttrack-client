@@ -20,11 +20,12 @@ export class Login extends Component {
     props: LoginProps;
     render() {
         const { users, onUserSelect } = this.props;
-        return (<div id="login" className={styles.login}>
-            <Brand />
-            <UserSelection users={users} onSelect={onUserSelect} />
-            <Footer />
-        </div>
+        return (
+            <div id="login" className={styles.login}>
+                <Brand />
+                <UserSelection users={users} onSelect={onUserSelect} />
+                <Footer />
+            </div>
         );
     }
 }
