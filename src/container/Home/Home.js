@@ -1,3 +1,5 @@
+// @flow
+
 import moment from 'moment';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';

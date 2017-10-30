@@ -1,13 +1,13 @@
 {
     "parser": "babel-eslint",
-    "extends": ["airbnb"],
+    "extends": ["airbnb", "plugin:flowtype/recommended"],
     "env": {
         "jasmine": true,
         "mocha": true,
         "jest": true,
         "browser": true
     },
-    "plugins": [ "react" ],
+    "plugins": [ "react", "flowtype" ],
     "rules": {
         "react/no-did-mount-set-state": 0,
         "camelcase":0,
