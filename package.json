@@ -104,7 +104,8 @@
     "start": "node scripts/start.js",
     "https": "HTTPS=true node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "jest": "jest --haste --debug"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -118,7 +119,9 @@
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+      "<rootDir>/src/node_modules/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)",
+      "<rootDir>/src/node_modules/**/?(*.)(spec|test).js?(x)"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
@@ -127,11 +130,14 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
+    "testPathIgnorePatterns": [
+        "<rootDir>/(node_modules)/"
+    ],
     "transformIgnorePatterns": [
-      "node_modules/(?!@data|@components)",
-      "!src/node_modules"
+      "^(?!.*([/\\\\]src[/\\\\]node_modules[/\\\\])).*([/\\\\]node_modules[/\\\\])"
     ],
     "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/node_modules/$1",
       "^react-native$": "react-native-web",
       "\\module.css$": "identity-obj-proxy"
     },

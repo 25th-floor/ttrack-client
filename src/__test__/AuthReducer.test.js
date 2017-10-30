@@ -1,5 +1,4 @@
-import { AuthReducer as reducer } from '../AuthReducer';
-// import * as types from '../AuthTypes';
+import { AuthReducer as reducer } from '@data/Auth/AuthReducer';
 
 describe('Authentication reducer', () => {
     // const initialState = { };

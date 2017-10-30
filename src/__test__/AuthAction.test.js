@@ -1,22 +1,22 @@
-import * as actions from '../AuthAction';
-import * as types from '../AuthTypes';
+import { Actions } from '@data';
+import actionTypes from '@data/Auth/AuthTypes';
 
 describe('Authentifiction actions', () => {
     it('should login user', () => {
         const user = {};
         const expectedAction = {
-            type: types.LOGIN,
+            type: actionTypes.LOGIN,
             user,
         };
-        expect(actions.login(user)).toEqual(expectedAction);
+        expect(Actions.Auth.login(user)).toEqual(expectedAction);
     });
 
     it('should logout user', () => {
         const user = {};
         const expectedAction = {
-            type: types.LOGOUT,
+            type: actionTypes.LOGOUT,
             user,
         };
-        expect(actions.logout(user)).toEqual(expectedAction);
+        expect(Actions.Auth.logout(user)).toEqual(expectedAction);
     });
 });

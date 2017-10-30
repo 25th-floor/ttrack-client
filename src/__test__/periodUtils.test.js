@@ -1,6 +1,6 @@
 import R from 'ramda';
 import moment from 'moment';
-import { utils } from '../';
+import { Utils } from '@data';
 import periodTypes from './periodtypes';
 
 const createDay = index => ({
@@ -18,13 +18,13 @@ const createDay = index => ({
 describe('createWeeks', () => {
     const timesheet = R.range(0, 20).map(createDay);
     it('should create ', () => {
-        const days = utils.assocPeriodsWithTypes(periodTypes, timesheet);
+        const days = Utils.assocPeriodsWithTypes(periodTypes, timesheet);
         const carryTime = {
             hours: 11,
             minutes: 54,
         };
 
-        const weeks = utils.createWeeks(
+        const weeks = Utils.createWeeks(
             days,
             carryTime,
         );

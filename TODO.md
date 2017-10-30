@@ -1,4 +1,4 @@
-[ ] - jest test fix
+[ ] - jest test fix (https://github.com/facebookincubator/create-react-app/issues/1042)
 [ ] - bable testcheck plugin
 [ ] - Flowtype
 [ ] - unit tests
