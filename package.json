@@ -94,8 +94,7 @@
     "testcheck": "^1.0.0-rc.2"
   },
   "lint-staged": {
-    "*.js": ["eslint"],
-    "*.{js,css}": ["prettier-eslint --list-different"]
+    "*.js": ["eslint"]
   },
   "scripts": {
     "gen": "plop --plopfile generators/plopfile.js",
@@ -128,7 +127,8 @@
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!@data|@components)"
+      "node_modules/(?!@data|@components)",
+      "!src/node_modules"
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",

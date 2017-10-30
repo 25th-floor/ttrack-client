@@ -1,8 +1,5 @@
 // @flow
 import R from 'ramda';
-import moment from 'moment';
-import momentDuration from 'moment-duration-format';
-
 import React, { Component } from 'react';
 import classSet from 'class-set';
 
@@ -55,12 +52,13 @@ export class Weeks extends Component {
         const workDuration = week.workDuration.format('hh:mm', { trim: false });
 
         const diff = week.diffUntilToday;
-        const carry = week.carry;
+        const { carry } = week;
 
         const firstDayOfWeek = R.last(week.days);
         const lastDayOfWeek = R.last(week.days);
 
-        const className = classSet(styles.weekSumRow,
+        const className = classSet(
+            styles.weekSumRow,
             !Utils.isDateInEmploymentInterval(firstDayOfWeek.date, this.props.user) &&
             !Utils.isDateInEmploymentInterval(lastDayOfWeek.date, this.props.user) ? styles.dayOutOfScope : null,
         );
@@ -69,9 +67,7 @@ export class Weeks extends Component {
         let diffTime = '';
 
         if (!Utils.isWeekInFuture(week)) {
-            carryTime = this.renderDeltaItem(
-                'col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry,
-            );
+            carryTime = this.renderDeltaItem('col-xs-2 col-sm-1 col-sm-offset-4 col-lg-offset-3 tt-col-lg-offset-3', carry);
             diffTime = this.renderDeltaItem('col-xs-2 col-sm-7 col-sm-offset-1 col-lg-7 col-lg-offset-1', diff);
         }
 
@@ -109,7 +105,7 @@ export class Weeks extends Component {
     }
 
     render() {
-        const weeks = this.props.weeks;
+        const { weeks } = this.props;
         return (
             <div className={styles.weeks}>
                 { R.compose(R.map(this.renderWeekItem), R.values)(weeks) }

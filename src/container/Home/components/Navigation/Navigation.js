@@ -1,20 +1,23 @@
 // @flow
-
+// TODO remove a tags
 import React, { Component } from 'react';
 import { Motto } from '@components';
-import styles from './Navigation.module.css';
+
+import type { LogoutActionType } from '@data/Auth/AuthTypes';
+import type { UserType } from '@data/Resources';
 
 import { ProfileWidget } from '../ProfileWidget';
 
+import styles from './Navigation.module.css';
+
 export type NavigationProps = {
-    onLogout: () => {},
-    user: any,
+    onLogout: LogoutActionType,
+    user: UserType,
 };
 
 /**
  * Navigation
  */
-
 export class Navigation extends Component {
     props: NavigationProps;
 
@@ -56,13 +59,13 @@ export class Navigation extends Component {
                     <div className={`navbar-container ${styles['navbar-container']}`}>
                         <ul className={`nav navbar-nav ${styles['navbar-nav']}`}>
                             <li className={`active ${styles.active}`}>
-                                <a>
+                                <a href="/#">
                                     <i className="fa fa-calendar" />
                                     <span>Monatsansicht</span>
                                 </a>
                             </li>
                             <li className={`logout ${styles.logout}`}>
-                                <a onClick={this.props.onLogout} href="">
+                                <a onClick={this.props.onLogout} href="/#">
                                     <i className="fa fa-power-off" />
                                     <span>Logout</span>
                                 </a>

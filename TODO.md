@@ -1,3 +1,5 @@
+[ ] - jest test fix
+[ ] - bable testcheck plugin
 [ ] - Flowtype
 [ ] - unit tests
 [ ] - move utils function to own namespace

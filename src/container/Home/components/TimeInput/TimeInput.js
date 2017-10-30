@@ -1,18 +1,32 @@
 // @flow
+/* eslint-disable jsx-a11y/label-has-for */
 import moment from 'moment';
 import classSet from 'class-set';
 import React, { Component } from 'react';
 import { Utils } from '@data';
 
-import styles from './TimeInput.module.css';
+import type { DurationType } from '@data/Resources';
+
+// import styles from './TimeInput.module.css';
+
+export type ChangeFnType = (name: string, duration: DurationType) => void;
 
 export type TimeInputProps = {
+    time: DurationType,
+    id: string,
+    label: string,
+    name: string,
+    placeholder: string,
+    css?: string,
+    required: boolean,
+    round?: number,
+    allowNegativeValues: boolean,
+    onChange: ChangeFnType,
 };
 
 /**
  * TimeInput
  */
-
 export class TimeInput extends Component {
     props: TimeInputProps;
 
@@ -39,7 +53,7 @@ export class TimeInput extends Component {
 
     render() {
         // time is a string
-        const time = this.state.time;
+        const { time } = this.state;
 
         const css = classSet(
             this.props.css || '',
@@ -53,11 +67,11 @@ export class TimeInput extends Component {
                 <label htmlFor={this.props.name}>{this.props.label}</label>
                 <input
                     type="text"
+                    id={this.props.name}
+                    name={this.props.name}
                     placeholder={this.props.placeholder}
                     className="form-control"
                     required={this.props.required}
-                    name={this.props.name}
-                    id={this.props.name}
                     value={time}
                     onChange={this.handleChange}
                 />
