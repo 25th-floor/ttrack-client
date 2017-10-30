@@ -120,7 +120,6 @@ export class Day extends Component<DayProps, State> {
         return (
             <fieldset
                 className={className}
-                key={fullDate}
                 onClick={dateOutOfEmploymentScope ? null : this.handleEditClick}
             >
                 <legend>

@@ -17,7 +17,7 @@ export type AuthProps = {
 
 const { Users } = Resources;
 
-const mapStateToProps = ({ history }) => ({
+const mapStateToProps = (_, { history }) => ({
     history,
 });
 

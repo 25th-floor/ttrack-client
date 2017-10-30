@@ -27,6 +27,7 @@ export class Weeks extends Component<WeeksProps> {
     renderDayItem = (day: ProcessedDayType) => (
         <Day
             day={day}
+            key={day.day_date}
             activeMonth={this.props.activeMonth}
             types={this.props.types}
             user={this.props.user}
