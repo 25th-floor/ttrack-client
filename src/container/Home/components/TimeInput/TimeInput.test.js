@@ -1,6 +1,6 @@
-import React from 'react';
+/* import React from 'react';
 import { shallow } from 'enzyme';
-import { TimeInput } from './TimeInput';
+import { TimeInput } from './TimeInput'; */
 
 
 describe('<TimeInput />', () => {

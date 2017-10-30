@@ -1,6 +1,6 @@
-import React from 'react';
+/* import React from 'react';
 import { shallow } from 'enzyme';
-import { Day } from './Day';
+import { Day } from './Day'; */
 
 
 describe('<Day />', () => {

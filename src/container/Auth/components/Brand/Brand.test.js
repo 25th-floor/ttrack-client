@@ -1,6 +1,6 @@
 import React from 'react';
 import { Motto } from '@components';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { Brand } from './Brand';
 import styles from './Brand.module.css';

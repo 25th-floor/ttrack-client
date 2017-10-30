@@ -1,6 +1,6 @@
-import React from 'react';
+/* import React from 'react';
 import { shallow } from 'enzyme';
-import { PeriodsForm } from './PeriodsForm';
+import { PeriodsForm } from './PeriodsForm'; */
 
 
 describe('<PeriodsForm />', () => {

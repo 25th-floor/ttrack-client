@@ -1,6 +1,6 @@
-import React from 'react';
+/* import React from 'react';
 import { shallow } from 'enzyme';
-import { MonthSelection } from './MonthSelection';
+import { MonthSelection } from './MonthSelection'; */
 
 
 describe('<MonthSelection />', () => {

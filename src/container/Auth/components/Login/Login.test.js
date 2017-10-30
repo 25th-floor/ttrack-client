@@ -1,6 +1,6 @@
 import React from 'react';
 import { Footer } from '@components';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { Login } from './Login';
 import { UserSelection } from '../UserSelection';
