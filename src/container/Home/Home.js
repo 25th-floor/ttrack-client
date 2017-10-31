@@ -11,7 +11,6 @@ import { Footer } from '@components';
 
 import type { AssocPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { UserType, PeriodTypeType } from '@data/Resources/ResourcesTypes';
-import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
@@ -19,9 +18,9 @@ import { Weeks } from './components/Weeks';
 
 import styles from './Home.module.css';
 
-const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
-    isAuthenticated,
-    user,
+const mapStateToProps = ({ auth }, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     history,
 });
 
@@ -78,7 +77,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
             weeks,
             types: periodTypes,
         });
-    }
+    };
 
     handleLogout = (user: UserType) => {
         this.props.logout(user);
