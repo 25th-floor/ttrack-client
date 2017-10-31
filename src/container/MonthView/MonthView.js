@@ -17,7 +17,7 @@ import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
 
-import styles from './Home.module.css';
+import styles from './MonthView.module.css';
 
 const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
     isAuthenticated,
@@ -148,4 +148,4 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
     }
 }
 
-export const Home = withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer));
+export const MonthView = withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer));
