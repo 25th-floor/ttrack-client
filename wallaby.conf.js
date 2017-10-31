@@ -4,8 +4,6 @@ module.exports = function (wallaby) {
     process.env.DATABASE_URL = 'postgres://postgres:postgres@localhost:5432/ttrack_test';
     process.env.NODE_ENV = 'test';
     process.env.TZ = 'UTC';
-    // const processCss = require('./config/preprocessors/processCss');
-    // console.log(processCss);
 
     return {
         files: [
@@ -24,14 +22,13 @@ module.exports = function (wallaby) {
         compilers: {
             '**/*.js': wallaby.compilers.babel({
                 babel: require('babel-core'),
-                presets: ['react-app'],
+                presets: ['react-app']
             }),
         },
-
         delays: {
             run: 1000,
         },
-        debug: true,
+
         testFramework: 'jest',
     };
 };

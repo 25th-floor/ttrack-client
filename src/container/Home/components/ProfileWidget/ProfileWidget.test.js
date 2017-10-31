@@ -1,10 +1,13 @@
+// @flow
 /* import React from 'react';
 import { shallow } from 'enzyme';
+import type { UserType } from '@data/Resources';
 import { ProfileWidget } from './ProfileWidget'; */
 
+require('jasmine-check').install();
 
 describe('<ProfileWidget />', () => {
-    it('Expect to have unit tests specified', () => {
-        expect(true).toEqual(true);
+    it('should render', () => {
+        expect(true).toBe(true);
     });
 });
