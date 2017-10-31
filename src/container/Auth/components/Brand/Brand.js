@@ -29,7 +29,7 @@ export const Brand = () => (
             <strong>Time</strong> Tracking
         </span>
 
-        <small className={styles['tt-motto']}>
+        <small className={styles.motto}>
             <Motto />
         </small>
     </div>
