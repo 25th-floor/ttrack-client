@@ -16,7 +16,8 @@ import { store, Utils } from '@data';
 
 import { Home, Auth as Authentication } from './container';
 
-const Index = () => <Redirect push to="/month" />;
+const today = moment().format('YYYY-MM');
+const Index = () => <Redirect push to={`/month/${today}`} />;
 
 const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
     isAuthenticated,
@@ -67,7 +68,6 @@ export const App = () => (
                 <div>
                     <Switch>
                         <PrivateRoute path="/month/:date" validation={dateValidation} component={Home} />
-                        <PrivateRoute path="/month" component={Home} />
                         <PrivateRoute path="/" component={Index} />
                     </Switch>
                     <Route exact path="/auth" component={Authentication} />
