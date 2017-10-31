@@ -3,15 +3,15 @@
 import React from 'react';
 import { Motto } from '@components';
 
-import type { LogoutActionType } from '@data/Auth/AuthTypes';
 import type { UserType } from '@data/Resources';
 
 import { ProfileWidget } from '../ProfileWidget';
 
 import styles from './Navigation.module.css';
 
+type LogoutFn = (user: UserType) => void; // todo
 export type NavigationProps = {
-    onLogout: LogoutActionType,
+    onLogout: LogoutFn,
     user: UserType,
 };
 
