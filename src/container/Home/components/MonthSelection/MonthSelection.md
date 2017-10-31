@@ -1,5 +1,5 @@
 Basic MonthSelection:
 
-```example
+```disabled
 <MonthSelection>MonthSelection</MonthSelection>
 ```

@@ -1,5 +1,5 @@
 Basic Day:
 
-```example
+```disabled
 <Day>Day</Day>
 ```

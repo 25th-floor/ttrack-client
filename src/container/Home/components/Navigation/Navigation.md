@@ -1,5 +1,5 @@
 Basic Navigation:
 
-```example
+```disabled
 <Navigation>Navigation</Navigation>
 ```

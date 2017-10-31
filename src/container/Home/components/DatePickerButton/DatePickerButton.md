@@ -1,5 +1,5 @@
 Basic DatePickerButton:
 
-```example
+```disabled
 <DatePickerButton>DatePickerButton</DatePickerButton>
 ```

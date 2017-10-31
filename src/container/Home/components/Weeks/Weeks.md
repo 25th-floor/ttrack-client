@@ -1,5 +1,5 @@
 Basic Weeks:
 
-```example
+```disabled
 <Weeks>Weeks</Weeks>
 ```

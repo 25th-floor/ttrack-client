@@ -1,5 +1,5 @@
 Basic PeriodsFormRow:
 
-```example
+```disabled
 <PeriodsFormRow>PeriodsFormRow</PeriodsFormRow>
 ```

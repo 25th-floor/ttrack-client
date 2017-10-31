@@ -1,5 +1,5 @@
 Basic YearSelection:
 
-```example
+```disabled
 <YearSelection>YearSelection</YearSelection>
 ```

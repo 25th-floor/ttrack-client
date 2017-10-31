@@ -1,5 +1,5 @@
 Basic DatePickerContainer:
 
-```example
+```disabled
 <DatePickerContainer>DatePickerContainer</DatePickerContainer>
 ```

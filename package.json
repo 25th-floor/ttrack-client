@@ -16,6 +16,24 @@
       "path": "./node_modules/babel-core"
     }
   },
+  "scripts": {
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
+    "gen": "plop --plopfile generators/plopfile.js",
+    "start": "node scripts/start.js",
+    "https": "HTTPS=true node scripts/start.js",
+    "build": "node scripts/build.js",
+    "precommit": "lint-staged",
+    "eslint": "eslint src",
+    "flow": "flow",
+    "jest": "jest",
+    "test": "node scripts/test.js --env=jsdom"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  },
   "dependencies": {
     "bootflat": "^2.0.4",
     "bootstrap": "~3.3.7",
@@ -26,6 +44,7 @@
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-styleguidist": "git://github.com/25th-floor/react-styleguidist.git#091dde8",
     "redux": "^3.7.2",
     "redux-persist": "^4.10.1",
     "rest": "^2.0.0"
@@ -94,22 +113,6 @@
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
   },
-  "lint-staged": {
-    "*.js": [
-      "eslint"
-    ]
-  },
-  "scripts": {
-    "gen": "plop --plopfile generators/plopfile.js",
-    "precommit": "lint-staged",
-    "flow": "flow",
-    "eslint": "eslint src",
-    "start": "node scripts/start.js",
-    "https": "HTTPS=true node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "jest": "jest"
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
@@ -159,13 +162,9 @@
     "presets": [
       "react-app"
     ],
-    "env": {
-        "development":{
-            "plugins": [
-                "react-hot-loader/babel"
-            ]
-        }
-    }
+    "plugins": [
+      "react-hot-loader/babel"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
