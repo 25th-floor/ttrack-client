@@ -1,5 +1,6 @@
 [ignore]
 /node_modules/
+.*/node_modules/redux-persist/.*
 [include]
 src/
 src/node_modules/

@@ -96,7 +96,13 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint"
+        "eslint",
+        "flow",
+        "test"
+    ],
+    "*.test.js": [
+        "eslint",
+        "test"
     ]
   },
   "scripts": {
