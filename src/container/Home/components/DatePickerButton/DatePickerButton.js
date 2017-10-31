@@ -7,8 +7,17 @@ import classSet from 'class-set';
 import styles from './DatePickerButton.module.css';
 
 export type DatePickerButtonProps = {
+    /**
+     * class name
+     */
     className: any,
+    /**
+     * link string
+     */
     link: string,
+    /**
+     * children
+     */
     children: any,
 };
 

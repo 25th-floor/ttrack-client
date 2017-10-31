@@ -27,7 +27,6 @@ export type DatePickerProps = {
 /**
  * DatePicker
  */
-
 export const DatePicker = ({ activeMonth, years, months }: DatePickerProps) => (
     <div className={styles.dateSelection}>
         <div className={`row ${styles.touchVersion}`}>

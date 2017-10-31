@@ -17,9 +17,21 @@ import styles from './Day.module.css';
 
 export type SaveFn = (date: Moment, periods: Array<AssocPeriodType>, removed: Array<number>) => any; // void or promise
 export type DayProps = {
+    /**
+     * Day
+     */
     day: ProcessedDayType,
+    /**
+     * Active Month as Moment, todo: remove?
+     */
     activeMonth: Moment,
+    /**
+     * Array of PeriodTypes
+     */
     types: Array<PeriodTypeType>,
+    /**
+     * UserType element
+     */
     user: UserType,
     onSaveDay: SaveFn,
 };

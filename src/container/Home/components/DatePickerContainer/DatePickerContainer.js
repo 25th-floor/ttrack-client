@@ -5,7 +5,13 @@ import React from 'react';
 import styles from './DatePickerContainer.module.css';
 
 export type DatePickerContainerProps = {
+    /**
+     * title of the container
+     */
     title: string,
+    /**
+     * children
+     */
     children: any,
 };
 

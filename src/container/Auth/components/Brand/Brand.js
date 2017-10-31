@@ -34,3 +34,5 @@ export const Brand = () => (
         </small>
     </div>
 );
+
+export default Brand;

@@ -12,8 +12,12 @@ module.exports = {
             components: 'src/node_modules/@components/**/*.js',
         },
         {
-            name: 'Containers',
-            components: 'src/container/**/*.js',
+            name: 'Auth Containers',
+            components: 'src/container/Auth/**/*.js',
+        },
+        {
+            name: 'MonthView Containers',
+            components: 'src/container/Home/**/*.js',
         },
     ],
     ignore: [

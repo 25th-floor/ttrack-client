@@ -1,5 +1,5 @@
 Basic DatePickerContainer:
 
-```disabled
-<DatePickerContainer>DatePickerContainer</DatePickerContainer>
+```jsx
+<DatePickerContainer title="title">Child Element</DatePickerContainer>
 ```

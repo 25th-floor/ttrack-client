@@ -11,7 +11,13 @@ import { Brand } from '../Brand';
 import styles from './Login.module.css';
 
 export type LoginProps = {
+    /**
+     * array of UserType to select the user
+     */
     users: Array<UserType>,
+    /**
+     * Function which is called if user is selected
+     */
     onUserSelect: SelectFn,
 };
 
@@ -25,3 +31,5 @@ export const Login = ({ users, onUserSelect }: LoginProps) => (
         <Footer />
     </div>
 );
+
+export default Login;

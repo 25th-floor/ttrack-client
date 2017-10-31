@@ -44,3 +44,5 @@ export const PeriodComment = ({ period }: PeriodCommentProps) => {
         </span>
     );
 };
+
+export default PeriodComment;
