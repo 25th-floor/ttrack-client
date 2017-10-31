@@ -1,4 +1,4 @@
 // @flow
 
-export { Period } from './Period';
+export { Periods } from './Period';
 

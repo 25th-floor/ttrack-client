@@ -11,7 +11,7 @@ import type { AssocPeriodType, ProcessedDayType } from '@data/Constants/utils';
 import type { PeriodTypeType, UserType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsForm } from '../PeriodsForm';
-import { Period } from '../Period';
+import { Periods } from '../Period';
 
 import styles from './Day.module.css';
 
@@ -158,7 +158,7 @@ export class Day extends Component<DayProps, State> {
                     onCancel={this.handleCancel}
                     onSave={onSave}
                 />
-                    : <Period periods={day.periods} />}
+                    : <Periods periods={day.periods} />}
 
             </fieldset>
 

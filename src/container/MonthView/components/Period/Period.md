@@ -1,4 +1,4 @@
-Basic Period:
+Basic Periods:
 
 ```jsx
 let period = {
@@ -18,7 +18,7 @@ let period = {
 };
 
 <div>
-    <Period periods={[period]} />
+    <Periods periods={[period]} />
     <div style={{ clear: 'both' }} />
 </div>
 ```
