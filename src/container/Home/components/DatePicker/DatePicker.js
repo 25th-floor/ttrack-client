@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 
 import type Moment from 'moment';
 
@@ -19,21 +19,13 @@ export type DatePickerProps = {
  * DatePicker
  */
 
-export class DatePicker extends Component {
-    props: DatePickerProps;
-
-    render() {
-        const { activeMonth, years, months } = this.props;
-
-        return (
-            <div className={styles.dateSelection}>
-                <div className={`row ${styles.touchVersion}`}>
-                    <YearSelection activeMonth={activeMonth} years={years} />
-                    <MonthSelection activeMonth={activeMonth} months={months} />
-                </div>
-            </div>
-        );
-    }
-}
+export const DatePicker = ({ activeMonth, years, months }: DatePickerProps) => (
+    <div className={styles.dateSelection}>
+        <div className={`row ${styles.touchVersion}`}>
+            <YearSelection activeMonth={activeMonth} years={years} />
+            <MonthSelection activeMonth={activeMonth} months={months} />
+        </div>
+    </div>
+);
 
 export default DatePicker;

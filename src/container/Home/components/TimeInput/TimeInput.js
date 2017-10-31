@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable jsx-a11y/label-has-for */
-import moment from 'moment';
+import moment, { type Duration } from 'moment';
 import classSet from 'class-set';
 import React, { Component } from 'react';
 import { Utils } from '@data';
@@ -9,7 +9,7 @@ import type { DurationType } from '@data/Resources/ResourcesTypes';
 
 // import styles from './TimeInput.module.css';
 
-export type ChangeFnType = (name: string, duration: DurationType) => void;
+export type ChangeFn = (name: string, duration: DurationType) => void;
 
 export type TimeInputProps = {
     time: DurationType,
@@ -21,25 +21,27 @@ export type TimeInputProps = {
     required: boolean,
     round?: number,
     allowNegativeValues: boolean,
-    onChange: ChangeFnType,
+    onChange: ChangeFn,
+};
+
+type State = {
+    time: Duration,
 };
 
 /**
  * TimeInput
  */
-export class TimeInput extends Component {
-    props: TimeInputProps;
+export class TimeInput extends Component<TimeInputProps, State> {
+    constructor(props: TimeInputProps) {
+        super(props);
 
-    constructor(props, context) {
-        super(props, context);
-        this.handleChange = this.handleChange.bind(this);
         // {hours: 2, minutes: 1}
         const duration = props.time ? moment.duration(props.time).format('hh:mm', { trim: false }) : '';
 
         this.state = { time: duration };
     }
 
-    handleChange(event) {
+    handleChange = (event: any) => {
         let duration = Utils.getValidMoment(event.target.value, this.props.allowNegativeValues);
         if (duration !== null) {
             if (this.props.round) {
@@ -49,7 +51,7 @@ export class TimeInput extends Component {
         }
 
         this.setState({ time: event.target.value });
-    }
+    };
 
     render() {
         // time is a string

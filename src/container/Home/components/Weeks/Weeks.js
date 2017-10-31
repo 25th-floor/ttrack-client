@@ -1,42 +1,41 @@
 // @flow
-import R from 'ramda';
 import React, { Component } from 'react';
+import R from 'ramda';
 import classSet from 'class-set';
+import type { Moment, Duration } from 'moment';
 
 import { Utils } from '@data';
-import { Day } from '../Day';
+import type { ProcessedWeekType, ProcessedDayType } from '@data/Constants/utils';
+import type { PeriodTypeType, UserType } from '@data/Resources/ResourcesTypes';
+
+import { Day, type SaveFn } from '../Day';
 
 import styles from './Weeks.module.css';
 
 export type WeeksProps = {
+    weeks: Array<ProcessedWeekType>,
+    activeMonth: Moment,
+    types: Array<PeriodTypeType>,
+    user: UserType,
+    onSaveDay: SaveFn,
 };
 
 /**
  * Weeks
  */
+export class Weeks extends Component<WeeksProps> {
+    renderDayItem = (day: ProcessedDayType) => (
+        <Day
+            day={day}
+            key={day.day_date}
+            activeMonth={this.props.activeMonth}
+            types={this.props.types}
+            user={this.props.user}
+            onSaveDay={this.props.onSaveDay}
+        />
+    );
 
-export class Weeks extends Component {
-    props: WeeksProps;
-    constructor(props, context) {
-        super(props, context);
-        this.renderDayItem = this.renderDayItem.bind(this);
-        this.renderWeekItem = this.renderWeekItem.bind(this);
-    }
-
-    renderDayItem(day) {
-        return (
-            <Day
-                day={day}
-                key={day.day_date}
-                activeMonth={this.props.activeMonth}
-                types={this.props.types}
-                user={this.props.user}
-                onSaveDay={this.props.onSaveDay}
-            />
-        );
-    }
-
-    renderDeltaItem(classes, delta) {
+    renderDeltaItem(classes: string, delta: Duration) {
         const str = delta.format('hh:mm', { trim: false });
         const className = classSet(
             classes || '',
@@ -48,7 +47,7 @@ export class Weeks extends Component {
         return <dd className={className}>{str}</dd>;
     }
 
-    renderWeekSum(week) {
+    renderWeekSum(week: ProcessedWeekType) {
         const workDuration = week.workDuration.format('hh:mm', { trim: false });
 
         const diff = week.diffUntilToday;
@@ -94,15 +93,13 @@ export class Weeks extends Component {
         );
     }
 
-    renderWeekItem(week) {
-        return (
-            <fieldset className={styles.week} key={week.weekNr}>
-                <legend>Week {week.weekNr}</legend>
-                {week.days.map(this.renderDayItem)}
-                {this.renderWeekSum(week)}
-            </fieldset>
-        );
-    }
+    renderWeekItem = (week: ProcessedWeekType) => (
+        <fieldset className={styles.week} key={week.weekNr}>
+            <legend>Week {week.weekNr}</legend>
+            {week.days.map(this.renderDayItem)}
+            {this.renderWeekSum(week)}
+        </fieldset>
+    );
 
     render() {
         const { weeks } = this.props;

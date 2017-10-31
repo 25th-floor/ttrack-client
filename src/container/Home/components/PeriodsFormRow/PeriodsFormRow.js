@@ -1,28 +1,44 @@
 // @flow
 /* eslint-disable jsx-a11y/label-has-for */
 // TODO eslint
-import R from 'ramda';
 import React, { Component } from 'react';
+import R from 'ramda';
 
 import { Utils } from '@data';
+import type { AssocPeriodType } from '@data/Constants/utils';
+import type { DurationType, PeriodTypeType } from '@data/Resources/ResourcesTypes';
+
 import { TimeInput } from '../TimeInput';
 
 import styles from './PeriodsFormRow.module.css';
 
-export type PeriodsFormRowProps = {};
-
-function findType(types, value) {
-    return types.find(type => type.pty_id === value);
+function findType(types: Array<PeriodTypeType>, value: string): PeriodTypeType | {} {
+    return types.find(type => type.pty_id === value) || {};
 }
+
+export type RemoveFn = (index: number) => void;
+// export type UpdateFn = (index: number, period: AssocPeriodType) => void;
+export type UpdateFn = (index: number, period: any) => void; // todo
+export type PeriodsFormRowProps = {
+    period: AssocPeriodType,
+    types: Array<PeriodTypeType>,
+    dayTargetTime: DurationType,
+    index: number,
+    onRemove: RemoveFn,
+    onUpdate: UpdateFn,
+};
+
+type State = {
+    period: AssocPeriodType,
+};
 
 /**
  * PeriodsFormRow
  */
+export class PeriodsFormRow extends Component<PeriodsFormRowProps, State> {
+    selectType: any; // todo
 
-export class PeriodsFormRow extends Component {
-    props: PeriodsFormRowProps;
-
-    constructor(props) {
+    constructor(props: PeriodsFormRowProps) {
         super(props);
 
         let { period } = props;
@@ -46,13 +62,6 @@ export class PeriodsFormRow extends Component {
         }
 
         this.state = { period };
-
-        this.handleComment = this.handleComment.bind(this);
-        this.handleDurationChange = this.handleDurationChange.bind(this);
-        this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleTypeChange = this.handleTypeChange.bind(this);
-        // this.renderDurationRadio = this.renderDurationRadio.bind(this);
-        this.renderSelectOption = this.renderSelectOption.bind(this);
     }
 
     componentDidMount() {
@@ -60,18 +69,18 @@ export class PeriodsFormRow extends Component {
         this.selectType.focus();
     }
 
-    addDurationTime(period) {
+    addDurationTime(period: AssocPeriodType) {
         return {
             per_duration: Utils.calculateDuration(period, this.props.dayTargetTime),
         };
     }
 
-    handleTypeChange(event) {
+    handleTypeChange = (event: any) => {
         const { period } = this.state;
         const { types } = this.props;
 
         const type = findType(types, event.target.value);
-        const cfg = type.pty_config.types;
+        const cfg = R.pathOr({}, ['pty_config', 'types'])(type);
         const defaultDuration = R.prop('value')(cfg) || Utils.NONE;
         // ???   _.findKey(cfg, value => value) || Utils.NONE;
         const durationValue = period.duration;
@@ -94,9 +103,9 @@ export class PeriodsFormRow extends Component {
             per_break: breakDuration,
             duration: cfg[durationValue] ? durationValue : defaultDuration,
         });
-    }
+    };
 
-    handleDurationChange(event) {
+    handleDurationChange = (event: any) => {
         let period = {
             ...this.state.period,
             duration: event.target.value,
@@ -113,9 +122,9 @@ export class PeriodsFormRow extends Component {
         }
 
         this.updateState(period);
-    }
+    };
 
-    handleTimeChange(name, duration) {
+    handleTimeChange = (name: string, duration: DurationType) => {
         const value = {};
         value[name] = duration;
 
@@ -123,16 +132,16 @@ export class PeriodsFormRow extends Component {
             ...this.state.period,
             ...value,
         });
-    }
+    };
 
-    handleComment(event) {
+    handleComment = (event: any) => {
         this.updateState({
             ...this.state.period,
             per_comment: event.target.value,
         });
-    }
+    };
 
-    updateState(period) {
+    updateState(period: any) { // todo any
         // add duration per_duration object if needed
         const per_duration = this.addDurationTime(period);
         const updatedPeriod = {
@@ -143,11 +152,9 @@ export class PeriodsFormRow extends Component {
         this.setState({ period: updatedPeriod });
     }
 
-    renderSelectOption(type) {
-        return (
-            <option value={type.pty_id} key={type.pty_id}>{type.pty_name}</option>
-        );
-    }
+    renderSelectOption = (type: PeriodTypeType) => (
+        <option value={type.pty_id} key={type.pty_id}>{type.pty_name}</option>
+    );
 
     renderDurationRadio = R.curry((elementName, value, duration) => {
         const id = `${elementName}-${duration.name}`;
@@ -179,7 +186,7 @@ export class PeriodsFormRow extends Component {
         );
     }
 
-    ref = (selectType) => {
+    ref = (selectType: any) => {
         this.selectType = selectType;
     };
 
@@ -237,7 +244,7 @@ export class PeriodsFormRow extends Component {
                 placeholder: 'hh:mm',
                 value: period.per_duration,
                 required: true,
-                round: null,
+                round: 0,
                 negative: true,
             }];
         }

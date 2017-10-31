@@ -40,8 +40,7 @@ export type YearSelectionProps = {
 /**
  * YearSelection
  */
-export class YearSelection extends Component {
-    props: YearSelectionProps;
+export class YearSelection extends Component<YearSelectionProps> {
     today = Utils.getMomentToday();
 
     render() {

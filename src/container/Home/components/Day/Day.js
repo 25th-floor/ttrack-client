@@ -1,48 +1,53 @@
 // @flow
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 // TODO FIX eslint error
-import R from 'ramda';
-import moment from 'moment';
 import React, { Component } from 'react';
+import R from 'ramda';
+import moment, { type Moment } from 'moment';
 import classSet from 'class-set';
 
 import { Utils } from '@data';
+import type { AssocPeriodType, ProcessedDayType } from '@data/Constants/utils';
+import type { PeriodTypeType, UserType } from '@data/Resources/ResourcesTypes';
+
 import { PeriodsForm } from '../PeriodsForm';
 import { Period } from '../Period';
 
 import styles from './Day.module.css';
 
+export type SaveFn = (date: Moment, periods: Array<AssocPeriodType>, removed: Array<number>) => void;
 export type DayProps = {
+    day: ProcessedDayType,
+    activeMonth: Moment,
+    types: Array<PeriodTypeType>,
+    user: UserType,
+    onSaveDay: SaveFn,
+};
+
+type State = {
+    edit: boolean,
 };
 
 /**
  * Day
  */
-
-export class Day extends Component {
-    props: DayProps;
-    constructor(props, context) {
-        super(props, context);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleEditClick = this.handleEditClick.bind(this);
-
-        this.state = { edit: false };
-    }
+export class Day extends Component<DayProps, State> {
+    state = { edit: false };
 
     onSave = R.curry((date, periods, removed) => {
         this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
     });
 
-    handleEditClick() {
+    handleEditClick = () => {
         // don't var user get out with this click
         if (this.state.edit) return;
         this.setState({ edit: !this.state.edit });
-    }
+    };
 
-    handleCancel() {
+    handleCancel = () => {
         this.setState({ edit: false });
-    }
+    };
 
     render() {
         const { edit } = this.state;
@@ -115,7 +120,6 @@ export class Day extends Component {
         return (
             <fieldset
                 className={className}
-                key={fullDate}
                 onClick={dateOutOfEmploymentScope ? null : this.handleEditClick}
             >
                 <legend>
@@ -138,7 +142,6 @@ export class Day extends Component {
                 {edit ? <PeriodsForm
                     periods={day.periods}
                     types={this.props.types}
-                    date={date}
                     dayTargetTime={day.day_target_time}
                     onCancel={this.handleCancel}
                     onSave={onSave}

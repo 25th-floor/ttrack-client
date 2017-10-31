@@ -3,33 +3,40 @@
 // https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-element-interactions.md
 
 // @flow
-
-import R from 'ramda';
 import React, { Component } from 'react';
+import R from 'ramda';
+import type { Duration } from 'moment';
+
 import { Utils } from '@data';
+import type { AssocPeriodType } from '@data/Constants/utils';
+import type { PeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsFormRow } from '../PeriodsFormRow';
-
 import styles from './PeriodsForm.module.css';
 
+export type CancelFn = () => void;
+type SaveFn = (periods: Array<AssocPeriodType>, removed: Array<number>) => void;
 export type PeriodsFormProps = {
+    periods: Array<AssocPeriodType>,
+    types: Array<PeriodTypeType>,
+    dayTargetTime: Duration,
+    onCancel: CancelFn,
+    onSave: SaveFn,
+};
+
+type State = {
+    // periods: Array<AssocPeriodType>,
+    periods: Array<any>, // todo
+    removed: Array<number>,
 };
 
 /**
  * PeriodsForm
  */
+export class PeriodsForm extends Component<PeriodsFormProps, State> {
+    constructor(props: PeriodsFormProps) {
+        super(props);
 
-export class PeriodsForm extends Component {
-    props: PeriodsFormProps;
-
-    constructor(props, context) {
-        super(props, context);
-        this.handleAddPeriod = this.handleAddPeriod.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleRemovePeriod = this.handleRemovePeriod.bind(this);
-        this.handleSave = this.handleSave.bind(this);
-        this.handleUpdatePeriod = this.handleUpdatePeriod.bind(this);
         // add at least one element if turning to edit mode
         let { periods } = props;
         if (periods.length === 0) {
@@ -47,16 +54,16 @@ export class PeriodsForm extends Component {
     }
 
     // TODO pseudo generation of id ???
-    handleAddPeriod() {
+    handleAddPeriod = () => {
         const maxId = this.state.periods.reduce((max, fi) => Math.max(max, fi.per_id), 0);
 
         this.setState({
             periods: R.append({ id: maxId + 1 })(this.state.periods),
             removed: this.state.removed,
         });
-    }
+    };
 
-    handleRemovePeriod = (index) => {
+    handleRemovePeriod = (index: number) => {
         const toBeRemoved = this.state.periods[index];
         const { removed } = this.state;
         if (toBeRemoved.per_id) {
@@ -69,7 +76,7 @@ export class PeriodsForm extends Component {
             periods,
             removed,
         });
-    }
+    };
 
     handleUpdatePeriod = R.curry((index, period) => {
         const newPeriods = [
@@ -84,30 +91,30 @@ export class PeriodsForm extends Component {
             periods: newPeriods,
             removed: this.state.removed,
         });
-    })
+    });
 
-    handleSave(e) {
-        e.preventDefault();
+    handleSave = (event: any) => {
+        event.preventDefault();
         if (this.isValid()) {
             this.props.onSave(this.state.periods, this.state.removed);
         }
-    }
+    };
 
-    handleCancel(event) {
+    handleCancel = (event: any) => {
         event.preventDefault();
-        this.props.onCancel(event);
-    }
+        this.props.onCancel();
+    };
 
-    handleKeyDown(event) {
+    handleKeyDown = (event: any) => {
         if (event.keyCode === 13) {
             this.handleSave(event);
             // escape just cancel everything
         } else if (event.keyCode === 27) {
             this.handleCancel(event);
         }
-    }
+    };
 
-    isValid() {
+    isValid = () => {
         // no periods
         const noPeriods = this.state.periods.length === 0;
         const noRemoved = this.state.removed.length === 0;
@@ -116,7 +123,7 @@ export class PeriodsForm extends Component {
 
         if (!Utils.validatePeriods(this.state.periods)) return false;
         return true;
-    }
+    };
 
     render() {
         const { periods } = this.state;
@@ -129,7 +136,6 @@ export class PeriodsForm extends Component {
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
-                        key={`${(period.per_id || period.id)}-${index}`}
                         index={index}
                         onRemove={() => this.handleRemovePeriod(index)}
                         onUpdate={R.curry(this.handleUpdatePeriod)(index)}
@@ -149,13 +155,13 @@ export class PeriodsForm extends Component {
                             disabled={disableSaveButton}
                             onClick={this.handleSave}
                         >
-                        Speichern
+                            Speichern
                         </button>
                         <button
                             className={`${styles.btn} btn btn-default pull-right`}
                             onClick={this.handleCancel}
                         >
-                        Abbrechen
+                            Abbrechen
                         </button>
 
                         <button
