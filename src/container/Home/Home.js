@@ -1,7 +1,7 @@
 // @flow
 
-import moment from 'moment';
 import React, { Component } from 'react';
+import moment, { type Moment } from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -9,8 +9,9 @@ import { withRouter } from 'react-router-dom';
 import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
-import type { UserType } from '@data/Resources/ResourcesTypes';
-import type { LogoutActionType, AuthState } from '@data/Auth/AuthTypes';
+import type { AssocPeriodType, ProcessedWeekType } from '@data/Constants/utils';
+import type { UserType, PeriodTypeType } from '@data/Resources/ResourcesTypes';
+import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
@@ -31,26 +32,33 @@ const mapDispatchToProps = dispatch => ({
 export type MonthViewContainerProps = {
     user: UserType,
     isAuthenticated: boolean,
-    logout: LogoutActionType,
+    logout: (user: UserType) => void, // todo
+
+    // eslint-disable-next-line react/no-unused-prop-types
+    match: any, // todo router
 };
 
-export class MonthViewContainer extends Component {
-    props: MonthViewContainerProps;
+type State = {
+    weeks: Array<ProcessedWeekType>,
+    types: Array<PeriodTypeType>,
+};
 
-    async componentDidMount() {
+export class MonthViewContainer extends Component<MonthViewContainerProps, State> {
+    activeMonth: string;
+
+    componentDidMount() {
         this.setActiveMonth(this.props);
-        this.getWeeks = this.getWeeks.bind(this);
         this.getWeeks(this.activeMonth);
     }
 
-    setActiveMonth = ({ match }) => {
+    setActiveMonth = ({ match }: MonthViewContainerProps) => {
         this.activeMonth = match.params.date;
         if (!this.activeMonth) {
             this.activeMonth = Utils.getMomentToday();
         }
     };
 
-    async getWeeks(activeMonth) {
+    getWeeks = async (activeMonth: string) => {
         const date = moment(activeMonth, 'YYYY-MM', true).startOf('month');
         const boundaries = Utils.getFirstAndLastDayOfMonth(date);
         const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
@@ -72,18 +80,18 @@ export class MonthViewContainer extends Component {
         });
     }
 
-    handleLogout = (user) => {
+    handleLogout = (user: UserType) => {
         this.props.logout(user);
-    }
+    };
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: MonthViewContainerProps) {
         // will set active month from router params or uses the current month
         this.setActiveMonth(nextProps);
         // fetch timesheet from selected month
         this.getWeeks(this.activeMonth);
     }
 
-    handelSaveDay = async (date, periods, removed) => {
+    handelSaveDay = async (date: Moment, periods: Array<AssocPeriodType>, removed: Array<number>) => {
         const { user } = this.props;
         const res = await Resources.Timesheet.saveDay(
             user.usr_id,
@@ -140,5 +148,4 @@ export class MonthViewContainer extends Component {
     }
 }
 
-//    <Footer />
 export const Home = withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer));
