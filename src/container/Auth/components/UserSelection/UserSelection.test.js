@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { UserSelection } from './UserSelection';
-import styles from './UserSelection.module.css';
+import { UserSelection, User } from './UserSelection';
 
 describe('<UserSelection />', () => {
     const users = [{
@@ -29,7 +28,7 @@ describe('<UserSelection />', () => {
     />);
 
     it('should contain container and userSelection', () => {
-        expect(component.hasClass(`container ${styles.userSelection}`)).toEqual(true);
+        expect(component.hasClass('container')).toEqual(true);
     });
 
     it('should render two users', () => {
@@ -39,7 +38,7 @@ describe('<UserSelection />', () => {
 
     it('should render userItem', () => {
         const index = '0';
-        const item = shallow(component.instance().renderUserItem(users[index], index));
+        const item = shallow(<User user={users[index]} index={index} />);
         expect(item.key()).toBe(index);
         expect(item.hasClass('col-xs-6 col-sm-3')).toEqual(true);
     });

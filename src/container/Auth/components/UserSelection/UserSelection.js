@@ -20,7 +20,7 @@ type UserProps = {
     onSelect: SelectFn,
 };
 
-const User = (props: UserProps) => (
+export const User = (props: UserProps) => (
     <li key={props.index} className={`${styles.user} col-xs-6 col-sm-3`}>
         <button onClick={() => props.onSelect(props.user)} className={`${styles.userButton}`}>
             <div className={styles.imageContainer}>
