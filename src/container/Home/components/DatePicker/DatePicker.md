@@ -1,5 +1,5 @@
 Basic DatePicker:
 
-```example
+```disabled
 <DatePicker>DatePicker</DatePicker>
 ```

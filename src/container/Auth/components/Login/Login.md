@@ -1,5 +1,5 @@
 Basic Login:
 
-```example
+```disabled
 <Login>Login</Login>
 ```

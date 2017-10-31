@@ -1,9 +1,12 @@
 [ignore]
-/node_modules/
-.*/node_modules/redux-persist/.*
+    /node_modules/
+    .*/node_modules/redux-persist/.*
+    .*/node_modules/jss/.*
+    .*/node_modules/findup/.*
+    .*/styleguide.config.js.*
 [include]
-src/
-src/node_modules/
+    src/
+    src/node_modules/
 [libs]
 
 [lints]

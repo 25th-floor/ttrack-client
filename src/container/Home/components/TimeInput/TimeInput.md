@@ -1,5 +1,5 @@
 Basic TimeInput:
 
-```example
+```disabled
 <TimeInput>TimeInput</TimeInput>
 ```

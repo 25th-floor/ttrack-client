@@ -1,5 +1,5 @@
 Basic UserSelection:
 
-```example
+```disabled
 <UserSelection>UserSelection</UserSelection>
 ```

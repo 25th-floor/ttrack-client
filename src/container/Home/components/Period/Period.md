@@ -1,5 +1,5 @@
 Basic Period:
 
-```example
+```disabled
 <Period>Period</Period>
 ```

@@ -1,5 +1,5 @@
 Basic ProfileWidget:
 
-```example
+```disabled
 <ProfileWidget>ProfileWidget</ProfileWidget>
 ```

@@ -1,5 +1,5 @@
 Basic PeriodComment:
 
-```example
+```disabled
 <PeriodComment>PeriodComment</PeriodComment>
 ```

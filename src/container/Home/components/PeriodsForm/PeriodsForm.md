@@ -1,5 +1,5 @@
 Basic PeriodsForm:
 
-```example
+```disabled
 <PeriodsForm>PeriodsForm</PeriodsForm>
 ```
