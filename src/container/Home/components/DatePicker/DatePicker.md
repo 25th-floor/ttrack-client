@@ -1,4 +1,4 @@
-# DatePicker:
+DatePicker is used to navigate through
 
 - The DatePicker will set his active class via uri
 

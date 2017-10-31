@@ -10,8 +10,17 @@ import { MonthSelection } from '../MonthSelection';
 import styles from './DatePicker.module.css';
 
 export type DatePickerProps = {
+    /**
+     * activeMonth TODO could be a GLOBAL ?
+     */
     activeMonth: Moment,
+    /**
+     * array of moment to render years
+     */
     years: Array<Moment>,
+    /**
+     * array of moment to render years
+     */
     months: Array<Moment>,
 };
 
