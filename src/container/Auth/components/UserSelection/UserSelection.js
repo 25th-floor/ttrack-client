@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import R from 'ramda';
 import React, { Component } from 'react';
 import { Avatar } from '@components';
@@ -15,41 +14,43 @@ export type UserSelectionProps = {
 
 const SortByLastName = R.sortBy(R.compose(R.toLower, R.prop('usr_lastname')));
 
+type UserProps = {
+    user: UserType,
+    index: number,
+    onSelect: SelectFn,
+};
+
+const User = (props: UserProps) => (
+    <li key={props.index} className={`${styles.user} col-xs-6 col-sm-3`}>
+        <button onClick={() => props.onSelect(props.user)} className={`${styles.userButton}`}>
+            <div className={styles.imageContainer}>
+                <Avatar user={props.user} />
+            </div>
+            <span>
+                {props.user.usr_firstname}
+                <span className={styles.lastname}>
+                    {` ${props.user.usr_lastname}`}
+                </span>
+            </span>
+        </button>
+    </li>
+);
+
 /**
  * UserSelection
  */
 export class UserSelection extends Component<UserSelectionProps> {
-    renderUserItem = (user: UserType, index: number) => {
-        const { usr_firstname, usr_lastname } = user;
-        return (
-            <li key={index} className="col-xs-6 col-sm-3">
-                <a onClick={() => this.props.onSelect(user)} href="#" role="button" tabIndex="0">
-                    <div className={styles.imageContainer}>
-                        <Avatar user={user} />
-                    </div>
-                    <span>
-                        {usr_firstname}
-                        <span className={styles.lastname}>
-                            {` ${usr_lastname}`}
-                        </span>
-                    </span>
-                </a>
-            </li>
-        );
-    };
-
     render() {
         const users = SortByLastName(this.props.users);
         return (
-            <div className={`container ${styles.userSelection}`}>
+            <div className="container">
                 <ul className={`${styles.userlist} row`}>
-                    {users.map(this.renderUserItem)}
+                    {users.map((user, index) => (
+                        <User user={user} index={index} key={index} onSelect={this.props.onSelect} />
+                    ))}
                 </ul>
                 <div className="clear" />
             </div>
         );
     }
 }
-
-export default UserSelection;
-
