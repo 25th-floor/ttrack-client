@@ -17,7 +17,7 @@ module.exports = {
         },
         {
             name: 'MonthView Containers',
-            components: 'src/container/Home/**/*.js',
+            components: 'src/container/MonthView/**/*.js',
         },
     ],
     ignore: [
