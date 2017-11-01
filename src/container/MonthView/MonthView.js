@@ -29,6 +29,30 @@ const mapDispatchToProps = dispatch => ({
     logout: bindActionCreators(Actions.Auth.logout, dispatch),
 });
 
+type BoundaryType = {
+    firstDay: Moment,
+    lastDay: Moment,
+};
+
+function getFirstAndLastDayOfMonth(month: Moment): BoundaryType {
+    const ret = {};
+    ret.firstDay = month.clone();
+
+    // get first day of that month
+    ret.firstDay.startOf('month');
+
+    // get last day of that month
+    ret.lastDay = ret.firstDay.clone().endOf('month');
+
+    // go back to last monday before first day of month
+    ret.firstDay.subtract(ret.firstDay.isoWeekday() - 1, 'day');
+
+    // extend last day to next sunday
+    ret.lastDay.add(7 - ret.lastDay.isoWeekday(), 'day');
+
+    return ret;
+}
+
 export type MonthViewContainerProps = {
     user: UserType,
     isAuthenticated: boolean,
@@ -60,7 +84,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
 
     getWeeks = async (activeMonth: string) => {
         const date = moment(activeMonth, 'YYYY-MM', true).startOf('month');
-        const boundaries = Utils.getFirstAndLastDayOfMonth(date);
+        const boundaries = getFirstAndLastDayOfMonth(date);
         const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
             this.props.user,
             boundaries.firstDay.format('YYYY-MM-DD'),
@@ -78,7 +102,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
             weeks,
             types: periodTypes,
         });
-    }
+    };
 
     handleLogout = (user: UserType) => {
         this.props.logout(user);
