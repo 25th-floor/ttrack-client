@@ -1,0 +1,48 @@
+FROM node:8.1.4
+
+ARG AS_USER=root
+ARG AS_UID=0
+ARG AS_GID=0
+
+ENV APPDIR /usr/src/app
+ENV DEBIAN_FRONTEND noninteractive
+ENV REUID_UID 2342
+
+#RUN [ ${AS_UID} -gt 500 -a $(getent passwd ${AS_UID}) ] && \
+#		{ REUID_USER=$(getent passwd ${AS_UID} | awk -F: '{print $1}') \
+#		&& usermod -u ${REUID_UID} ${REUID_USER} \
+#		&& find / -path /proc -prune -o -uid ${AS_UID} -exec chown ${REUID_USER} {} \; -print \
+#		&& echo "-----> Changed UID for ${REUID_USER} to ${REUID_UID}"; \
+#		} || { echo -n ""; } \
+#	&& [ ${AS_USER} != 'root' ] && { \
+#		useradd ${AS_USER} -u ${AS_UID} -g ${AS_GID}; \
+#		} || { echo -n ""; } \
+#	&& echo "-----> Preparing for user [`id ${AS_USER}`]" \
+#	&& mkdir -p ${APPDIR} \
+#	&& mkdir -p /home/${AS_USER} \
+#	&& chown ${AS_USER} ${APPDIR} /home/${AS_USER}
+
+#USER ${AS_USER}
+WORKDIR ${APPDIR}
+
+# install dependencies
+COPY package.json ${APPDIR}
+COPY yarn.lock ${APPDIR}
+RUN yarn install
+
+# Linting
+COPY .eslintrc ${APPDIR}
+COPY .eslintignore ${APPDIR}
+
+# flow
+COPY .flowconfig ${APPDIR}
+
+# Entrypoint related
+COPY docker/dev/entrypoint.sh /entrypoint.sh
+COPY docker/dev/entrypoint.d /entrypoint.d
+
+# Applicatin sources
+COPY / ${APPDIR}
+
+ENTRYPOINT ["/entrypoint.sh"]
+# CMD ["npm", "start"]
