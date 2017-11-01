@@ -33,7 +33,13 @@ const Year = ({ year, activeMonth, today }: YearProps) => {
 };
 
 export type YearSelectionProps = {
+    /**
+     * Active selected month, needed to know if we need to show the today button
+     */
     activeMonth: Moment,
+    /**
+     * Array of Moments with the Years to show
+     */
     years: Array<Moment>,
 };
 
