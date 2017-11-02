@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import { Resources, Utils } from '@data';
-import { Footer } from '@components';
+import { Footer, Navigation } from '@components';
 
 import type { ApiVacationsType, ApiVacationType } from '@data/Resources/ResourcesTypes';
 import type { AuthState } from '@data/Auth/AuthTypes';
@@ -89,6 +89,7 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
         return (
             <div className={styles['site-container']}>
                 <div className="container-fluid">
+                    <Navigation />
                     <fieldset className="hidden-xs">
                         <dl>
                             <dt className="col-sm-2 col-md-1">Datum</dt>
