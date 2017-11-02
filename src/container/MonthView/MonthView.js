@@ -116,9 +116,9 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         const activeMonth = moment(this.activeMonth, 'YYYY-MM', true).startOf('month');
         return (
             <div className={styles['site-container']}>
+                <Navigation />
                 <div className="container-fluid">
                     <div id={styles.month}>
-                        <Navigation />
                         <div className={styles.pageHeader}>
                             <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
                             <DatePicker
@@ -140,16 +140,16 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
                             </dl>
                         </fieldset>
                     </div>
+                    {this.state
+                    && <Weeks
+                        weeks={this.state.weeks}
+                        activeMonth={activeMonth}
+                        types={this.state.types}
+                        user={user}
+                        onSaveDay={this.handelSaveDay}
+                    />}
+                    <Footer />
                 </div>
-                {this.state
-                && <Weeks
-                    weeks={this.state.weeks}
-                    activeMonth={activeMonth}
-                    types={this.state.types}
-                    user={user}
-                    onSaveDay={this.handelSaveDay}
-                />}
-                <Footer />
             </div>
         );
     }

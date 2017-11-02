@@ -88,8 +88,8 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
         if (!isAuthenticated) return null;
         return (
             <div className={styles['site-container']}>
+                <Navigation />
                 <div className="container-fluid">
-                    <Navigation />
                     <fieldset className="hidden-xs">
                         <dl>
                             <dt className="col-sm-2 col-md-1">Datum</dt>
@@ -98,9 +98,9 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
                             <dt className="col-sm-6 col-md-7 col-lg-8">Kommentar</dt>
                         </dl>
                     </fieldset>
+                    {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
+                    <Footer />
                 </div>
-                {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
-                <Footer />
             </div>
         );
     }
