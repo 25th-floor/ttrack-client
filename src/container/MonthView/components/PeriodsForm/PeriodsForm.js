@@ -9,7 +9,7 @@ import type { Duration } from 'moment';
 
 import { Utils } from '@data';
 import type { AssocPeriodType } from '@data/Constants/utils';
-import type { PeriodTypeType } from '@data/Resources/ResourcesTypes';
+import type { ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsFormRow } from '../PeriodsFormRow';
 import styles from './PeriodsForm.module.css';
@@ -18,7 +18,7 @@ export type CancelFn = () => void;
 type SaveFn = (periods: Array<AssocPeriodType>, removed: Array<number>) => void;
 export type PeriodsFormProps = {
     periods: Array<AssocPeriodType>,
-    types: Array<PeriodTypeType>,
+    types: Array<ApiPeriodTypeType>,
     dayTargetTime: Duration,
     onCancel: CancelFn,
     onSave: SaveFn,

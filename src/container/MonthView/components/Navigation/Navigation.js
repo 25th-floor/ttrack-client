@@ -3,16 +3,16 @@
 import React from 'react';
 import { Motto } from '@components';
 
-import type { UserType } from '@data/Resources';
+import type { ApiUserType } from '@data/Resources';
 
 import { ProfileWidget } from '../ProfileWidget';
 
 import styles from './Navigation.module.css';
 
-type LogoutFn = (user: UserType) => void; // todo
+type LogoutFn = (user: ApiUserType) => void; // todo
 export type NavigationProps = {
     onLogout: LogoutFn,
-    user: UserType,
+    user: ApiUserType,
 };
 
 /**

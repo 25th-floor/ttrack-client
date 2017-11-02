@@ -10,7 +10,7 @@ import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
 import type { AssocPeriodType, ProcessedWeekType } from '@data/Constants/utils';
-import type { UserType, PeriodTypeType } from '@data/Resources/ResourcesTypes';
+import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { Navigation } from './components/Navigation';
@@ -54,9 +54,9 @@ function getFirstAndLastDayOfMonth(month: Moment): BoundaryType {
 }
 
 export type MonthViewContainerProps = {
-    user: UserType,
+    user: ApiUserType,
     isAuthenticated: boolean,
-    logout: (user: UserType) => void, // todo
+    logout: (user: ApiUserType) => void, // todo
 
     // eslint-disable-next-line react/no-unused-prop-types
     match: any, // todo router
@@ -64,7 +64,7 @@ export type MonthViewContainerProps = {
 
 type State = {
     weeks: Array<ProcessedWeekType>,
-    types: Array<PeriodTypeType>,
+    types: Array<ApiPeriodTypeType>,
 };
 
 export class MonthViewContainer extends Component<MonthViewContainerProps, State> {
@@ -104,7 +104,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         });
     };
 
-    handleLogout = (user: UserType) => {
+    handleLogout = (user: ApiUserType) => {
         this.props.logout(user);
     };
 

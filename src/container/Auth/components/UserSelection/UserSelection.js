@@ -2,18 +2,18 @@
 import R from 'ramda';
 import React, { Component } from 'react';
 import { Avatar } from '@components';
-import type { UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import styles from './UserSelection.module.css';
 
 const SortByLastName = R.sortBy(R.compose(R.toLower, R.prop('usr_lastname')));
 
-export type SelectFn = (user: UserType) => void;
+export type SelectFn = (user: ApiUserType) => void;
 type UserProps = {
     /**
-     * UserType
+     * ApiUserType
      */
-    user: UserType,
+    user: ApiUserType,
     /**
      * number for the react key
      */
@@ -42,9 +42,9 @@ export const User = (props: UserProps) => (
 
 export type UserSelectionProps = {
     /**
-     * array of UserType to select the user
+     * array of ApiUserType to select the user
      */
-    users: Array<UserType>,
+    users: Array<ApiUserType>,
     /**
      * Function which is called if user is selected
      */

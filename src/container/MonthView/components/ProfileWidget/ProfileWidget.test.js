@@ -1,6 +1,6 @@
 /* import React from 'react';
 import { shallow } from 'enzyme';
-import type { UserType } from '@data/Resources';
+import type { ApiUserType } from '@data/Resources';
 import { ProfileWidget } from './ProfileWidget'; */
 
 require('jasmine-check').install();

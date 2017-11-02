@@ -6,7 +6,7 @@ import type { Moment, Duration } from 'moment';
 
 import { Utils } from '@data';
 import type { ProcessedWeekType, ProcessedDayType } from '@data/Constants/utils';
-import type { PeriodTypeType, UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiPeriodTypeType, ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import { Day, type SaveFn } from '../Day';
 
@@ -15,8 +15,8 @@ import styles from './Weeks.module.css';
 export type WeeksProps = {
     weeks: Array<ProcessedWeekType>,
     activeMonth: Moment,
-    types: Array<PeriodTypeType>,
-    user: UserType,
+    types: Array<ApiPeriodTypeType>,
+    user: ApiUserType,
     onSaveDay: SaveFn,
 };
 

@@ -6,13 +6,13 @@ import R from 'ramda';
 
 import { Utils } from '@data';
 import type { AssocPeriodType } from '@data/Constants/utils';
-import type { DurationType, PeriodTypeType } from '@data/Resources/ResourcesTypes';
+import type { DurationType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 import { TimeInput } from '../TimeInput';
 
 import styles from './PeriodsFormRow.module.css';
 
-function findType(types: Array<PeriodTypeType>, value: string): PeriodTypeType | {} {
+function findType(types: Array<ApiPeriodTypeType>, value: string): ApiPeriodTypeType | {} {
     return types.find(type => type.pty_id === value) || {};
 }
 
@@ -21,7 +21,7 @@ export type RemoveFn = (index: number) => void;
 export type UpdateFn = (index: number, period: any) => void; // todo
 export type PeriodsFormRowProps = {
     period: AssocPeriodType,
-    types: Array<PeriodTypeType>,
+    types: Array<ApiPeriodTypeType>,
     dayTargetTime: DurationType,
     index: number,
     onRemove: RemoveFn,
@@ -152,7 +152,7 @@ export class PeriodsFormRow extends Component<PeriodsFormRowProps, State> {
         this.setState({ period: updatedPeriod });
     }
 
-    renderSelectOption = (type: PeriodTypeType) => (
+    renderSelectOption = (type: ApiPeriodTypeType) => (
         <option value={type.pty_id} key={type.pty_id}>{type.pty_name}</option>
     );
 

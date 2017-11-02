@@ -2,12 +2,12 @@
 import React from 'react';
 import { Avatar } from '@components';
 
-import type { UserType } from '@data/Resources';
+import type { ApiUserType } from '@data/Resources';
 
 import styles from './ProfileWidget.module.css';
 
 export type ProfileWidgetProps = {
-    user: UserType,
+    user: ApiUserType,
 };
 
 /**

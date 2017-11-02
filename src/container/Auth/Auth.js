@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 
 import { Actions, Resources } from '@data';
-import type { UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiUserType } from '@data/Resources/ResourcesTypes';
 import typeof { login } from '@data/Auth/AuthAction';
 
 import { Login } from './components/Login';
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 type State = {
-    users: Array<UserType>,
+    users: Array<ApiUserType>,
 };
 
 /**
@@ -47,7 +47,7 @@ export class AuthContainer extends Component<AuthProps, State> {
         this.loadUsers();
     }
 
-    handleLogin = (user: UserType) => {
+    handleLogin = (user: ApiUserType) => {
         this.props.login(user);
         this.props.history.push('/home');
     };

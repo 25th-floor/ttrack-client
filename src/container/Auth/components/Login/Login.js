@@ -2,7 +2,7 @@
 import React from 'react';
 import { Footer } from '@components';
 
-import type { UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import { UserSelection, type SelectFn } from '../UserSelection';
 import { Brand } from '../Brand';
@@ -12,9 +12,9 @@ import styles from './Login.module.css';
 
 export type LoginProps = {
     /**
-     * array of UserType to select the user
+     * array of ApiUserType to select the user
      */
-    users: Array<UserType>,
+    users: Array<ApiUserType>,
     /**
      * Function which is called if user is selected
      */

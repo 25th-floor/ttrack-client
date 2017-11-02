@@ -8,7 +8,7 @@ import classSet from 'class-set';
 
 import { Utils } from '@data';
 import type { AssocPeriodType, ProcessedDayType } from '@data/Constants/utils';
-import type { PeriodTypeType, UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiPeriodTypeType, ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsForm } from '../PeriodsForm';
 import { Periods } from '../Period';
@@ -28,11 +28,11 @@ export type DayProps = {
     /**
      * Array of PeriodTypes
      */
-    types: Array<PeriodTypeType>,
+    types: Array<ApiPeriodTypeType>,
     /**
-     * UserType element
+     * ApiUserType element
      */
-    user: UserType,
+    user: ApiUserType,
     onSaveDay: SaveFn,
 };
 
