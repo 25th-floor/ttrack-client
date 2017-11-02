@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import R from 'ramda';
 
 import { Utils } from '@data';
-import type { AssocPeriodType } from '@data/Constants/utils';
+import type { ProcessedPeriodType } from '@data/Constants/utils';
 import type { DurationType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 import { TimeInput } from '../TimeInput';
@@ -17,10 +17,10 @@ function findType(types: Array<ApiPeriodTypeType>, value: string): ApiPeriodType
 }
 
 export type RemoveFn = (index: number) => void;
-// export type UpdateFn = (index: number, period: AssocPeriodType) => void;
+// export type UpdateFn = (index: number, period: ProcessedPeriodType) => void;
 export type UpdateFn = (index: number, period: any) => void; // todo
 export type PeriodsFormRowProps = {
-    period: AssocPeriodType,
+    period: ProcessedPeriodType,
     types: Array<ApiPeriodTypeType>,
     dayTargetTime: DurationType,
     index: number,
@@ -29,7 +29,7 @@ export type PeriodsFormRowProps = {
 };
 
 type State = {
-    period: AssocPeriodType,
+    period: ProcessedPeriodType,
 };
 
 /**
@@ -69,7 +69,7 @@ export class PeriodsFormRow extends Component<PeriodsFormRowProps, State> {
         this.selectType.focus();
     }
 
-    addDurationTime(period: AssocPeriodType) {
+    addDurationTime(period: ProcessedPeriodType) {
         return {
             per_duration: Utils.calculateDuration(period, this.props.dayTargetTime),
         };

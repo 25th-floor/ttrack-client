@@ -6,14 +6,14 @@ import moment from 'moment';
 import 'moment-duration-format';
 
 import { Utils } from '@data';
-import type { AssocPeriodType } from '@data/Constants/utils';
+import type { ProcessedPeriodType } from '@data/Constants/utils';
 
 import { PeriodComment } from '../PeriodComment';
 
 import styles from './Period.module.css';
 
 export type PeriodProp = {
-    period: AssocPeriodType,
+    period: ProcessedPeriodType,
     index: number,
 };
 
@@ -49,7 +49,7 @@ export const Period = ({ period, index }: PeriodProp) => {
 };
 
 export type PeriodsProp = {
-    periods: Array<AssocPeriodType>,
+    periods: Array<ProcessedPeriodType>,
 };
 
 /**

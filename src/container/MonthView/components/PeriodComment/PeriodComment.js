@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { Utils } from '@data';
-import type { AssocPeriodType } from '@data/Constants/utils';
+import type { ProcessedPeriodType } from '@data/Constants/utils';
 
 import styles from './PeriodComment.module.css';
 
 export type PeriodCommentProps = {
-    period: AssocPeriodType,
+    period: ProcessedPeriodType,
 };
 
 /**

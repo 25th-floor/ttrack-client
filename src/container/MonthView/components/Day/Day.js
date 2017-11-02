@@ -7,7 +7,7 @@ import moment, { type Moment } from 'moment';
 import classSet from 'class-set';
 
 import { Utils } from '@data';
-import type { AssocPeriodType, ProcessedDayType } from '@data/Constants/utils';
+import type { ProcessedPeriodType, ProcessedDayType } from '@data/Constants/utils';
 import type { ApiPeriodTypeType, ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsForm } from '../PeriodsForm';
@@ -15,7 +15,7 @@ import { Periods } from '../Period';
 
 import styles from './Day.module.css';
 
-export type SaveFn = (date: Moment, periods: Array<AssocPeriodType>, removed: Array<number>) => any; // void or promise
+export type SaveFn = (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => any; // void or promise
 export type DayProps = {
     /**
      * Day

@@ -8,16 +8,16 @@ import R from 'ramda';
 import type { Duration } from 'moment';
 
 import { Utils } from '@data';
-import type { AssocPeriodType } from '@data/Constants/utils';
+import type { ProcessedPeriodType } from '@data/Constants/utils';
 import type { ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsFormRow } from '../PeriodsFormRow';
 import styles from './PeriodsForm.module.css';
 
 export type CancelFn = () => void;
-type SaveFn = (periods: Array<AssocPeriodType>, removed: Array<number>) => void;
+type SaveFn = (periods: Array<ProcessedPeriodType>, removed: Array<number>) => void;
 export type PeriodsFormProps = {
-    periods: Array<AssocPeriodType>,
+    periods: Array<ProcessedPeriodType>,
     types: Array<ApiPeriodTypeType>,
     dayTargetTime: Duration,
     onCancel: CancelFn,
@@ -25,7 +25,7 @@ export type PeriodsFormProps = {
 };
 
 type State = {
-    // periods: Array<AssocPeriodType>,
+    // periods: Array<ProcessedPeriodType>,
     periods: Array<any>, // todo
     removed: Array<number>,
 };

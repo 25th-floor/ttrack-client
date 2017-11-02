@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { Actions, Utils, Resources } from '@data';
 import { Footer } from '@components';
 
-import type { AssocPeriodType, ProcessedWeekType } from '@data/Constants/utils';
+import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 import type { AuthState } from '@data/Auth/AuthTypes';
 
@@ -115,7 +115,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         this.getWeeks(this.activeMonth);
     }
 
-    handelSaveDay = async (date: Moment, periods: Array<AssocPeriodType>, removed: Array<number>) => {
+    handelSaveDay = async (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => {
         const { user } = this.props;
         const res = await Resources.Timesheet.saveDay(
             user.usr_id,
