@@ -14,7 +14,7 @@ import { AppContainer } from 'react-hot-loader';
 
 import { store, Utils } from '@data';
 
-import { MonthView, Auth as Authentication } from './container';
+import { MonthView, Auth as Authentication, VacationsOverview } from './container';
 
 const today = moment().format('YYYY-MM');
 const Index = () => <Redirect push to={`/month/${today}`} />;
@@ -68,6 +68,7 @@ export const App = () => (
                 <div>
                     <Switch>
                         <PrivateRoute path="/month/:date" validation={dateValidation} component={MonthView} />
+                        <PrivateRoute path="/vacations" component={VacationsOverview} />
                         <PrivateRoute path="/" component={Index} />
                     </Switch>
                     <Route exact path="/auth" component={Authentication} />
