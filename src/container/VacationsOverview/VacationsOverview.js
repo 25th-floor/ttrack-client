@@ -6,14 +6,12 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import { Resources, Utils } from '@data';
-import { Footer, Navigation } from '@components';
+import { Page } from '@components';
 
 import type { ApiVacationsType, ApiVacationType } from '@data/Resources/ResourcesTypes';
 import type { AuthState } from '@data/Auth/AuthTypes';
 
-// import { Navigation } from './components/Navigation';
-
-import styles from './VacationsOverview.module.css';
+// import styles from './VacationsOverview.module.css';
 
 const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
     isAuthenticated,
@@ -87,21 +85,17 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
         const { isAuthenticated } = this.props;
         if (!isAuthenticated) return null;
         return (
-            <div className={styles['site-container']}>
-                <Navigation />
-                <div className="container-fluid">
-                    <fieldset className="hidden-xs">
-                        <dl>
-                            <dt className="col-sm-2 col-md-1">Datum</dt>
-                            <dt className="hidden-sm col-sm-1">Sollzeit</dt>
-                            <dt className="col-sm-4 col-md-3 col-lg-2">User</dt>
-                            <dt className="col-sm-6 col-md-7 col-lg-8">Kommentar</dt>
-                        </dl>
-                    </fieldset>
-                    {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
-                    <Footer />
-                </div>
-            </div>
+            <Page>
+                <fieldset className="hidden-xs">
+                    <dl>
+                        <dt className="col-sm-2 col-md-1">Datum</dt>
+                        <dt className="hidden-sm col-sm-1">Sollzeit</dt>
+                        <dt className="col-sm-4 col-md-3 col-lg-2">User</dt>
+                        <dt className="col-sm-6 col-md-7 col-lg-8">Kommentar</dt>
+                    </dl>
+                </fieldset>
+                {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
+            </Page>
         );
     }
 }

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { Utils, Resources } from '@data';
-import { Footer, Navigation } from '@components';
+import { Page } from '@components';
 
 import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
@@ -115,42 +115,38 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         if (!isAuthenticated) return null;
         const activeMonth = moment(this.activeMonth, 'YYYY-MM', true).startOf('month');
         return (
-            <div className={styles['site-container']}>
-                <Navigation />
-                <div className="container-fluid">
-                    <div id={styles.month}>
-                        <div className={styles.pageHeader}>
-                            <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
-                            <DatePicker
-                                activeMonth={activeMonth}
-                                years={Utils.getYearsForUser(user, Utils.getMomentToday())}
-                                months={Utils.getMonthsForUser(user, activeMonth)}
-                            />
-                            <div className="clearfix" />
-                        </div>
-
-                        <fieldset className={`${styles.monthHeader}`}>
-                            <dl>
-                                <dt className="col-sm-3 col-md-1 col-lg-1">Datum</dt>
-                                <dt className="hidden-sm col-md-2 tt-col-lg-1 col-lg-1">Wochentag</dt>
-                                <dt className="col-sm-1 col-lg-1">Arbeitszeit</dt>
-                                <dt className="col-sm-1 tt-col-lg-1">Pause</dt>
-                                <dt className="col-sm-1 col-lg-1">Differenz</dt>
-                                <dt className="col-sm-4 col-lg-6">Kommentar</dt>
-                            </dl>
-                        </fieldset>
+            <Page>
+                <div id={styles.month}>
+                    <div className={styles.pageHeader}>
+                        <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
+                        <DatePicker
+                            activeMonth={activeMonth}
+                            years={Utils.getYearsForUser(user, Utils.getMomentToday())}
+                            months={Utils.getMonthsForUser(user, activeMonth)}
+                        />
+                        <div className="clearfix" />
                     </div>
-                    {this.state
-                    && <Weeks
-                        weeks={this.state.weeks}
-                        activeMonth={activeMonth}
-                        types={this.state.types}
-                        user={user}
-                        onSaveDay={this.handelSaveDay}
-                    />}
-                    <Footer />
+
+                    <fieldset className={`${styles.monthHeader}`}>
+                        <dl>
+                            <dt className="col-sm-3 col-md-1 col-lg-1">Datum</dt>
+                            <dt className="hidden-sm col-md-2 tt-col-lg-1 col-lg-1">Wochentag</dt>
+                            <dt className="col-sm-1 col-lg-1">Arbeitszeit</dt>
+                            <dt className="col-sm-1 tt-col-lg-1">Pause</dt>
+                            <dt className="col-sm-1 col-lg-1">Differenz</dt>
+                            <dt className="col-sm-4 col-lg-6">Kommentar</dt>
+                        </dl>
+                    </fieldset>
                 </div>
-            </div>
+                {this.state
+                && <Weeks
+                    weeks={this.state.weeks}
+                    activeMonth={activeMonth}
+                    types={this.state.types}
+                    user={user}
+                    onSaveDay={this.handelSaveDay}
+                />}
+            </Page>
         );
     }
 }
