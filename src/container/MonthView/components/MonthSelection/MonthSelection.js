@@ -54,7 +54,7 @@ export class MonthSelection extends Component<MonthSelectionProps> {
         const { months, activeMonth } = this.props;
 
         return (
-            <DatePickerContainer title="Month">
+            <DatePickerContainer title="Month" className={styles.container}>
                 {months.map(m => (
                     <Month month={m} activeMonth={activeMonth} today={this.today} key={m.format('M')} />))}
             </DatePickerContainer>

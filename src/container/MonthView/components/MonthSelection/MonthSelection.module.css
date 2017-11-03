@@ -1,4 +1,8 @@
 /* month */
+.container {
+    background : rgba(141, 149, 153, 0.4);
+}
+
 .today a {
     background : rgba(47, 160, 132, 0.4);
 }
