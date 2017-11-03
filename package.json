@@ -47,7 +47,8 @@
     "react-styleguidist": "git://github.com/25th-floor/react-styleguidist.git#091dde8",
     "redux": "^3.7.2",
     "redux-persist": "^4.10.1",
-    "rest": "^2.0.0"
+    "rest": "^2.0.0",
+    "wfk-roboto": "^1.0.7"
   },
   "devDependencies": {
     "autoprefixer": "7.1.2",
