@@ -1,0 +1,13 @@
+fieldset.vacation {
+    background    : white;
+    border-bottom : 1px solid #ddd;
+    padding       : 5px;
+    cursor        : pointer;
+    min-height    : 3.5em;
+    position      : relative;
+}
+
+fieldset.vacation:hover {
+    background : rgba(180, 225, 213, 0.31);
+}
+
