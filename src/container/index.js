@@ -1,6 +1,6 @@
 // @flow
 
-export { Home } from './Home';
+export { MonthView } from './MonthView';
 
 export { Auth } from './Auth';
 export type { AuthProps } from './Auth';

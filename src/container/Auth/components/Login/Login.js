@@ -2,7 +2,7 @@
 import React from 'react';
 import { Footer } from '@components';
 
-import type { UserType } from '@data/Resources/ResourcesTypes';
+import type { ApiUserType } from '@data/Resources/ResourcesTypes';
 
 import { UserSelection, type SelectFn } from '../UserSelection';
 import { Brand } from '../Brand';
@@ -11,7 +11,13 @@ import { Brand } from '../Brand';
 import styles from './Login.module.css';
 
 export type LoginProps = {
-    users: Array<UserType>,
+    /**
+     * array of ApiUserType to select the user
+     */
+    users: Array<ApiUserType>,
+    /**
+     * Function which is called if user is selected
+     */
     onUserSelect: SelectFn,
 };
 
@@ -25,3 +31,5 @@ export const Login = ({ users, onUserSelect }: LoginProps) => (
         <Footer />
     </div>
 );
+
+export default Login;

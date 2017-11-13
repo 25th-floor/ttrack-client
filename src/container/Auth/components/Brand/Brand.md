@@ -1,7 +1,6 @@
-- Basic Brand:
-- Basic Brand:
-- Basic Brand:
-
-```disabled
-<Brand />
+Auth Brand:
+```jsx
+<div style={{ position: 'relative', backgroundColor: '#CCC' }}>
+    <Brand />
+</div>
 ```
