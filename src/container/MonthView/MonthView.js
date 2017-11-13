@@ -11,7 +11,6 @@ import { Footer } from '@components';
 
 import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
-import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
@@ -19,9 +18,9 @@ import { Weeks } from './components/Weeks';
 
 import styles from './MonthView.module.css';
 
-const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
-    isAuthenticated,
-    user,
+const mapStateToProps = ({ auth }, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     history,
 });
 
