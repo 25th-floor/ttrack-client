@@ -74,6 +74,7 @@ start:: ##@Compose Start the client development stack in detached mode
 	$(shell_env) docker-compose \
 		-f docker-compose.dev.yml \
 		up \
+		--build \
 		-d
 
 .PHONY: stop
