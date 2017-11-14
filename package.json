@@ -27,7 +27,7 @@
     "eslint": "eslint src",
     "flow": "flow",
     "jest": "jest",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --no-cache"
   },
   "lint-staged": {
     "*.js": [
