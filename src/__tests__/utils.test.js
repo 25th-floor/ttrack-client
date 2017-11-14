@@ -1,12 +1,6 @@
 import { Utils } from '@data';
 
 describe('Utils', () => {
-    xit('should return a fixed Durations fn fixDurations', () => {
-        const fn = Utils.fixDurations;
-        // const period = {};
-        expect(fn({})).toEqual({});
-    });
-
     it('should check if string is a isValidTimeString', () => {
         const a = Utils.isValidTimeString('12:34');
         expect(a).toBe(true);

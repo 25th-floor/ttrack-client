@@ -8,16 +8,15 @@ node_js:
   - "8"
 
 before_install:
-  - yarn run build
-  - make GIT_COMMIT="$TRAVIS_COMMIT" VERSION=$TRAVIS_BUILD_NUMBER build
-  - make start
-  - docker-compose -f docker-compose.dev.yml ps
+  - yarn install
 
 script:
-  - make yarn test
+  - yarn test
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    yarn build
+    make GIT_COMMIT="$TRAVIS_COMMIT" VERSION=$TRAVIS_BUILD_NUMBER build
     make VERSION=$TRAVIS_BUILD_NUMBER ship;
     fi

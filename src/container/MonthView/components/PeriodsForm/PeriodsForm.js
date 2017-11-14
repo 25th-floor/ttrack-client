@@ -133,6 +133,7 @@ export class PeriodsForm extends Component<PeriodsFormProps, State> {
             <div className={styles.form}>
                 <form onSubmit={this.handleSave} onKeyDown={this.handleKeyDown}>
                     {periods.map((period, index) => (<PeriodsFormRow
+                        key={`${(period.per_id || period.id)}-${index}`}
                         period={period}
                         types={this.props.types}
                         dayTargetTime={this.props.dayTargetTime}
