@@ -39,6 +39,14 @@ ship:: ##@Docker Ship the image (build, ship)
 # All things deployment - beware
 # -----------------------------------------------------------------------------
 
+.PHONY: assets
+assets:: ##@Helpers Run tests within the client container
+	docker exec ttrack-client yarn build
+
+.PHONY: test
+test:: ##@Helpers Run tests within the client container
+	docker exec -e NODE_ENV=test ttrack-client yarn test
+
 # -----------------------------------------------------------------------------
 # All the convenient things for developers
 # -----------------------------------------------------------------------------

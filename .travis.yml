@@ -3,18 +3,17 @@ sudo: required
 services:
   - docker
 
-language: node_js
-
 before_install:
   - make start
   - docker-compose -f docker-compose.dev.yml ps
 
 script:
-  - make yarn test
+  - make test
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    make assets
     make GIT_COMMIT="$TRAVIS_COMMIT" VERSION=$TRAVIS_BUILD_NUMBER build
     make VERSION=$TRAVIS_BUILD_NUMBER ship;
     fi
