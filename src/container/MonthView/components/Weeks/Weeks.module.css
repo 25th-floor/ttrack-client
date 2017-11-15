@@ -1,0 +1,57 @@
+/* global timetrack variables */
+
+
+/* navigation */
+
+.weeks {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+@media (min-width: 768px) {
+    .weeks {
+        margin: 0;
+    }
+}
+
+fieldset.week {
+    background-color: white;
+}
+
+fieldset.week dl {
+    display: inline;
+}
+
+fieldset.week dl dt {
+    display: none;
+}
+
+fieldset.week>legend {
+    display: none;
+}
+
+fieldset.weekSumRow {
+    background-color: #ededed;
+    border-bottom: 2px solid #ccc;
+    min-height: 3.5em;
+}
+
+fieldset.weekSumRow legend,
+fieldset.weekSumRow .th {
+    display: none;
+}
+
+fieldset.weekSumRow dl.weekCarry {
+    font-weight: bold;
+}
+
+@media (min-width: 1200px) {
+    fieldset.weekSumRow dl.weekCarry {
+        display: block;
+        clear: both;
+    }
+}
+
+fieldset.weekSumRow dl.weekCarry dt {
+    display: block;
+}

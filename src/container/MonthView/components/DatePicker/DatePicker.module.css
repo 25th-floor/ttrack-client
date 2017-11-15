@@ -1,0 +1,23 @@
+/* global timetrack variables */
+
+
+/* navigation */
+
+.dateSelection .touchVersion {
+    display: block;
+    margin-top: -8px;
+}
+
+@media (min-width: 768px) {
+    .dateSelection {
+        float: right;
+    }
+
+    .dateSelection .touchVersion {
+        margin-top: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}

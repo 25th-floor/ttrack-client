@@ -1,0 +1,41 @@
+/* YearSelection */
+
+/* Year */
+.today a {
+    background : rgba(47, 160, 132, 0.4);
+}
+
+.future a {
+    color : #646464;
+}
+
+.year .short,
+.year .full {
+    display : none;
+}
+
+@media (min-width : 768px) {
+    .year .number {
+        display : none;
+    }
+
+    .year .short {
+        display : block;
+    }
+}
+
+/* Today Button */
+li.todayButton {
+    float     : right;
+    min-width : 90px;
+}
+
+.todayButton a {
+    background : rgba(47, 160, 132, 0.4);
+    color      : #c8c8c8;
+}
+
+.todayButton.button a:hover {
+    background : rgba(47, 160, 132, 0.6);
+    color      : white;
+}

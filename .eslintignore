@@ -1,6 +1,1 @@
-# IntelliJ Override
-*.js
-!src/**/*
-
-# Ignore test files
-**/__*/**
+registerServiceWorker.js

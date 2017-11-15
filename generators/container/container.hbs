@@ -1,0 +1,33 @@
+// @flow
+import React, { Component } from 'react';
+
+// REDUX
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+// import { bindActionCreators } from 'redux';
+// import { Actions } from '@data';
+import { Layout, Main } from '@components';
+
+import './{{ properCase name }}.module.css';
+
+export type {{ properCase name }}Props = {
+    children?: React.Element<any>,
+};
+
+/**
+ * {{ properCase name }}
+ */
+export class {{ properCase name }} extends Component {
+    props: {{ properCase name }}Props;
+
+    render() {
+        return (<Layout>
+            <Main>
+
+            </Main>
+        </Layout>);
+    }
+}
+
+export const {{ properCase name }} = withRouter(connect(null, null)({{ properCase name }}Container));

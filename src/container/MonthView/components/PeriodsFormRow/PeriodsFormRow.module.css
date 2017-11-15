@@ -1,0 +1,9 @@
+.row {
+    padding    : 15px;
+    border-top : 1px solid #DDD;
+}
+
+.row:first-child {
+    border-top : none;
+}
+

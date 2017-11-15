@@ -1,0 +1,23 @@
+/* month */
+.today a {
+    background : rgba(47, 160, 132, 0.4);
+}
+
+li.future a {
+    color : #646464;
+}
+
+.short,
+.full {
+    display : none;
+}
+
+@media (min-width : 768px) {
+    .number {
+        display : none;
+    }
+
+    .short {
+        display : block;
+    }
+}
