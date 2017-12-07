@@ -59,9 +59,11 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
                 <fieldset className={`hidden-xs ${styles.header}`}>
                     <dl>
                         <dt className="col-sm-2 col-md-1">Datum</dt>
-                        <dt className="hidden-sm col-sm-1">Sollzeit</dt>
+                        <dt className="hidden-sm hidden-md col-lg-1">Sollzeit</dt>
+                        <dt className="hidden-sm hidden-md col-lg-1">Dauer</dt>
+                        <dt className="col-sm-1">Prozent</dt>
                         <dt className="col-sm-4 col-md-3 col-lg-2">User</dt>
-                        <dt className="col-sm-6 col-md-7 col-lg-8">Kommentar</dt>
+                        <dt className="col-sm-5 col-md-7 col-lg-6">Kommentar</dt>
                     </dl>
                 </fieldset>
                 {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
