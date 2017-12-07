@@ -30,6 +30,7 @@ export type VacationOverviewProps = {
 
 type State = {
     vacations: ApiVacationsType,
+    start: number,
 };
 
 export class VacationsOverviewContainer extends Component<VacationOverviewProps, State> {
@@ -44,16 +45,30 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
     }
 
     loadVacancies = async () => {
-        const vacations = await Resources.Vacations.collection();
+        const start = this.state.vacations.vacations.length;
+        const vacations: ApiVacationsType = await Resources.Vacations.collection(start);
 
         await this.setState({
-            vacations,
+            vacations: {
+                vacations: [...this.state.vacations.vacations, ...vacations.vacations],
+                // eslint-disable-next-line no-underscore-dangle
+                _meta: vacations._meta,
+            },
         });
     };
 
     render() {
         const { isAuthenticated } = this.props;
         if (!isAuthenticated) return null;
+
+        const { _meta } = this.state.vacations;
+        let showMore = true;
+        if (_meta !== undefined) {
+            const { total, start, count } = _meta;
+            if (start + count >= total) {
+                showMore = false;
+            }
+        }
         return (
             <Page>
                 <fieldset className={`hidden-xs ${styles.header}`}>
@@ -67,6 +82,7 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
                     </dl>
                 </fieldset>
                 {this.state.vacations.vacations.map((vacation, index) => <Vacation vacation={vacation} key={index} />)}
+                {showMore && (<button onClick={this.loadVacancies}>load more</button>) }
             </Page>
         );
     }
