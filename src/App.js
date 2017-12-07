@@ -19,9 +19,9 @@ import { MonthView, Auth as Authentication, VacationsOverview } from './containe
 const today = moment().format('YYYY-MM');
 const Index = () => <Redirect push to={`/month/${today}`} />;
 
-const mapStateToProps = ({ isAuthenticated, user }, { history }) => ({
-    isAuthenticated,
-    user,
+const mapStateToProps = ({ auth }, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     history,
 });
 

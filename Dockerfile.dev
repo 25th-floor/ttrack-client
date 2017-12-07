@@ -8,6 +8,8 @@ ENV APPDIR /usr/src/app
 ENV DEBIAN_FRONTEND noninteractive
 ENV REUID_UID 2342
 
+ENV NODE_ENV development
+
 #RUN [ ${AS_UID} -gt 500 -a $(getent passwd ${AS_UID}) ] && \
 #		{ REUID_USER=$(getent passwd ${AS_UID} | awk -F: '{print $1}') \
 #		&& usermod -u ${REUID_UID} ${REUID_USER} \

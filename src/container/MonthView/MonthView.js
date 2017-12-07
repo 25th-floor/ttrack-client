@@ -1,16 +1,16 @@
 // @flow
 
 import React, { Component } from 'react';
-import moment, { type Moment } from 'moment';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment, { type Moment } from 'moment';
 
-import { Utils, Resources } from '@data';
+import { Actions, Utils, Resources } from '@data';
 import { Page } from '@components';
 
 import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
-import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
@@ -157,6 +157,8 @@ const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => (
     history,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+    logout: bindActionCreators(Actions.Auth.logout, dispatch),
+});
 
 export const MonthView = withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer));

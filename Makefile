@@ -1,7 +1,7 @@
 include docker/mk/*.mk
 
 # Define variables, export them and include them usage-documentation
-$(eval $(call defw,NS,twentyfifth))
+$(eval $(call defw,NS,25thfloor))
 $(eval $(call defw,REPO,ttrack-client))
 $(eval $(call defw,VERSION,latest))
 $(eval $(call defw,NAME,ttrack))
@@ -39,6 +39,14 @@ ship:: ##@Docker Ship the image (build, ship)
 # All things deployment - beware
 # -----------------------------------------------------------------------------
 
+.PHONY: assets
+assets:: ##@Helpers Run tests within the client container
+	docker exec ttrack-client yarn build
+
+.PHONY: test
+test:: ##@Helpers Run tests within the client container
+	docker exec -e NODE_ENV=test ttrack-client yarn test
+
 # -----------------------------------------------------------------------------
 # All the convenient things for developers
 # -----------------------------------------------------------------------------
@@ -74,6 +82,7 @@ start:: ##@Compose Start the client development stack in detached mode
 	$(shell_env) docker-compose \
 		-f docker-compose.dev.yml \
 		up \
+		--build \
 		-d
 
 .PHONY: stop
