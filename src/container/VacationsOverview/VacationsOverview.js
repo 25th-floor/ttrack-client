@@ -30,7 +30,7 @@ export type VacationOverviewProps = {
 
 type State = {
     vacations: ApiVacationsType,
-    start: number,
+    showMore: boolean,
 };
 
 export class VacationsOverviewContainer extends Component<VacationOverviewProps, State> {
@@ -38,6 +38,7 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
         vacations: {
             vacations: [],
         },
+        showMore: true,
     };
 
     componentDidMount() {
@@ -45,15 +46,20 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
     }
 
     loadVacancies = async () => {
-        const start = this.state.vacations.vacations.length;
-        const vacations: ApiVacationsType = await Resources.Vacations.collection(start);
+        const { vacations } = this.state.vacations;
+        const apiVacations: ApiVacationsType = await Resources.Vacations.collection(vacations.length);
+
+        // eslint-disable-next-line no-underscore-dangle
+        const { total, start, count } = apiVacations._meta;
+        const showMore = start + count < total;
 
         await this.setState({
             vacations: {
-                vacations: [...this.state.vacations.vacations, ...vacations.vacations],
+                vacations: [...vacations, ...apiVacations.vacations],
                 // eslint-disable-next-line no-underscore-dangle
-                _meta: vacations._meta,
+                _meta: apiVacations._meta,
             },
+            showMore,
         });
     };
 
@@ -61,14 +67,7 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
         const { isAuthenticated } = this.props;
         if (!isAuthenticated) return null;
 
-        const { _meta } = this.state.vacations;
-        let showMore = true;
-        if (_meta !== undefined) {
-            const { total, start, count } = _meta;
-            if (start + count >= total) {
-                showMore = false;
-            }
-        }
+        const { showMore } = this.state;
         return (
             <Page>
                 <fieldset className={`hidden-xs ${styles.header}`}>
