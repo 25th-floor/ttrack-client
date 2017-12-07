@@ -151,9 +151,9 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
     }
 }
 
-const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
-    isAuthenticated,
-    user,
+const mapStateToProps = ({ auth }: AppState, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     history,
 });
 

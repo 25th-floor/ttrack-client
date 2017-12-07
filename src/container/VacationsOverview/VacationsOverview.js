@@ -4,19 +4,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Resources } from '@data';
+import { Resources, type AppState } from '@data';
 import { Page } from '@components';
 
 import type { ApiVacationsType } from '@data/Resources/ResourcesTypes';
-import type { AuthState } from '@data/Auth/AuthTypes';
 
 import { Vacation } from './components/Vacation';
 
 import styles from './VacationsOverview.module.css';
 
-const mapStateToProps = ({ isAuthenticated, user }: AuthState, { history }) => ({
-    isAuthenticated,
-    user,
+const mapStateToProps = ({ auth }: AppState, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
     history,
 });
 
