@@ -1,32 +1,21 @@
 // @flow
 
 import React, { Component } from 'react';
-import moment, { type Moment } from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment, { type Moment } from 'moment';
 
 import { Actions, Utils, Resources } from '@data';
-import { Footer } from '@components';
+import { Page } from '@components';
 
 import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
-import { Navigation } from './components/Navigation';
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
 
 import styles from './MonthView.module.css';
-
-const mapStateToProps = ({ auth }, { history }) => ({
-    isAuthenticated: auth.isAuthenticated,
-    user: auth.user,
-    history,
-});
-
-const mapDispatchToProps = dispatch => ({
-    logout: bindActionCreators(Actions.Auth.logout, dispatch),
-});
 
 type BoundaryType = {
     firstDay: Moment,
@@ -55,7 +44,6 @@ function getFirstAndLastDayOfMonth(month: Moment): BoundaryType {
 export type MonthViewContainerProps = {
     user: ApiUserType,
     isAuthenticated: boolean,
-    logout: (user: ApiUserType) => void, // todo
 
     // eslint-disable-next-line react/no-unused-prop-types
     match: any, // todo router
@@ -103,10 +91,6 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         });
     };
 
-    handleLogout = (user: ApiUserType) => {
-        this.props.logout(user);
-    };
-
     componentWillReceiveProps(nextProps: MonthViewContainerProps) {
         // will set active month from router params or uses the current month
         this.setActiveMonth(nextProps);
@@ -131,31 +115,28 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         if (!isAuthenticated) return null;
         const activeMonth = moment(this.activeMonth, 'YYYY-MM', true).startOf('month');
         return (
-            <div className={styles['site-container']}>
-                <div className="container-fluid">
-                    <div id={styles.month}>
-                        <Navigation user={user} onLogout={this.handleLogout} />
-                        <div className={styles.pageHeader}>
-                            <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
-                            <DatePicker
-                                activeMonth={activeMonth}
-                                years={Utils.getYearsForUser(user, Utils.getMomentToday())}
-                                months={Utils.getMonthsForUser(user, activeMonth)}
-                            />
-                            <div className="clearfix" />
-                        </div>
-
-                        <fieldset className={`${styles.monthHeader}`}>
-                            <dl>
-                                <dt className="col-sm-3 col-md-1 col-lg-1">Datum</dt>
-                                <dt className="hidden-sm col-md-2 tt-col-lg-1 col-lg-1">Wochentag</dt>
-                                <dt className="col-sm-1 col-lg-1">Arbeitszeit</dt>
-                                <dt className="col-sm-1 tt-col-lg-1">Pause</dt>
-                                <dt className="col-sm-1 col-lg-1">Differenz</dt>
-                                <dt className="col-sm-4 col-lg-6">Kommentar</dt>
-                            </dl>
-                        </fieldset>
+            <Page>
+                <div id={styles.month}>
+                    <div className={styles.pageHeader}>
+                        <h1 className="hidden-lg hidden-md hidden-sm hidden-xs">Monats Ansicht</h1>
+                        <DatePicker
+                            activeMonth={activeMonth}
+                            years={Utils.getYearsForUser(user, Utils.getMomentToday())}
+                            months={Utils.getMonthsForUser(user, activeMonth)}
+                        />
+                        <div className="clearfix" />
                     </div>
+
+                    <fieldset className={`${styles.monthHeader}`}>
+                        <dl>
+                            <dt className="col-sm-3 col-md-1 col-lg-1">Datum</dt>
+                            <dt className="hidden-sm col-md-2 tt-col-lg-1 col-lg-1">Wochentag</dt>
+                            <dt className="col-sm-1 col-lg-1">Arbeitszeit</dt>
+                            <dt className="col-sm-1 tt-col-lg-1">Pause</dt>
+                            <dt className="col-sm-1 col-lg-1">Differenz</dt>
+                            <dt className="col-sm-4 col-lg-6">Kommentar</dt>
+                        </dl>
+                    </fieldset>
                 </div>
                 {this.state
                 && <Weeks
@@ -165,10 +146,19 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
                     user={user}
                     onSaveDay={this.handelSaveDay}
                 />}
-                <Footer />
-            </div>
+            </Page>
         );
     }
 }
+
+const mapStateToProps = ({ auth }: AppState, { history }) => ({
+    isAuthenticated: auth.isAuthenticated,
+    user: auth.user,
+    history,
+});
+
+const mapDispatchToProps = dispatch => ({
+    logout: bindActionCreators(Actions.Auth.logout, dispatch),
+});
 
 export const MonthView = withRouter(connect(mapStateToProps, mapDispatchToProps)(MonthViewContainer));
