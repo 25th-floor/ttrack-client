@@ -65,7 +65,7 @@ shell: ##@Helpers Get a shell within the client container
 
 .PHONY: buildinfo
 buildinfo:: ##@Helpers create the buildinfo json config
-	$(shell_env) echo '{"build": "$(VERSION)", "git": "$(GIT_COMMIT)"}' > ./buildinfo.json
+	$(shell_env) sed -i '' 's/BUILD_INFO={}/BUILD_INFO={"build": "$(VERSION)", "git": "$(GIT_COMMIT)"}/' build/index.html
 
 # -----------------------------------------------------------------------------
 # Local development & docker-compose

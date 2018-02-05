@@ -19,4 +19,5 @@ after_success:
     yarn build;
     make GIT_COMMIT="$TRAVIS_COMMIT" VERSION=$TRAVIS_BUILD_NUMBER build;
     make VERSION=$TRAVIS_BUILD_NUMBER ship;
+    make VERSION=latest ship;
     fi
