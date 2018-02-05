@@ -49,7 +49,7 @@ export class AuthContainer extends Component<AuthProps, State> {
 
     handleLogin = (user: ApiUserType) => {
         this.props.login(user);
-        this.props.history.push('/home');
+        this.props.history.push('/');
     };
 
     render() {

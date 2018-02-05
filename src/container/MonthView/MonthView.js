@@ -70,7 +70,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
     };
 
     getWeeks = async (activeMonth: string) => {
-        const date = moment(activeMonth, 'YYYY-MM', true).startOf('month');
+        const date = moment.utc(activeMonth, 'YYYY-MM', true).startOf('month');
         const boundaries = getFirstAndLastDayOfMonth(date);
         const responseTimeSheet = await Resources.Timesheet.getTimesheetFromUser(
             this.props.user,
@@ -113,7 +113,7 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
     render() {
         const { isAuthenticated, user } = this.props;
         if (!isAuthenticated) return null;
-        const activeMonth = moment(this.activeMonth, 'YYYY-MM', true).startOf('month');
+        const activeMonth = moment.utc(this.activeMonth, 'YYYY-MM', true).startOf('month');
         return (
             <Page>
                 <div id={styles.month}>
