@@ -48,7 +48,7 @@ const dateValidation = ({ user, location }, RouterPath) => {
     const match = matchPath(location.pathname, { path: RouterPath });
     const { date } = match.params;
 
-    let activeMonth = moment(date, 'YYYY-MM', true).startOf('month');
+    let activeMonth = moment.utc(date, 'YYYY-MM', true).startOf('month');
     if (!activeMonth.isValid()) activeMonth = Utils.getMomentToday();
     const found = Utils.getNearestDateWithinEmployment(activeMonth, user);
 
