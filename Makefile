@@ -33,7 +33,13 @@ build:: buildinfo
 
 .PHONY: ship
 ship:: ##@Docker Ship the image (build, ship)
+ship:: ship-latest
 	docker push $(NS)/$(REPO):$(VERSION)
+
+.PHONY: ship-latest
+ship-latest:: ##@Docker also ship the image with tagged version latest
+	docker tag $(NS)/$(REPO):$(VERSION) $(NS)/$(REPO):latest
+	docker push $(NS)/$(REPO):latest
 
 # -----------------------------------------------------------------------------
 # All things deployment - beware
@@ -65,7 +71,7 @@ shell: ##@Helpers Get a shell within the client container
 
 .PHONY: buildinfo
 buildinfo:: ##@Helpers create the buildinfo json config
-	$(shell_env) echo '{"build": "$(VERSION)", "git": "$(GIT_COMMIT)"}' > ./buildinfo.json
+#	$(shell_env) sed -i '' 's/BUILD_INFO={}/BUILD_INFO={"build": "$(VERSION)", "git": "$(GIT_COMMIT)"}/' build/index.html
 
 # -----------------------------------------------------------------------------
 # Local development & docker-compose
