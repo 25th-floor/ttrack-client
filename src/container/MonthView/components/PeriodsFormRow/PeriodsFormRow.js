@@ -81,7 +81,7 @@ export class PeriodsFormRow extends Component<PeriodsFormRowProps, State> {
 
         const type = findType(types, event.target.value);
         const cfg = R.pathOr({}, ['pty_config', 'types'])(type);
-        const defaultDuration = R.prop('value')(cfg) || Utils.NONE;
+        const defaultDuration = R.head(R.keys(R.pickBy(val => val === true, cfg))) || Utils.NONE;
         // ???   _.findKey(cfg, value => value) || Utils.NONE;
         const durationValue = period.duration;
 
