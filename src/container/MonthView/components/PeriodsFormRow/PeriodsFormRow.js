@@ -257,9 +257,9 @@ export class PeriodsFormRow extends Component<PeriodsFormRowProps, State> {
                 {!isValid ? this.renderErrorMessages() : ''}
 
                 <div className="pull-right">
-                    <a onClick={this.props.onRemove} role="button" href="/" tabIndex={0}>
+                    <button onClick={this.props.onRemove} tabIndex={0} className="btn-link">
                         <i className="fa fa-trash text-danger" />
-                    </a>
+                    </button>
                 </div>
                 <div className="row">
                     <label className="col-xs-12 col-sm-3 col-lg-2" htmlFor={`${elementName}[pty_id]`}>
