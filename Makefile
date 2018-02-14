@@ -26,10 +26,8 @@ running_container := $(shell docker ps -a -f "name=ttrack" --format="{{.ID}}")
 .PHONY: build
 build:: ##@Docker Build an image
 build:: buildinfo
-	$(shell_env) docker \
-		build \
-		-t $(NS)/$(REPO):$(VERSION) \
-		.
+	yarn build
+	$(shell_env) docker build -t $(NS)/$(REPO):$(VERSION) .
 
 .PHONY: ship
 ship:: ##@Docker Ship the image (build, ship)
@@ -71,7 +69,7 @@ shell: ##@Helpers Get a shell within the client container
 
 .PHONY: buildinfo
 buildinfo:: ##@Helpers create the buildinfo json config
-#	$(shell_env) sed -i '' 's/BUILD_INFO={}/BUILD_INFO={"build": "$(VERSION)", "git": "$(GIT_COMMIT)"}/' build/index.html
+	$(shell_env) echo 'REACT_APP_VERSION=$(VERSION)\nREACT_APP_GIT=$(GIT_COMMIT)\n' > ./.env
 
 # -----------------------------------------------------------------------------
 # Local development & docker-compose

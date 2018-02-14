@@ -11,3 +11,4 @@ dist
 .idea
 public/images/
 buildinfo.json
+.env
