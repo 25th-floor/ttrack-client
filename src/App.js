@@ -1,10 +1,8 @@
-import R from 'ramda';
 import React from 'react';
 import moment from 'moment';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { Redirect, matchPath } from 'react-router';
 import {
-    withRouter,
     BrowserRouter as Router,
     Route,
     Switch,
@@ -13,37 +11,12 @@ import {
 import { AppContainer } from 'react-hot-loader';
 
 import { store, Utils } from '@data';
-import { LoadingApplication } from '@components';
+import { LoadingApplication, PrivateRoute } from '@components';
 
 import { MonthView, Auth as Authentication, VacationsOverview } from './container';
 
 const today = moment().format('YYYY-MM');
 const Index = () => <Redirect push to={`/month/${today}`} />;
-
-const mapStateToProps = ({ auth }, { history }) => ({
-    isAuthenticated: auth.isAuthenticated,
-    user: auth.user,
-    history,
-});
-
-const PrivateRoute = withRouter(connect(mapStateToProps, null)(({
-    component: Component, path: RouterPath, validation = () => true, ...rest
-}) => {
-    // on /auth do nothing
-    if (rest.history.location.pathname === '/auth') return null;
-    if (!rest.isAuthenticated) return (<Redirect push to="/auth" />);
-    const valid = validation(rest, RouterPath);
-    if (R.is(String, valid)) {
-        rest.history.push(valid);
-        return null;
-    }
-
-    return (<Route
-        path={RouterPath}
-        {...rest}
-        render={props => <Component {...props} />}
-    />);
-}));
 
 const dateValidation = ({ user, location }, RouterPath) => {
     const match = matchPath(location.pathname, { path: RouterPath });
