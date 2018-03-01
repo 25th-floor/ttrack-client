@@ -42,9 +42,9 @@ export const App = () => (
                 <Router>
                     <div>
                         <Switch>
-                            <PrivateRoute path="/month/:date" validation={dateValidation} component={MonthView} />
-                            <PrivateRoute path="/vacations" component={VacationsOverview} />
-                            <PrivateRoute path="/" component={Index} />
+                            <PrivateRoute path="/month/:date" validation={dateValidation}><MonthView /></PrivateRoute>
+                            <PrivateRoute path="/vacations"><VacationsOverview /></PrivateRoute>
+                            <PrivateRoute path="/"><Index /></PrivateRoute>
                         </Switch>
                         <Route exact path="/auth" component={Authentication} />
                     </div>
