@@ -13,6 +13,7 @@ import {
 import { AppContainer } from 'react-hot-loader';
 
 import { store, Utils } from '@data';
+import { LoadingApplication } from '@components';
 
 import { MonthView, Auth as Authentication, VacationsOverview } from './container';
 
@@ -64,16 +65,18 @@ const dateValidation = ({ user, location }, RouterPath) => {
 export const App = () => (
     <AppContainer>
         <Provider store={store}>
-            <Router>
-                <div>
-                    <Switch>
-                        <PrivateRoute path="/month/:date" validation={dateValidation} component={MonthView} />
-                        <PrivateRoute path="/vacations" component={VacationsOverview} />
-                        <PrivateRoute path="/" component={Index} />
-                    </Switch>
-                    <Route exact path="/auth" component={Authentication} />
-                </div>
-            </Router>
+            <LoadingApplication>
+                <Router>
+                    <div>
+                        <Switch>
+                            <PrivateRoute path="/month/:date" validation={dateValidation} component={MonthView} />
+                            <PrivateRoute path="/vacations" component={VacationsOverview} />
+                            <PrivateRoute path="/" component={Index} />
+                        </Switch>
+                        <Route exact path="/auth" component={Authentication} />
+                    </div>
+                </Router>
+            </LoadingApplication>
         </Provider>
     </AppContainer>
 );
