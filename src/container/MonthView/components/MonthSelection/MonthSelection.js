@@ -48,7 +48,7 @@ export type MonthSelectionProps = {
  * MonthSelection
  */
 export class MonthSelection extends Component<MonthSelectionProps> {
-    today = moment().startOf('month');
+    today = moment.utc().startOf('month');
 
     render() {
         const { months, activeMonth } = this.props;
