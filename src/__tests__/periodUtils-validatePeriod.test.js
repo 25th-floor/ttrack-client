@@ -41,7 +41,7 @@ describe('Utils', () => {
             })).toBeFalsy();
         });
 
-        xit('returns true if duration is none and the config allows it', () => {
+        it('returns true if duration is none and the config allows it', () => {
             expect(Utils.validatePeriod({
                 duration: Utils.NONE,
                 type: { pty_config: { types: { period: false, fullday: false, halfday: false } } },
