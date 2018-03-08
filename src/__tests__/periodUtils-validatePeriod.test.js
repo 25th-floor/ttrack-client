@@ -41,18 +41,18 @@ describe('Utils', () => {
             })).toBeFalsy();
         });
 
-        xit('returns true if duration is none and the config allows it', () => {
+        it('returns true if duration is none and the config allows it', () => {
             expect(Utils.validatePeriod({
                 duration: Utils.NONE,
                 type: { pty_config: { types: { period: false, fullday: false, halfday: false } } },
             })).toBeTruthy();
         });
 
-        xit('returns true if there is a starttime', () => {
+        it('returns true if there is a starttime', () => {
             expect(Utils.validatePeriod({ per_start: { hours: 8, minutes: 45 } })).toBeTruthy();
         });
 
-        xit('returns true if there is a starttime, but it does not check if starttime is valid', () => {
+        it('returns true if there is a starttime, but it does not check if starttime is valid', () => {
             expect(Utils.validatePeriod({ per_start: { foo: 42 } })).toBeTruthy();
         });
 
@@ -64,7 +64,7 @@ describe('Utils', () => {
                 })).toBeFalsy();
             });
 
-            xit('returns true if endtime is after starttime', () => {
+            it('returns true if endtime is after starttime', () => {
                 expect(Utils.validatePeriod({
                     per_start: { hours: 8, minutes: 45 },
                     per_stop: { hours: 9 },
@@ -79,7 +79,7 @@ describe('Utils', () => {
                 })).toBeFalsy();
             });
 
-            xit('returns true if there is a breaktime and it valid', () => {
+            it('returns true if there is a breaktime and it valid', () => {
                 expect(Utils.validatePeriod({
                     per_start: { hours: 8 },
                     per_stop: { hours: 9 },
