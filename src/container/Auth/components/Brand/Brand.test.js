@@ -1,5 +1,5 @@
 import React from 'react';
-import { Motto } from '@components';
+import { Motto, TTLogo } from '@components';
 import { shallow } from 'enzyme';
 
 import { Brand } from './Brand';
@@ -10,8 +10,8 @@ describe('<Brand />', () => {
     it('should contain Motto component', () => {
         expect(component.find(Motto).length).toEqual(1);
     });
-    it('should contain a svg', () => {
-        expect(component.find('svg').length).toEqual(1);
+    it('should contain TTLogo component', () => {
+        expect(component.find(TTLogo).length).toEqual(1);
     });
 
     it('should contain a .loginBrand', () => {
