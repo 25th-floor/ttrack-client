@@ -9,8 +9,10 @@ import moment, { type Moment } from 'moment';
 import { Actions, Utils, Resources } from '@data';
 import { Page } from '@components';
 
+import type { AppState } from '@data';
 import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
 import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
+
 
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
@@ -44,7 +46,6 @@ function getFirstAndLastDayOfMonth(month: Moment): BoundaryType {
 export type MonthViewContainerProps = {
     user: ApiUserType,
     isAuthenticated: boolean,
-
     // eslint-disable-next-line react/no-unused-prop-types
     match: any, // todo router
 };

@@ -46,7 +46,7 @@ type State = {
 export class Day extends Component<DayProps, State> {
     state = { edit: false };
 
-    onSave = R.curry((date, periods, removed) => {
+    onSave = R.curry((date: Moment, periods: Array<any>, removed: Array<any>) => {
         this.props.onSaveDay(date, periods, removed);
         this.setState({ edit: false });
     });
