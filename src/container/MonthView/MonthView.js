@@ -10,8 +10,8 @@ import { Actions, Utils, Resources } from '@data';
 import { Page } from '@components';
 
 import type { AppState } from '@data';
-import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
-import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
+import { type ProcessedPeriodType, type ProcessedWeekType } from '@data/Constants/utils';
+import { type ApiUserType, type ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
 
 
 import { DatePicker } from './components/DatePicker';
@@ -80,7 +80,6 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         );
         const periodTypes = await Resources.Timesheet.getTypes();
         const days = Utils.assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
-
         const weeks = Utils.createWeeks(
             days,
             responseTimeSheet.carryTime,
