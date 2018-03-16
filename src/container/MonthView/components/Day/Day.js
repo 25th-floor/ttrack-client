@@ -15,7 +15,7 @@ import { Periods } from '../Period';
 
 import styles from './Day.module.css';
 
-export type SaveFn = (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => any; // void or promise
+export type SaveFn = (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => Promise<any>; // void or promise
 export type DayProps = {
     /**
      * Day
@@ -51,10 +51,16 @@ type State = {
 export class Day extends Component<DayProps, State> {
     state = { edit: false };
 
-    onSave = R.curry((date: Moment, periods: Array<any>, removed: Array<any>) => {
-        this.props.onSaveDay(date, periods, removed);
-        this.setState({ edit: false });
-    });
+    onSave = R.curry((date: Moment, periods: Array<any>, removed: Array<any>) => this.props
+        .onSaveDay(date, periods, removed)
+        .then(() => {
+            this.setState({ edit: false });
+        }, (err) => {
+            // possible error handling
+            // eslint-disable-next-line
+            console.error(err);
+            return err;
+        }));
 
     handleEditClick = () => {
         // don't var user get out with this click

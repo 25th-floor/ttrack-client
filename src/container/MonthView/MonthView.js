@@ -100,14 +100,19 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
 
     handelSaveDay = async (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => {
         const { user } = this.props;
-        const res = await Resources.Timesheet.saveDay(
-            user.usr_id,
-            date,
-            periods,
-            removed,
-        );
-        // success reload props
-        if (res.length !== 0) this.getWeeks(this.activeMonth);
+        try {
+            return await Resources.Timesheet.saveDay(
+                user.usr_id,
+                date,
+                periods,
+                removed,
+            ).then((res) => {
+                if (res.length !== 0) this.getWeeks(this.activeMonth);
+                return res;
+            });
+        } catch (error) {
+            throw error;
+        }
     };
 
     render() {
