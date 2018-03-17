@@ -36,6 +36,12 @@ type State = {
 export class VacationsOverviewContainer extends Component<VacationOverviewProps, State> {
     state = {
         vacations: {
+            _meta: {
+                count: 0,
+                limit: 0,
+                start: 0,
+                total: 0,
+            },
             vacations: [],
         },
         showMore: true,
@@ -47,7 +53,7 @@ export class VacationsOverviewContainer extends Component<VacationOverviewProps,
 
     loadVacancies = async () => {
         const { vacations } = this.state.vacations;
-        const apiVacations: ApiVacationsType = await Resources.Vacations.collection(vacations.length);
+        const apiVacations = await Resources.Vacations.collection(vacations.length);
 
         // eslint-disable-next-line no-underscore-dangle
         const { total, start, count } = apiVacations._meta;

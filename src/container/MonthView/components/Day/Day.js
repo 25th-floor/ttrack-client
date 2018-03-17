@@ -7,20 +7,25 @@ import moment, { type Moment } from 'moment';
 import classSet from 'class-set';
 
 import { Utils } from '@data';
-import type { ProcessedPeriodType, ProcessedDayType } from '@data/Constants/utils';
-import type { ApiPeriodTypeType, ApiUserType } from '@data/Resources/ResourcesTypes';
+import { type ProcessedPeriodType, type ProcessedDayType } from '@data/Constants/utils';
+import { type ApiPeriodTypeType, type ApiUserType, type ApiDayType } from '@data/Resources/ResourcesTypes';
 
 import { PeriodsForm } from '../PeriodsForm';
 import { Periods } from '../Period';
 
 import styles from './Day.module.css';
 
-export type SaveFn = (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => any; // void or promise
+export type SaveFn = (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => Promise<any>; // void or promise
 export type DayProps = {
     /**
      * Day
      */
-    day: ProcessedDayType,
+    /**
+     * The intersection type dont work with exported types.
+     *
+     * @type {(ProcessedDayType & ApiDayType)}
+     */
+    day: ProcessedDayType & ApiDayType,
     /**
      * Active Month as Moment, todo: remove?
      */
@@ -46,10 +51,16 @@ type State = {
 export class Day extends Component<DayProps, State> {
     state = { edit: false };
 
-    onSave = R.curry((date, periods, removed) => {
-        this.props.onSaveDay(date, periods, removed);
-        this.setState({ edit: false });
-    });
+    onSave = R.curry((date: Moment, periods: Array<any>, removed: Array<any>) => this.props
+        .onSaveDay(date, periods, removed)
+        .then(() => {
+            this.setState({ edit: false });
+        }, (err) => {
+            // possible error handling
+            // eslint-disable-next-line
+            console.error(err);
+            return err;
+        }));
 
     handleEditClick = () => {
         // don't var user get out with this click

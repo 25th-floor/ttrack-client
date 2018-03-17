@@ -9,7 +9,7 @@ export type DatePickerContainerProps = {
     /**
      * class name
      */
-    className: any,
+    className?: any,
     /**
      * title of the container
      */

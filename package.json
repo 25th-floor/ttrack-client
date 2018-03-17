@@ -46,8 +46,11 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-styleguidist": "git://github.com/25th-floor/react-styleguidist.git#091dde8",
+    "reapop": "^1.2.0",
+    "reapop-theme-wybo": "^1.0.2",
     "redux": "^3.7.2",
     "redux-persist": "^4.10.1",
+    "redux-thunk": "^2.2.0",
     "rest": "^2.0.0",
     "wfk-roboto": "^1.0.7"
   },

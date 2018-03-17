@@ -9,6 +9,7 @@
     },
     "plugins": [ "react", "flowtype" ],
     "rules": {
+        "no-return-await": 0,
         "react/no-did-mount-set-state": 0,
         "camelcase":0,
         "no-plusplus": [

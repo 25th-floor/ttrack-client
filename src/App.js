@@ -8,6 +8,9 @@ import {
     Switch,
 } from 'react-router-dom';
 
+import NotificationsSystem from 'reapop';
+import theme from 'reapop-theme-wybo';
+
 import { AppContainer } from 'react-hot-loader';
 
 import { store, Utils } from '@data';
@@ -49,6 +52,7 @@ export const App = () => (
                         <Route exact path="/auth" component={Authentication} />
                     </div>
                 </Router>
+                <NotificationsSystem theme={theme} />
             </LoadingApplication>
         </Provider>
     </AppContainer>

@@ -9,8 +9,10 @@ import moment, { type Moment } from 'moment';
 import { Actions, Utils, Resources } from '@data';
 import { Page } from '@components';
 
-import type { ProcessedPeriodType, ProcessedWeekType } from '@data/Constants/utils';
-import type { ApiUserType, ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
+import type { AppState } from '@data';
+import { type ProcessedPeriodType, type ProcessedWeekType } from '@data/Constants/utils';
+import { type ApiUserType, type ApiPeriodTypeType } from '@data/Resources/ResourcesTypes';
+
 
 import { DatePicker } from './components/DatePicker';
 import { Weeks } from './components/Weeks';
@@ -44,7 +46,6 @@ function getFirstAndLastDayOfMonth(month: Moment): BoundaryType {
 export type MonthViewContainerProps = {
     user: ApiUserType,
     isAuthenticated: boolean,
-
     // eslint-disable-next-line react/no-unused-prop-types
     match: any, // todo router
 };
@@ -79,7 +80,6 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
         );
         const periodTypes = await Resources.Timesheet.getTypes();
         const days = Utils.assocPeriodsWithTypes(periodTypes, responseTimeSheet.days);
-
         const weeks = Utils.createWeeks(
             days,
             responseTimeSheet.carryTime,
@@ -100,14 +100,15 @@ export class MonthViewContainer extends Component<MonthViewContainerProps, State
 
     handelSaveDay = async (date: Moment, periods: Array<ProcessedPeriodType>, removed: Array<number>) => {
         const { user } = this.props;
-        const res = await Resources.Timesheet.saveDay(
+        return await Resources.Timesheet.saveDay(
             user.usr_id,
             date,
             periods,
             removed,
-        );
-        // success reload props
-        if (res.length !== 0) this.getWeeks(this.activeMonth);
+        ).then((res) => {
+            if (res.length !== 0) this.getWeeks(this.activeMonth);
+            return res;
+        });
     };
 
     render() {
