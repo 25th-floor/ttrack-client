@@ -1,6 +1,5 @@
 [ignore]
     /node_modules/
-    .*/node_modules/redux-persist/.*
     .*/node_modules/jss/.*
     .*/node_modules/findup/.*
     .*/styleguide.config.js.*
