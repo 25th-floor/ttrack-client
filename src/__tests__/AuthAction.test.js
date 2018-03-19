@@ -12,11 +12,9 @@ describe('Authentifiction actions', () => {
     });
 
     it('should logout user', () => {
-        const user = {};
         const expectedAction = {
             type: actionTypes.LOGOUT,
-            user,
         };
-        expect(Actions.Auth.logout(user)).toEqual(expectedAction);
+        expect(Actions.Auth.logout()).toEqual(expectedAction);
     });
 });
