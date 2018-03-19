@@ -15,7 +15,7 @@ import theme from 'reapop-theme-wybo';
 import { AppContainer } from 'react-hot-loader';
 
 import { store, persistor, Utils } from '@data';
-import { LoadingApplication, PrivateRoute } from '@components';
+import { LoadingApplication, PrivateRoute, LogoutRoute } from '@components';
 
 import { MonthView, Auth as Authentication, VacationsOverview } from './container';
 
@@ -59,6 +59,7 @@ export const App = () => (
                 <Router>
                     <div>
                         <Switch>
+                            <PrivateRoute path="/logout"><LogoutRoute /></PrivateRoute>
                             <PrivateRoute path="/month/:date" validation={dateValidation}><MonthView /></PrivateRoute>
                             <PrivateRoute path="/vacations"><VacationsOverview /></PrivateRoute>
                             <PrivateRoute path="/"><Index /></PrivateRoute>
