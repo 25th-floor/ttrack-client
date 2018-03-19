@@ -39,22 +39,23 @@ const dateValidation = ({ user, location }, RouterPath) => {
     return `/month/${validDateFormat}`;
 };
 
-const onBeforeLift = async () =>
-    // take some action before the gate lifts
-    new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('resolved');
-        }, 2000);
-    });
+// const onBeforeLift = async () =>
+//     // take some action before the gate lifts
+//     new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve('resolved');
+//         }, 10000);
+//     });
 
 export const App = () => (
     <AppContainer>
         <Provider store={store}>
             <PersistGate
                 loading={<LoadingApplication />}
-                onBeforeLift={onBeforeLift}
+                // onBeforeLift={onBeforeLift}
                 persistor={persistor}
             >
+                <LoadingApplication open />
                 <Router>
                     <div>
                         <Switch>
