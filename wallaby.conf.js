@@ -10,6 +10,7 @@ module.exports = function (wallaby) {
             'src/**/*.js',
             'src/**/*.css',
             '!src/**/*.test.js',
+            'config/**/*.js',
         ],
 
         tests: ['src/**/*.test.js'],
@@ -27,6 +28,12 @@ module.exports = function (wallaby) {
         },
         delays: {
             run: 1000,
+        },
+
+        setup: function (wallaby) {
+            const jestConfig = require('./package.json').jest;
+            jestConfig.setupFiles = jestConfig.setupFiles.map(p => p.replace('<rootDir>', wallaby.projectCacheDir));
+            wallaby.testFramework.configure(jestConfig);
         },
 
         testFramework: 'jest',

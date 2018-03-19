@@ -7,13 +7,14 @@ import {
     Route,
     Switch,
 } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import NotificationsSystem from 'reapop';
 import theme from 'reapop-theme-wybo';
 
 import { AppContainer } from 'react-hot-loader';
 
-import { store, Utils } from '@data';
+import { store, persistor, Utils } from '@data';
 import { LoadingApplication, PrivateRoute } from '@components';
 
 import { MonthView, Auth as Authentication, VacationsOverview } from './container';
@@ -38,10 +39,22 @@ const dateValidation = ({ user, location }, RouterPath) => {
     return `/month/${validDateFormat}`;
 };
 
+const onBeforeLift = async () =>
+    // take some action before the gate lifts
+    new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('resolved');
+        }, 2000);
+    });
+
 export const App = () => (
     <AppContainer>
         <Provider store={store}>
-            <LoadingApplication>
+            <PersistGate
+                loading={<LoadingApplication />}
+                onBeforeLift={onBeforeLift}
+                persistor={persistor}
+            >
                 <Router>
                     <div>
                         <Switch>
@@ -53,7 +66,7 @@ export const App = () => (
                     </div>
                 </Router>
                 <NotificationsSystem theme={theme} />
-            </LoadingApplication>
+            </PersistGate>
         </Provider>
     </AppContainer>
 );
