@@ -1,10 +1,9 @@
 import React from 'react';
-import { Footer } from '@components';
+import { Brand, Footer } from '@components';
 import { shallow } from 'enzyme';
 
 import { Login } from './Login';
 import { UserSelection } from '../UserSelection';
-import { Brand } from '../Brand';
 
 import styles from './Login.module.css';
 

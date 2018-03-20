@@ -44,14 +44,14 @@
     }
 }
 
-.loginBrand .title {
+.loginBrand .brand-title {
     text-transform : uppercase;
     font-size      : 20px;
     padding        : 0 10px 0 2px;
 }
 
 @media (min-width : 768px) {
-    .loginBrand .title {
+    .loginBrand .brand-title {
         display   : block;
         font-size : 40px;
         padding   : 0;
@@ -59,24 +59,24 @@
 }
 
 @media (min-width : 992px) {
-    .loginBrand .title {
+    .loginBrand .brand-title {
         font-size : 60px;
     }
 }
 
-.loginBrand .title strong {
+.loginBrand .brand-title strong {
     font-weight : 500;
 }
 
 @media (min-width : 768px) {
-    .motto {
+    .loginBrand .brand-motto {
         font-size : 20px;
         color     : #707a81;
     }
 }
 
 @media (min-width : 992px) {
-    .motto {
+    .loginBrand .brand-motto {
         font-size : 25px;
     }
 }
